@@ -1,0 +1,21 @@
+<?php
+
+namespace DummyNamespace;
+
+use App\Repositories\DummyRepositoryNamespace;
+
+class DummyClass
+{
+    protected $demoReporitoryVariable;
+    /**
+       * Instantiate service
+       * 
+       * @param DummyRepository $demoReporitoryVariable
+       */
+    public function __construct(DummyRepository $demoReporitoryVariable)
+    {
+        $this->demoReporitoryVariable = $demoReporitoryVariable;
+    }
+
+    // Your methods for service
+}

@@ -1,0 +1,24 @@
+<?php 
+
+return [
+    'paginate' => 10,
+    'table' => [
+        'users' => 'users',
+        'permissions' => 'permissions',
+        'roles' => 'roles',
+        'categories' => 'categories',
+        'posts' => 'posts',
+        'comments' => 'comments',
+    ],
+    'path' => [
+        'storage' => 'storage',
+        'storage_app' => 'app',
+        'storage_public' => 'public',
+        'storage_app_public' => 'app/public', 
+        'posts' => [
+            'normals' => 'images/posts/normals',
+            'thumbnails' => 'images/posts/thumbnails'
+        ],
+        'profile' => 'images/profile',
+    ]
+];

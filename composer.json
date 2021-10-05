@@ -1,0 +1,43 @@
+{
+    "name": "bjit/reusable-lib-laravel",
+    "description": "A BJIT Reusable Laravel Package",
+    "keywords": ["bjit", "reusable library", "crossdomain", "api"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Abdul Halim",
+            "email": "abdul.halim@bjitgroup.com"
+        }
+    ],
+    "require-dev": {
+        "orchestra/testbench": "^6.20",
+        "phpunit/phpunit": "^9.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Bjit\\ReusableLib\\" : "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Bjit\\ReusableLib\\Tests\\": "tests/",
+            "Database\\Factories\\": "database/factories"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        },
+        "laravel": {
+            "providers": [
+                "Bjit\\ReusableLib\\ReusableLibBaseServiceProvider"
+            ] 
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-f": "vendor/bin/phpunit --filter"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

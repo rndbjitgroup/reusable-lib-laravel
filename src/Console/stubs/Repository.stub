@@ -1,0 +1,21 @@
+<?php
+
+namespace DummyNamespace;
+
+use App\Models\DummyModel;
+
+class DummyClass
+{
+    protected $demoModelVariable;
+    /**
+       * Instantiate reporitory
+       * 
+       * @param DummyModel $demoModelVariable
+       */
+    public function __construct(DummyModel $demoModelVariable)
+    {
+        $this->demoModelVariable = $demoModelVariable;
+    }
+
+    // Your methods for repository
+}
