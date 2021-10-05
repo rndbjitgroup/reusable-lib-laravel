@@ -37,7 +37,6 @@
     "scripts": {
         "test": "vendor/bin/phpunit",
         "test-f": "vendor/bin/phpunit --filter"
-    },
-    "minimum-stability": "dev",
+    }, 
     "prefer-stable": true
 }

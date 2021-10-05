@@ -28,7 +28,7 @@ Install Reusable Library the package.
 
 ```sh
 cd your project root
-composer require bjit/reusable-lib-laravel
+composer require bjitgroup/reusable-lib-laravel
 ```
 
 #### Configure .env file 
