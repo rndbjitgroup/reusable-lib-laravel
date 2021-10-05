@@ -1,5 +1,5 @@
 # BJIT Reusable Library Package
-### _This is the reusable library package there has some reusable module_
+This is the reusable library package there has some reusable module
 
 ## Features
 
