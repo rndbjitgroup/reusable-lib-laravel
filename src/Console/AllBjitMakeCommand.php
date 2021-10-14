@@ -18,7 +18,10 @@ class AllBjitMakeCommand extends GeneratorCommand
      *
      * @var string
      */
-    protected $name = 'bjit-make:model';
+    protected $name = 'bjit-make:model
+    {--all : create all required files}
+    {--force : Overwrite any existing files}
+    ';
 
     /**
      * The console command description.

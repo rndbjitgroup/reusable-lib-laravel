@@ -16,7 +16,7 @@ Reusable Library Package is a lightweight laravel Package
 Reusable Library requires 
 - **[Laravel](https://laravel.com/) v8+ to run.** 
 -  **enable exec function in php.ini**  
-- **Composer 2+**
+- **Composer 2+(Recommended)**
 
 Install the laravel project from this link
 **[Laravel Document](https://laravel.com/docs)** or run below command
@@ -27,7 +27,7 @@ composer create-project laravel/laravel rl-demo
 Install Reusable Library the package.
 
 ```sh
-cd your project root
+cd rl-demo(your project root)
 composer require bjitgroup/reusable-lib-laravel
 ```
 
