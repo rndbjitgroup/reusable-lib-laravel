@@ -1,5 +1,5 @@
 # BJIT Reusable Library Package
-This is the reusable library package there has some reusable module
+This is the reusable library package for laravel there has some reusable module
 
 ## Features
 
