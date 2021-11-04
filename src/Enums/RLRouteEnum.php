@@ -8,6 +8,7 @@ abstract class RLRouteEnum
     const ROUTE_BOILERPLATE = 'boilerplate';
     const ROUTE_CUSTOM_PERMISSION_ROLE = 'customized_permission_and_role';
     const ROUTE_BLOG = 'blog';
+    const ROUTE_CENTRALIZED_MULTIPLE_FILE = 'centralized_multiple_file';
 
     const ROUTE_API = [
         'basic' => [
@@ -48,6 +49,14 @@ abstract class RLRouteEnum
                 "        Route::get('posts/{post:slug}', [\App\Http\Controllers\Api\Blogs\PostController::class, 'show']);\n",
                 "        Route::post('posts/{post:slug}/comments', [\App\Http\Controllers\Api\Blogs\CommentController::class, 'store']);\n",
                 "        Route::post('posts/{post:slug}/comments/reply', [\App\Http\Controllers\Api\Blogs\CommentController::class, 'storeReply']);\n",
+            ]
+        ],
+        'centralized_multiple_file' => [
+            "auth" => [
+                "        Route::resource('product-categories', \App\Http\Controllers\Api\Products\ProductCategoryController::class);\n",
+                "        Route::get('product-categories/{product_category:slug}', [\App\Http\Controllers\Api\Products\ProductCategoryController::class, 'show']);\n",
+                "        Route::resource('products', \App\Http\Controllers\Api\Products\ProductController::class);\n",
+                "        Route::get('products/{product:slug}', [\App\Http\Controllers\Api\Products\ProductController::class, 'show']);\n",
             ]
         ],
     ];

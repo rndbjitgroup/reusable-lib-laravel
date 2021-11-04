@@ -99,6 +99,11 @@ class ReusableLibInstallCommand extends Command
                 $this->chosenRoutes[] = RLRouteEnum::ROUTE_BLOG;
             }
 
+            if ($this->confirm('Is Certralized Multiple File needed in this application?', true)) { 
+                $this->artisanCommands[] = ReusableLibEnum::ARTISAN_COMMAND_CENTRALIZED_MULTIPLE_FILE . ' --auth=' . $this->selectedApiAuth . ' --case=' . $this->selectedCase;
+                $this->chosenRoutes[] = RLRouteEnum::ROUTE_CENTRALIZED_MULTIPLE_FILE;
+            }
+
         } else {
             $this->info('Sorry! There is no support at the moment!');
             return false;
@@ -188,6 +193,13 @@ class ReusableLibInstallCommand extends Command
                     $routeStr .=  $sbAuthRow;
                 }
             }
+
+            if ($chosenRoute == RLRouteEnum::ROUTE_CENTRALIZED_MULTIPLE_FILE) {
+                foreach(RLRouteEnum::ROUTE_API[RLRouteEnum::ROUTE_CENTRALIZED_MULTIPLE_FILE]['auth'] as $sbAuthRow) {
+                    $routeStr .=  $sbAuthRow;
+                }
+            }
+
         }
         
         if ( $this->selectedApiAuth !== ReusableLibEnum::API_AUTH_NONE ) {

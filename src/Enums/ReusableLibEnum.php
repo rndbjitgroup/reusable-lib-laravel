@@ -8,6 +8,7 @@ abstract class ReusableLibEnum
     const DEFAULT_ZERO = 0;
     const DEFAULT_ONE = 1;
     const DEFAULT_TWO = 2;
+    const DEFAULT_THREE = 2;
     const DEFAULT_TEXT = 'default';
     const ADDITIONAL_TEXT = 'additional';
     const DEFAULT_LANG = 'English';
@@ -97,6 +98,9 @@ abstract class ReusableLibEnum
     const API_AUTH_JWT_VENDOR_PUBLISH = 'php artisan vendor:publish --provider="Tymon\JWTAuth\Providers\LaravelServiceProvider"';
     const API_AUTH_JWT_SECRET = 'php artisan jwt:secret --force';
     const IS_BLOG_YES = 'blog-yes';
+
+    const ARTISAN_COMMAND_CENTRALIZED_MULTIPLE_FILE = 'bjit:centralized-multiple-file-install';
+    const ARTISAN_COMMAND_REMOVE_CENTRALIZED_MULTIPLE_FILE = 'bjit:centralized-multiple-file-remove';
 
     const SEEDER_MAIN_FILE = 'DatabaseSeeder.php';
     const MODEL_USER = 'User.php';
