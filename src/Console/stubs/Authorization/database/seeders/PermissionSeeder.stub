@@ -47,6 +47,17 @@ class PermissionSeeder extends Seeder
             ['title' => 'comment-reply', 'display_title' => 'Comment Reply'],
             ['title' => 'comment-edit', 'display_title' => 'Comment Edit'],
             ['title' => 'comment-delete', 'display_title' => 'Comment Delete'],
+            ['title' => 'product-category-list', 'display_title' => 'Product Category List'],
+            ['title' => 'product-category-view', 'display_title' => 'Product Category View'],
+            ['title' => 'product-category-create', 'display_title' => 'Product Category Create'],
+            ['title' => 'product-category-edit', 'display_title' => 'Product Category Edit'],
+            ['title' => 'product-category-delete', 'display_title' => 'Product Category Delete'], 
+            ['title' => 'product-list', 'display_title' => 'Product List'],
+            ['title' => 'product-view', 'display_title' => 'Product View'],
+            ['title' => 'product-create', 'display_title' => 'Product Create'],
+            ['title' => 'product-edit', 'display_title' => 'Product Edit'],
+            ['title' => 'product-delete', 'display_title' => 'Product Delete'],
+            ['title' => 'product-publish', 'display_title' => 'Product Publish'],
         ];
 
         Permission::insert($permissions);

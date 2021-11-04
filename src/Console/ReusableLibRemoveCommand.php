@@ -53,6 +53,7 @@ class ReusableLibRemoveCommand extends Command
         $this->artisanCommands[] = ReusableLibEnum::BOILERPLATE_REMOVE_COMMAND;
         $this->artisanCommands[] = ReusableLibEnum::AUTHORIZATION_ARTISAN_REMOVE_COMMAND[ReusableLibEnum::ROLE_CUSTOM_TITLE];
         $this->artisanCommands[] = ReusableLibEnum::ARTISAN_COMMAND_REMOVE_BLOG;
+        $this->artisanCommands[] = ReusableLibEnum::ARTISAN_COMMAND_REMOVE_CENTRALIZED_MULTIPLE_FILE;
 
         $this->runRemoveExecCommands();  
         $this->runRemoveArtisanCommands(); 
