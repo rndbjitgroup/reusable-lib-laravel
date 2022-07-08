@@ -78,6 +78,11 @@ php artisan bjit-remove:all Products/Item
 php artisan bjit:reusable-lib-remove
 ```
 
+### For Websocket 
+```sh 
+php artisan websocket:serve
+```
+
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

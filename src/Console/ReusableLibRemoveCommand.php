@@ -54,6 +54,7 @@ class ReusableLibRemoveCommand extends Command
         $this->artisanCommands[] = ReusableLibEnum::AUTHORIZATION_ARTISAN_REMOVE_COMMAND[ReusableLibEnum::ROLE_CUSTOM_TITLE];
         $this->artisanCommands[] = ReusableLibEnum::ARTISAN_COMMAND_REMOVE_BLOG;
         $this->artisanCommands[] = ReusableLibEnum::ARTISAN_COMMAND_REMOVE_CENTRALIZED_MULTIPLE_FILE;
+        $this->artisanCommands[] = ReusableLibEnum::ARTISAN_COMMAND_REMOVE_NOTIFICATION;
 
         $this->runRemoveExecCommands();  
         $this->runRemoveArtisanCommands(); 
@@ -118,6 +119,21 @@ class ReusableLibRemoveCommand extends Command
             file_get_contents(base_path('.env'))
         ); 
         file_put_contents(base_path('.env'), $envFile);  
+
+
+         
+        $envFile = str_replace(
+            [
+                'BROADCAST_DRIVER=pusher',
+                'PUSHER_APP_ID=' . ReusableLibEnum::PUSHER_APP_ID,
+                'PUSHER_APP_KEY=' . ReusableLibEnum::PUSHER_APP_KEY,
+                'PUSHER_APP_SECRET=' . ReusableLibEnum::PUSHER_APP_SECRET,
+            ],
+            ['BROADCAST_DRIVER=log', 'PUSHER_APP_ID=','PUSHER_APP_KEY=', 'PUSHER_APP_SECRET='], 
+            file_get_contents(base_path('.env'))
+        ); 
+        file_put_contents(base_path('.env'), $envFile);
+         
     }
 
     protected function updateRouteFile()

@@ -9,6 +9,7 @@ abstract class RLRouteEnum
     const ROUTE_CUSTOM_PERMISSION_ROLE = 'customized_permission_and_role';
     const ROUTE_BLOG = 'blog';
     const ROUTE_CENTRALIZED_MULTIPLE_FILE = 'centralized_multiple_file';
+    const ROUTE_NOTIFICATION_SYSTEM = 'notification_system';
 
     const ROUTE_API = [
         'basic' => [
@@ -59,5 +60,13 @@ abstract class RLRouteEnum
                 "        Route::get('products/{product:slug}', [\App\Http\Controllers\Api\Products\ProductController::class, 'show']);\n",
             ]
         ],
+        'notification_system' => [
+            "without_auth" => [
+                "    Route::get('/notifications/email', [\App\Http\Controllers\Api\Notifications\EmailNotificationController::class, 'notify']);\n\n",
+                "    Route::get('/notifications/database', [\App\Http\Controllers\Api\Notifications\DatabaseNotificationController::class, 'notify']);\n\n",
+                "    Route::get('/notifications/both', [\App\Http\Controllers\Api\Notifications\BothNotificationController::class, 'notify']);\n\n",
+                "    Route::get('/notifications/push', [\App\Http\Controllers\Api\Notifications\PushNotificationController::class, 'notify']);\n\n",
+            ]
+        ]
     ];
 }

@@ -34,6 +34,8 @@ class ReusableLibInstallCommand extends Command
     protected $chosenRoutes = [];
     protected $selectedApiAuth = '';
     protected $selectedCase = 'snack_case';
+    protected $isPushNotification = false;
+    protected $selectedNotificationOptions = [];
 
     /**
      * Execute the console command.
@@ -61,6 +63,7 @@ class ReusableLibInstallCommand extends Command
     protected function handleInstallation()
     {
         $langArr = ReusableLibEnum::LANGS;
+        $notificationTypes = ReusableLibEnum::NOTIFICATION_TYPES;
         $this->selectedLangs = [ReusableLibEnum::DEFAULT_LANG];
         //$this->isDatabaseConnected();
         if ($this->confirm('Is this API based application?', true)) {
@@ -104,12 +107,25 @@ class ReusableLibInstallCommand extends Command
                 $this->chosenRoutes[] = RLRouteEnum::ROUTE_CENTRALIZED_MULTIPLE_FILE;
             }
 
+            $result = $this->choice( 'Please choose notification type which is used this applications(Example: 0 or 0, 1, 2).', $notificationTypes, ReusableLibEnum::DEFAULT_ZERO, null, true );
+             
+            if ($result) { 
+                $this->artisanCommands[] = ReusableLibEnum::ARTISAN_COMMAND_NOTIFICATION . ' --auth=' . $this->selectedApiAuth . ' --case=' . $this->selectedCase  . ' --notification_types=' . base64_encode(json_encode($result));
+                $this->chosenRoutes[] = RLRouteEnum::ROUTE_NOTIFICATION_SYSTEM;
+                $this->selectedNotificationOptions = $result;
+
+                if (in_array( ReusableLibEnum::NOTIFICATION_PUSH, $result)) { 
+                    $this->isPushNotification = true;
+                }
+            }
+
         } else {
             $this->info('Sorry! There is no support at the moment!');
             return false;
-        }
- 
-        $this->appendRoute();
+        } 
+
+        $this->appendRoute(); 
+        
         $this->appendEnv();
         $this->runExecCommands();  
         $this->runArtisanCommands(); 
@@ -158,20 +174,24 @@ class ReusableLibInstallCommand extends Command
 
     protected function appendRoute()
     {
-        $routeStr = RLRouteEnum::ROUTE_API['basic']['group_start'];
+        $gRouteStr = RLRouteEnum::ROUTE_API['basic']['group_start'];
+        $routeStr = '';
+        $waRouteStr = '';
         foreach ($this->chosenRoutes as $chosenRoute) {
+            
             if ($chosenRoute == RLRouteEnum::ROUTE_BOILERPLATE) {
                 foreach(RLRouteEnum::ROUTE_API[RLRouteEnum::ROUTE_BOILERPLATE]['without_auth'] as $bwAuthRow) {
-                    $routeStr .=  $bwAuthRow;
+                    //$routeStr .=  $bwAuthRow;
+                    $waRouteStr .=  $bwAuthRow;
                 }
 
-                if ( $this->selectedApiAuth !== ReusableLibEnum::API_AUTH_NONE ) {
-                    if (in_array(RLRouteEnum::ROUTE_CUSTOM_PERMISSION_ROLE, $this->chosenRoutes)) {
-                        $routeStr .=  RLRouteEnum::ROUTE_API['basic']['auth_start'];
-                    } else {
-                        $routeStr .=  RLRouteEnum::ROUTE_API['basic']['auth_start_without_auth_gate'];
-                    }
-                }
+                // if ( $this->selectedApiAuth !== ReusableLibEnum::API_AUTH_NONE ) {
+                //     if (in_array(RLRouteEnum::ROUTE_CUSTOM_PERMISSION_ROLE, $this->chosenRoutes)) {
+                //         $routeStr .=  RLRouteEnum::ROUTE_API['basic']['auth_start'];
+                //     } else {
+                //         $routeStr .=  RLRouteEnum::ROUTE_API['basic']['auth_start_without_auth_gate'];
+                //     }
+                // }
 
                 foreach(RLRouteEnum::ROUTE_API[RLRouteEnum::ROUTE_BOILERPLATE]['auth'] as $bAuthRow) {
                     if ( $this->selectedApiAuth === ReusableLibEnum::API_AUTH_NONE 
@@ -200,15 +220,50 @@ class ReusableLibInstallCommand extends Command
                 }
             }
 
+            if ($chosenRoute == RLRouteEnum::ROUTE_NOTIFICATION_SYSTEM) {
+                foreach(RLRouteEnum::ROUTE_API[RLRouteEnum::ROUTE_NOTIFICATION_SYSTEM]['without_auth'] as $sbWAuthKey => $sbWAuthRow) {
+                    //$this->info($sbWAuthKey . ' --- ' .$sbWAuthRow); 
+                    if (in_array(ReusableLibEnum::NOTIFICATION_EMAIL, $this->selectedNotificationOptions) && $sbWAuthKey == ReusableLibEnum::DEFAULT_ZERO) {
+                        $waRouteStr .=  $sbWAuthRow;
+                    }
+
+                    if (in_array(ReusableLibEnum::NOTIFICATION_DATABASE, $this->selectedNotificationOptions) && $sbWAuthKey == ReusableLibEnum::DEFAULT_ONE) {
+                        $waRouteStr .=  $sbWAuthRow;
+                    }
+                    
+                    if (in_array(ReusableLibEnum::NOTIFICATION_EMAIL, $this->selectedNotificationOptions) 
+                        && in_array(ReusableLibEnum::NOTIFICATION_DATABASE, $this->selectedNotificationOptions)
+                        && $sbWAuthKey == ReusableLibEnum::DEFAULT_TWO) {
+                        $waRouteStr .=  $sbWAuthRow;
+                    }
+
+                    if (in_array( ReusableLibEnum::NOTIFICATION_PUSH, $this->selectedNotificationOptions) && $sbWAuthKey == ReusableLibEnum::DEFAULT_THREE) {
+                        $waRouteStr .=  $sbWAuthRow;
+                    }
+
+                }
+            }
         }
+
+        $gRouteStr .= $waRouteStr;
+
+        if ( $this->selectedApiAuth !== ReusableLibEnum::API_AUTH_NONE ) {
+            if (in_array(RLRouteEnum::ROUTE_CUSTOM_PERMISSION_ROLE, $this->chosenRoutes)) {
+                $gRouteStr .= RLRouteEnum::ROUTE_API['basic']['auth_start'];
+            } else {
+                $gRouteStr .= RLRouteEnum::ROUTE_API['basic']['auth_start_without_auth_gate'];
+            }
+        }
+
+        $gRouteStr .= $routeStr;
         
         if ( $this->selectedApiAuth !== ReusableLibEnum::API_AUTH_NONE ) {
-            $routeStr .= RLRouteEnum::ROUTE_API['basic']['auth_end'];
+            $gRouteStr .= RLRouteEnum::ROUTE_API['basic']['auth_end'];
         }
         
-        $routeStr .= RLRouteEnum::ROUTE_API['basic']['group_end'];
+        $gRouteStr .= RLRouteEnum::ROUTE_API['basic']['group_end'];
          
-        file_put_contents(base_path('routes/api.php'), $routeStr.PHP_EOL, FILE_APPEND | LOCK_EX); 
+        file_put_contents(base_path('routes/api.php'), $gRouteStr.PHP_EOL, FILE_APPEND | LOCK_EX); 
         $this->info('This route is appended successfully!');
     }
 
@@ -246,6 +301,28 @@ class ReusableLibInstallCommand extends Command
             file_get_contents(base_path('.env'))
         ); 
         file_put_contents(base_path('.env'), $envFile);
+
+        if($this->isPushNotification) { 
+            $envFile = str_replace(
+                [
+                    'BROADCAST_DRIVER=log',
+                    'PUSHER_APP_ID=',
+                    'PUSHER_APP_KEY=', 
+                    'PUSHER_APP_SECRET=', 
+                    ReusableLibEnum::PUSHER_APP_KEY . '"'
+                ], 
+                [
+                    'BROADCAST_DRIVER=pusher',
+                    'PUSHER_APP_ID=' . ReusableLibEnum::PUSHER_APP_ID,
+                    'PUSHER_APP_KEY=' . ReusableLibEnum::PUSHER_APP_KEY,
+                    'PUSHER_APP_SECRET=' . ReusableLibEnum::PUSHER_APP_SECRET,
+                    '"'
+                ],
+                file_get_contents(base_path('.env'))
+            ); 
+            file_put_contents(base_path('.env'), $envFile);
+        }
+
     }
 
     protected function runLastArtisanCommands()
