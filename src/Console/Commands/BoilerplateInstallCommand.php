@@ -118,12 +118,12 @@ class BoilerplateInstallCommand extends Command
 
         // --- UPDATE AUTH CONFIG FILE --- 
         file_put_contents(config_path('auth.php'), file_get_contents(__DIR__.'/../stubs/Boilerplate/config/auth.stub'));
-        $this->info('This auth config file is updated successfully!');
+        $this->info('This config/auth.php file is updated successfully!');
         
 
         // --- UPDATE AUTH SERVICE PROVIDER ---
         file_put_contents(app_path('Providers/AuthServiceProvider.php'), file_get_contents(__DIR__.'/../stubs/Boilerplate/Auth/Providers/AuthServiceProvider.stub'));
-        $this->info('This auth config file is updated successfully!');
+        $this->info('This Providers/AuthServiceProvider.php file is updated successfully!');
         
         // --- UPDATE ROUTE --- 
         if (file_exists(base_path('routes/api.php'))) {
@@ -133,7 +133,7 @@ class BoilerplateInstallCommand extends Command
                 file_get_contents(base_path('routes/api.php'))
             );
             file_put_contents(base_path('routes/api.php'), $routeFile);
-            $this->info('This auth config file is updated successfully!');
+            $this->info('This routes/api.php file is updated successfully!');
         }
 
         // --- REGISTER SERVICE ---
@@ -188,7 +188,7 @@ class BoilerplateInstallCommand extends Command
             file_get_contents(__DIR__.'/../stubs/Boilerplate/config/auth.stub')
         ); 
         file_put_contents(config_path('auth.php'), $autFile);
-        $this->info('This auth config file is updated successfully!');
+        $this->info('This config/auth.php file is updated successfully!');
         
         // --- UPDATE ROUTE --- 
         if (file_exists(base_path('routes/api.php'))) {
@@ -198,7 +198,7 @@ class BoilerplateInstallCommand extends Command
                 file_get_contents(base_path('routes/api.php'))
             );
             file_put_contents(base_path('routes/api.php'), $routeFile);
-            $this->info('This auth config file is updated successfully!');
+            $this->info('This routes/api.php file is updated successfully!');
         }
 
         // --- REGISTER SERVICE ---
