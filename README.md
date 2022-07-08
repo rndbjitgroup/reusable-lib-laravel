@@ -8,6 +8,8 @@ This is the reusable library package for laravel, there has some reusable module
 - Sample Module 
 - Permissions and Roles Module  
 - Blog Module  
+- Certralized Multiple File
+- Notifications (Email, Database and Push)
 
 Reusable Library Package is a lightweight laravel Package 
 
@@ -49,6 +51,14 @@ php artisan bjit:reusable-lib-install
 php artisan serve 
 ```
 
+##### For Websocket 
+
+If you choose push notification from the reusable library, You have to run below command 
+
+```sh 
+php artisan websocket:serve
+```
+
 #### To get Open API(Swagger) documentation
 - Click one your preferred browser
 - copy **localhost:8000/api/documentation** and paste it in the browser url
@@ -76,11 +86,6 @@ php artisan bjit-remove:all Products/Item
 #### To remove reusable library the package
 ```sh
 php artisan bjit:reusable-lib-remove
-```
-
-### For Websocket 
-```sh 
-php artisan websocket:serve
 ```
 
 ## License
