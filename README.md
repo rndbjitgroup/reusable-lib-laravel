@@ -75,9 +75,13 @@ File structure flow is as follow
 
 #### To generate the required files for the structure to use a command
 ```sh
-php artisan bjit-make:model Products/Item
+php artisan bjit-make:model Products/Item -m --all
 ```
+1. m => migration 
+2. s => seed 
+3. f => factory
 
+We can use for all **_-mfs --all_** 
 #### To remove specific module/function files  to use a command
 ```sh
 php artisan bjit-remove:all Products/Item

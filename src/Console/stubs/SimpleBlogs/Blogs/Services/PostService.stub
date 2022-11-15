@@ -110,8 +110,8 @@ class PostService
         
         $request->merge([
             'slug' => $slug,
-            'image_path' => $data['image_path'] ? $data['image_path'] : null,
-            'thumbnail_path' => $data['thumbnail_path'] ? $data['thumbnail_path'] : null 
+            'image_path' => $data['image_path'] ?? null,
+            'thumbnail_path' => $data['thumbnail_path'] ?? null 
         ]); 
 
         $result = $this->postRepository->store($request);
@@ -137,8 +137,8 @@ class PostService
         
         $request->merge([
             'slug' => $slug,
-            'image_path' => $data['image_path'] ? $data['image_path'] : null,
-            'thumbnail_path' => $data['thumbnail_path'] ? $data['thumbnail_path'] : null 
+            'image_path' => $data['image_path'] ?? null,
+            'thumbnail_path' => $data['thumbnail_path'] ?? null 
         ]); 
 
         $result = $this->postRepository->update($request, $post);

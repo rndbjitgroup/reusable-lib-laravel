@@ -84,7 +84,8 @@ class ServiceBjitMakeCommand extends GeneratorCommand
     {
         $name = $this->argument('name');
         $name = str_replace('/', ' ', $name);
-        $name = ucwords(strtolower($name));
+        //$name = ucwords(strtolower($name));
+        $name = ucwords($name);
         $name = str_replace(' ', '/', $name);
 
         $this->repository = $this->parseInputName($name) . 'Repository';
