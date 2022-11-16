@@ -57,7 +57,6 @@ class AllBjitRemoveCommand extends GeneratorCommand
     protected function handleRemoveFiles()
     {
         $files = $this->removeFlieList();
-        //dd($files);
         foreach ($files as $to) {
             if (! file_exists($filePath = $to['file'])) {  
                 continue;
@@ -110,7 +109,7 @@ class AllBjitRemoveCommand extends GeneratorCommand
     protected function isMigrationFileExists($file)
     {
         $deleteFileNames = $this->migrationFileNames();
-        //dd($deleteFileNames);
+        
         $fileName = substr($file->getFilename(), ReusableLibEnum::MIGRATION_DATE_STRING_LAST_POS);
   
         if (isset($deleteFileNames[$fileName])) {

@@ -2,8 +2,7 @@
 
 namespace App\Models\Products;
 
-use App\Enums\CmnEnum;
-use App\Models\BaseModel;
+use App\Enums\CmnEnum; 
 use App\Models\Common\File;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 
-class Product extends BaseModel
+class Product extends Model
 {
     use HasFactory, SoftDeletes;
 

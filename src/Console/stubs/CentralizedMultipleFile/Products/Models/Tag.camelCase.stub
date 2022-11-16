@@ -2,19 +2,19 @@
 
 namespace App\Models\Products;
 
-use App\Models\Common\File;
+use App\Models\BaseModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+//use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class ProductCategory extends Model
+class Tag extends BaseModel
 {
     use HasFactory, SoftDeletes;
 
     protected $fillable = ['title', 'slug'];
 
-    public function files()
+    public function posts()
     {
-        return $this->morphMany(File::class, 'fileable');
+        return $this->belongsToMany(Product::class, 'product_tag', 'tag_id', 'product_id');
     }
 }
