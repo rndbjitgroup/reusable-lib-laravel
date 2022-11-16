@@ -3,13 +3,12 @@
 namespace App\Models\Common;
 
 use App\Enums\CmnEnum;
-use App\Models\BaseModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 
-class File extends BaseModel
+class File extends Model
 {
     use HasFactory, SoftDeletes;
 
