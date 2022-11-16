@@ -66,13 +66,13 @@ class ReusableLibInstallCommand extends Command
         $notificationTypes = ReusableLibEnum::NOTIFICATION_TYPES;
         $this->selectedLangs = [ReusableLibEnum::DEFAULT_LANG];
         //$this->isDatabaseConnected();
-        if ($this->confirm('Is this API based application?', true)) {
+        if ($this->confirm('Is this an API-based app?', true)) {
             
-            if ($this->confirm('Is camel case allowed for request and response', true)) {
+            if ($this->confirm('Will this application be camel case enabled for requests and responses?', true)) {
                 $this->selectedCase = ReusableLibEnum::CAMEL_CASE;
             }
 
-            $result = $this->choice( 'Please choose API auth options?', ReusableLibEnum::API_AUTHS, ReusableLibEnum::DEFAULT_ZERO );
+            $result = $this->choice( 'Please choose one of the following API authentication methods:', ReusableLibEnum::API_AUTHS, ReusableLibEnum::DEFAULT_ZERO );
             
             $this->selectedApiAuth = $result;
 
@@ -87,27 +87,27 @@ class ReusableLibInstallCommand extends Command
                 $this->lastCommands[] = ReusableLibEnum::ARTISAN_PASSPORT_COMMAND;
             }
 
-            $result = $this->choice( 'Please choose localization language and type default language at first(Example: 1 or 1, 0, 2).', $langArr, ReusableLibEnum::DEFAULT_ZERO, null, true );
+            $result = $this->choice( 'Please choose the localization language and type the default language first (example: 1 or 1, 0, 2):', $langArr, ReusableLibEnum::DEFAULT_ZERO, null, true );
             if ($result !== ReusableLibEnum::LANG_NA) {
                 $this->selectedLangs = $result; 
             }
             
-            if ($this->selectedApiAuth !== ReusableLibEnum::API_AUTH_NONE && $this->confirm('Are Role and Permission needed in this application?', true)) {
+            if ($this->selectedApiAuth !== ReusableLibEnum::API_AUTH_NONE && $this->confirm('Are roles and permissions module needed in this application?', true)) {
                 $this->artisanCommands[] = ReusableLibEnum::AUTHORIZATION_ARTISAN_COMMAND[ReusableLibEnum::DEFAULT_ROLE_AND_PERMISSION] . ' --case=' . $this->selectedCase;
                 $this->chosenRoutes[] = RLRouteEnum::ROUTE_CUSTOM_PERMISSION_ROLE;
             }
 
-            if ($this->confirm('Is blog needed in this application?', true)) { 
+            if ($this->confirm('Is the simple blog module needed in this application?', true)) { 
                 $this->artisanCommands[] = ReusableLibEnum::ARTISAN_COMMAND_BLOG . ' --auth=' . $this->selectedApiAuth . ' --case=' . $this->selectedCase;
                 $this->chosenRoutes[] = RLRouteEnum::ROUTE_BLOG;
             }
 
-            if ($this->confirm('Is Certralized Multiple File needed in this application?', true)) { 
+            if ($this->confirm('Is the centralized multiple file module needed in this application?', true)) { 
                 $this->artisanCommands[] = ReusableLibEnum::ARTISAN_COMMAND_CENTRALIZED_MULTIPLE_FILE . ' --auth=' . $this->selectedApiAuth . ' --case=' . $this->selectedCase;
                 $this->chosenRoutes[] = RLRouteEnum::ROUTE_CENTRALIZED_MULTIPLE_FILE;
             }
 
-            $result = $this->choice( 'Please choose notification type which is used this applications(Example: 0 or 0, 1, 2).', $notificationTypes, ReusableLibEnum::DEFAULT_ZERO, null, true );
+            $result = $this->choice( 'Please choose the notification type that is used by this application (example: 0 or 0, 1, 2):', $notificationTypes, ReusableLibEnum::DEFAULT_ZERO, null, true );
              
             if ($result) { 
                 $this->artisanCommands[] = ReusableLibEnum::ARTISAN_COMMAND_NOTIFICATION . ' --auth=' . $this->selectedApiAuth . ' --case=' . $this->selectedCase  . ' --notification_types=' . base64_encode(json_encode($result));
@@ -134,7 +134,7 @@ class ReusableLibInstallCommand extends Command
         $this->installLanguages();
         //$this->updateFileContent();
         
-        $this->info('Reusable Library is installed successfully.');
+        $this->info('The reusable library has been successfully installed.');
     }
 
     protected function runExecCommands($paramCommands = [])
@@ -145,7 +145,7 @@ class ReusableLibInstallCommand extends Command
                 exec('cd ' . base_path() . ' && ' . $execCommand); 
             }
             exec('cd ' . base_path() . ' && ' . ReusableLibEnum::COMPOSER_AUTOLOAD);
-            $this->info('The Commands are run successfully.');
+            $this->info('The commands have been run successfully.');
         } else {
             $this->error($this->prepareErrorMessage());
         } 
@@ -153,7 +153,7 @@ class ReusableLibInstallCommand extends Command
 
     protected function prepareErrorMessage()
     {
-        $rtrText =  "Please run below commands \n";
+        $rtrText =  "Please run the below commands: \n";
         if(empty($this->execCommands)) {
             return false;
         }
@@ -168,7 +168,7 @@ class ReusableLibInstallCommand extends Command
     {
         foreach ($this->artisanCommands as $artisanCommand) {
             Artisan::call($artisanCommand);
-            $this->info('This ' . $artisanCommand . ' installed successfully!');
+            $this->info('This ' . $artisanCommand . ' has been successfully installed!');
         } 
     }
 
@@ -264,7 +264,7 @@ class ReusableLibInstallCommand extends Command
         $gRouteStr .= RLRouteEnum::ROUTE_API['basic']['group_end'];
          
         file_put_contents(base_path('routes/api.php'), $gRouteStr.PHP_EOL, FILE_APPEND | LOCK_EX); 
-        $this->info('This route is appended successfully!');
+        $this->info('This route has been successfully appended!');
     }
 
     protected function updateConfig()
@@ -276,14 +276,14 @@ class ReusableLibInstallCommand extends Command
                 file_get_contents(config_path('l5-swagger.php'))
             ); 
             file_put_contents(config_path('l5-swagger.php'), $swaggerConfigFile);
-            $this->info("This l5-swagger.php file is updated successfully!\n");
+            $this->info("This l5-swagger.php file has been successfully updated!\n");
         }
     }
 
     protected function appendEnv()
     {
         if( ! file_exists(base_path('.env'))) {
-            $this->error('.env file is not exists'); 
+            $this->error('The .env file is missing.'); 
             exit;
         }
         $envStr = '';
@@ -373,7 +373,7 @@ class ReusableLibInstallCommand extends Command
                         file_get_contents($stubPath . '/' . $langFile->getFilename()) 
                     );
                 } 
-                $this->info('This resources/lang/' . $selectedShortLang .  ' files is installed successfully!');
+                $this->info('This resources/lang/' . $selectedShortLang .  ' files have been successfully installed!');
             }
         }
          
