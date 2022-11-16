@@ -62,7 +62,7 @@ class AllBjitMakeCommand extends GeneratorCommand
 
         $this->handleAllFiles();
 
-        $this->info('Files are created successfully!');
+        $this->info('The files have been successfully created! ');
     }
 
     protected function handleAllFiles()
@@ -96,7 +96,7 @@ class AllBjitMakeCommand extends GeneratorCommand
 
         foreach ($this->execCommands as $artisanCommand) {
             Artisan::call($artisanCommand);
-            $this->info('This ' . $artisanCommand . ' installed successfully!');
+            $this->info('This ' . $artisanCommand . ' has been successfully installed!');
         }
 
         $routeName = $name;
@@ -106,7 +106,7 @@ class AllBjitMakeCommand extends GeneratorCommand
  
         $routeStr = "\nRoute::resource('" . Str::plural(Str::lower($routeName)) .  "', \App\Http\Controllers\Api\\" . str_replace('/', '\\', $name) . "Controller::class);";
         file_put_contents(base_path('routes/api.php'), $routeStr.PHP_EOL, FILE_APPEND | LOCK_EX); 
-        $this->info('This route is appended successfully!');
+        $this->info('This route has been successfully appended!');
 
     }
 

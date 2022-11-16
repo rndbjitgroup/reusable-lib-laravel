@@ -139,7 +139,7 @@ class ProductController extends Controller
      *          @OA\MediaType(
      *              mediaType="multipart/form-data",
      *              @OA\Schema(
-     *                  required={"filenames[0]","productCategoryId","title"}, 
+     *                  required={"filenames[0]","product_category_id","title"}, 
      *                  @OA\Property(
      *                      property="filenames[0]",
      *                      type="file",
