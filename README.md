@@ -1,5 +1,5 @@
 # BJIT Reusable Library Package
-This is the reusable library package for laravel, there has some reusable module
+This is the reusable library package for Laravel. There are some reusable modules.
 
 ## Features
 
@@ -11,41 +11,41 @@ This is the reusable library package for laravel, there has some reusable module
 - Certralized Multiple File
 - Notifications (Email, Database and Push)
 
-Reusable Library Package is a lightweight laravel Package 
+The Reusable Library Package is a lightweight Laravel package.
 
 ## Installation
 
-Reusable Library requires 
+The Reusable Library requires
 - **[Laravel](https://laravel.com/) v8+ to run.** 
--  **enable exec function in php.ini**  
+- **enable the "exec" function in php.ini**  
 - **Composer 2+(Recommended)**
 
-Install the laravel project from this link
-**[Laravel Document](https://laravel.com/docs)** or run below command
+Install the Laravel project by following this link
+**[Laravel Document](https://laravel.com/docs)** or use the below command:
 ```sh 
 composer create-project laravel/laravel rl-demo
 ```
 
-Install Reusable Library the package.
+Install the Reusable Library package. Use the below command:
 
 ```sh
 cd rl-demo(your project root)
 composer require bjitgroup/reusable-lib-laravel
 ```
 
-#### Configure .env file 
-**Confirm database connection** 
-In .env file you must set **right APP_URL**. Such as  
+#### Configure the .env file
+**Confirm the database connection** 
+The correct **APP_URL** must be specified in the.env file. For example,
 ```sh
 APP_URL=locahost:8000 
 ```
 
-#### To install reusable library the package 
+#### To install the reusable library package, use the below command: 
 ```sh
 php artisan bjit:reusable-lib-install
 ```
 
-#### Verify the deployment by navigating to your server address in your preferred browser.
+#### Verify the deployment by navigating to your server address in your preferred browser. Use the below command:
 
 ```sh
 php artisan serve 
@@ -53,27 +53,27 @@ php artisan serve
 
 ##### For Websocket 
 
-If you choose push notification from the reusable library, You have to run below command 
+If you choose push notification while setting up the reusable library, you have to run the below command:
 
 ```sh 
 php artisan websocket:serve
 ```
 
-#### To get Open API(Swagger) documentation
-- Click one your preferred browser
-- copy **localhost:8000/api/documentation** and paste it in the browser url
+#### To get Open API (Swagger) documentation
+- Click on one of your preferred browsers.
+- Copy **localhost:8000/api/documentation** and paste it in the browser's url.
 
 
 ## File Structure 
 File structure flow is as follow
-1. Route - Configure route path.
-2. Controller - Write code as simple as possible in the controller and Call Requst Class in method.  
-3. Request - Form validation in this class.  
-4. Service - Write Business logic and response data. 
-5. Repository - Insert, Update, Retrieve and Delete data in here.   
-6. Resource - Return response in here from service.
+1. Route - Configure the route path.
+2. Controller - Write code as simply as possible in the controller, and call Request Class in the method parameter.
+3. Request - Form validation is required in this class.  
+4. Service - Write business logic and response data (API).
+5. Repository - Create, retrieve, update, and delete are actioned in this section.   
+6. Resource - Return the response from service in this section and format it if necessary. 
 
-#### To generate the required files for the structure to use a command
+#### To generate the required files for the structure, use the below command:
 ```sh
 php artisan bjit-make:model Products/Item -m --all
 ```
@@ -81,13 +81,13 @@ php artisan bjit-make:model Products/Item -m --all
 2. s => seed 
 3. f => factory
 
-We can use for all **_-mfs --all_** 
-#### To remove specific module/function files  to use a command
+This **_-mfs --all_** can be used at the end of the above command.
+#### To remove a specific module (all files), use the below command:
 ```sh
 php artisan bjit-remove:all Products/Item
 ```
 
-#### To remove reusable library the package
+#### To remove the reusable library package, use the below command:
 ```sh
 php artisan bjit:reusable-lib-remove
 ```
@@ -95,4 +95,3 @@ php artisan bjit:reusable-lib-remove
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-
