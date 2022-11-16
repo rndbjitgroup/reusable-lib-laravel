@@ -37,9 +37,9 @@ class ReusableLibRemoveCommand extends Command
     {
         if ($this->option('force') || $this->confirm('Do you really want to remove?', false)) {
             $this->handleRemove();
-            $this->info('Reusable Lib Package is removed successfully.');
+            $this->info('The Reusable Lib Package has been successfully removed.');
         } else {
-            $this->info('There is no change in Reusable Lib Package.');
+            $this->info('There is no change in the Reusable Lib Package.');
         }  
     }
 

@@ -51,7 +51,7 @@ class AllBjitRemoveCommand extends GeneratorCommand
         $this->removeDirectories();
         $this->updatedContent();
 
-        $this->info('All files are removed successfully!');
+        $this->info('All files have been successfully removed!');
     }
 
     protected function handleRemoveFiles()
@@ -63,7 +63,7 @@ class AllBjitRemoveCommand extends GeneratorCommand
             } 
             (new Filesystem)->delete($filePath); 
             $mainFile = str_replace(base_path() . '/', '', $filePath);
-            $this->info("This path {$mainFile} is removed successfully!");
+            $this->info("This path {$mainFile} has been successfully removed!");
         } 
 
     } 
@@ -100,7 +100,7 @@ class AllBjitRemoveCommand extends GeneratorCommand
                 if ($this->isMigrationFileExists($file)) {
                     (new Filesystem)->delete($file->getPathname());  
                     $mainFile = str_replace(base_path() . '/', '', $file->getPathname());
-                    $this->info("This file {$mainFile} is removed successfully!");
+                    $this->info("This file {$mainFile} has been successfully removed!");
                 }
             } 
         }
@@ -143,7 +143,7 @@ class AllBjitRemoveCommand extends GeneratorCommand
             if (count((new Filesystem)->files($directoryPath)) == ReusableLibEnum::DEFAULT_ZERO) {
                 (new Filesystem)->deleteDirectory($directoryPath);
                 $mainPath = str_replace(base_path() . '/', '', $directoryPath);
-                $this->info("This path {$mainPath} is removed successfully!");
+                $this->info("This path {$mainPath} has been successfully removed!");
             }
         }
     }
@@ -183,7 +183,7 @@ class AllBjitRemoveCommand extends GeneratorCommand
                     ); 
         
         file_put_contents(base_path('routes/api.php'), $routeFile); 
-        $this->info('This route is updated successfully!');
+        $this->info('This route has been successfully updated!');
     }
 
     /**
