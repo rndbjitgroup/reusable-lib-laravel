@@ -11,7 +11,6 @@ use Symfony\Component\Console\Input\InputArgument;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputOption; 
 
-//#[AsCommand(name: 'bjit-make:model')]
 class AllBjitMakeCommand extends GeneratorCommand 
 {
     /**
@@ -60,12 +59,7 @@ class AllBjitMakeCommand extends GeneratorCommand
     public function handle() 
     {
         //parent::handle();
-        // if (parent::handle() === false && ! $this->option('force')) {
-        //     return false;
-        // }
 
-        //dd($this->options());
-        
         $this->handleAllFiles();
 
         $this->info('Files are created successfully!');
