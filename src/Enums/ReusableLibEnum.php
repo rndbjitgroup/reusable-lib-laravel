@@ -118,6 +118,7 @@ abstract class ReusableLibEnum
     const EXCEPTION_HANDLER = 'Handler.php';
     const CONFIG_APP = 'app.php';
     const CONFIG_BROADCASTING = 'broadcasting.php';
+    const HTTP_KERNEL = 'Kernel.php';
 
     const OPEN_API_ENV_VARIABLES = [
         "\nFE_APP_URL=http://localhost:8000\n",

@@ -21,7 +21,7 @@ class NotFoundHttpException
 
     public function render()
     { 
-        return $this->failure(__('messages.notFoundUrl'), Response::HTTP_NOT_FOUND);
+        return $this->failure(__('messages.notFoundUrl'), Response::HTTP_BAD_REQUEST);
     }
 
 } 

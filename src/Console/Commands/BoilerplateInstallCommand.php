@@ -5,8 +5,7 @@ namespace Bjit\ReusableLib\Console\Commands;
 use Bjit\ReusableLib\Enums\ReusableLibEnum;
 use Bjit\ReusableLib\Utils\CmnUtil;
 use Illuminate\Console\Command;
-use Illuminate\Filesystem\Filesystem;
-use Illuminate\Support\Facades\Artisan;
+use Illuminate\Filesystem\Filesystem; 
 
 class BoilerplateInstallCommand extends Command 
 {
@@ -272,6 +271,7 @@ class BoilerplateInstallCommand extends Command
             }  
             if (! file_exists($to['file']) 
                 || strpos($to['file'], ReusableLibEnum::MODEL_USER) !== false
+                || strpos($to['file'], ReusableLibEnum::HTTP_KERNEL) !== false
                 || str_contains($to['file'], ReusableLibEnum::CONFIG_APP)
                 || strpos($to['file'], ReusableLibEnum::EXCEPTION_HANDLER) !== false
                 || $this->option('force')) {
@@ -394,8 +394,17 @@ class BoilerplateInstallCommand extends Command
             __DIR__.'/../stubs/Common/Http/Controllers/BaseController.stub' => [
                 'path' => app_path('Http/Controllers/Api'), 'file' => app_path('Http/Controllers/Api').'/BaseController.php'
             ],
+            __DIR__.'/../stubs/Common/Http/Middleware/Localization.stub' => [
+                'path' => app_path('Http/Middleware'), 'file' => app_path('Http/Middleware').'/Localization.php'
+            ],
+            __DIR__.'/../stubs/Common/Http/Kernel.stub' => [
+                'path' => app_path('Http'), 'file' => app_path('Http').'/Kernel.php'
+            ],
             __DIR__.'/../stubs/Common/Http/Resources/PaginationResource' . $case . '.stub' => [
                 'path' => app_path('Http/Resources/Common'), 'file' => app_path('Http/Resources/Common').'/PaginationResource.php'
+            ],
+            __DIR__.'/../stubs/Common/Http/Resources/CommonArrayResource' . $case . '.stub' => [
+                'path' => app_path('Http/Resources/Common'), 'file' => app_path('Http/Resources/Common').'/CommonArrayResource.php'
             ],
             __DIR__.'/../stubs/Common/resources/views/vendor/notifications/email.blade.stub' => [
                 'path' => base_path('resources/views/vendor/notifications'), 'file' => base_path('resources/views/vendor/notifications').'/email.blade.php'
