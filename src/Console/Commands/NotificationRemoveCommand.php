@@ -41,7 +41,7 @@ class NotificationRemoveCommand extends Command
     protected function handleRemove()
     {
         $this->runRemoveExecCommands(); 
-        //$this->deleteMigrationFiles();
+        $this->deleteMigrationFiles(); // CREATED NOTIFICATION MIGRATION FILE FROM THIS COMMAND php artisan notifications:table
         $this->removeDirectory(); 
         $this->deleteExtraDirecotriesOrFiles();
         $this->removeOtherDirectory();
@@ -195,5 +195,36 @@ class NotificationRemoveCommand extends Command
             ['path' => app_path('Events')] 
         ];
     } 
+
+    protected function deleteMigrationFiles()
+    {
+        $files = (new Filesystem)->files(base_path('database/migrations'));
+        if (!empty($files ) && count($files) > 0) {
+            foreach ($files as $file) { 
+                if ($this->isMigrationFileExists($file)) {
+                    (new Filesystem)->delete($file->getPathname());  
+                    $mainFile = str_replace(base_path() . '/', '', $file->getPathname());
+                    $this->info("This file {$mainFile} is removed successfully!");
+                }
+            } 
+        }
+    }
+    protected function isMigrationFileExists($file)
+    {
+        $deleteFileNames = $this->migrationFileNames();
+        $fileName = substr($file->getFilename(), ReusableLibEnum::MIGRATION_DATE_STRING_LAST_POS);
+  
+        if (isset($deleteFileNames[$fileName])) {
+            return true;
+        }
+        return false;
+    }
+
+    protected function migrationFileNames()
+    {
+        return [
+            'create_notifications_table.php' => 'create_notifications_table.php',
+        ];
+    }
 
 }

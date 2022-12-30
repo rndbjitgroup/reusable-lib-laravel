@@ -21,7 +21,7 @@ class MethodNotAllowedHttpException
 
     public function render()
     { 
-        return $this->failure($this->exception->getHeaders(), Response::HTTP_UNPROCESSABLE_ENTITY);
+        return $this->failure(__('messages.notAllowedHTTPMethod'), Response::HTTP_METHOD_NOT_ALLOWED);
     }
 
 } 

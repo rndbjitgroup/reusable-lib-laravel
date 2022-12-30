@@ -80,6 +80,7 @@ class AllBjitMakeCommand extends GeneratorCommand
         }
          
         $name = $this->argument('name'); 
+        $name = str_replace('\\', '/', $name); // ADDED FOR WINDOW 
         $optionals = $optionals ? ' -'. $optionals : '';
 
         $this->execCommands[] = 'make:model ' . $name . $optionals;

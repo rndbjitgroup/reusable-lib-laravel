@@ -2,6 +2,8 @@
 
 namespace App\Services\Samples;
 
+use App\Enums\CmnEnum;
+use App\Http\Resources\Common\CommonArrayResource;
 use App\Http\Resources\Samples\SampleCollection;
 use App\Http\Resources\Samples\SampleListCollection;
 use App\Http\Resources\Samples\SampleResource;
@@ -47,6 +49,12 @@ class SampleService
     public function get($sample)
     {
         return $this->success('', new SampleResource($sample));
+    }
+
+    public function getCommon($sample)
+    {
+        $params['url'] = CmnEnum::BJIT_WEBSITE_URL;
+        return $this->success('', new CommonArrayResource($params));
     }
 
     /**

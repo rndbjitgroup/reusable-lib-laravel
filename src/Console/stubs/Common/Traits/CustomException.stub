@@ -41,7 +41,7 @@ trait CustomException
         //dd($e->getMessage(), $e); 
         Log::error($e->getMessage());
         Log::error($e->getCode());
-        Log::error($e->getTrace());
+        Log::error($e->getTraceAsString());
         Log::error($e);
 
         if ($e instanceof RouteNotFoundException) {

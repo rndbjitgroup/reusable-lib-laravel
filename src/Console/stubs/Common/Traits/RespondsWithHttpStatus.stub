@@ -4,7 +4,7 @@ namespace App\Traits\Common;
 
 use App\Enums\CmnEnum;
 use Illuminate\Http\Response;
-use stdClass;
+use Illuminate\Support\Collection;
 
 trait RespondsWithHttpStatus
 {
@@ -44,7 +44,7 @@ trait RespondsWithHttpStatus
         if (isset($result['data']) && $result['data']->count() <= CmnEnum::ZERO ) {
             return false;
         }
-        if (!isset($result['data']) && !isset($result['token_type']) && $result->count() <= CmnEnum::ZERO) {
+        if (!isset($result['data']) && !isset($result['token_type']) && $result instanceof Collection && $result->count() <= CmnEnum::ZERO) {
             return false;
         }
         return $result;

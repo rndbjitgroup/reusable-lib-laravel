@@ -131,8 +131,7 @@ class ReusableLibInstallCommand extends Command
         $this->runArtisanCommands(); 
         $this->updateConfig();
         $this->runLastArtisanCommands();
-        $this->installLanguages();
-        //$this->updateFileContent();
+        $this->installLanguages(); 
         
         $this->info('The reusable library has been successfully installed.');
     }
@@ -377,23 +376,6 @@ class ReusableLibInstallCommand extends Command
             }
         }
          
-    }
- 
-
-    // protected function updateFileContent()
-    // { 
-    //     //--- UPDATE app/Models/User.php 
-    //     if (in_array(ReusableLibEnum::API_AUTH_PASSPORT, $this->selectedOptions)) {
-    //         if (file_exists(app_path('Models/User.php'))) {
-    //             $authFile = str_replace(
-    //                 ['use Laravel\Sanctum\HasApiTokens;'], 
-    //                 ['use Laravel\Passport\HasApiTokens;'],
-    //                 file_get_contents(app_path('Models/User.php'))
-    //             ); 
-    //             file_put_contents(app_path('Models/User.php'), $authFile);
-    //             $this->info('This app/Models/User.php file is updated successfully!');
-    //         }
-    //     }
-    // }
+    }  
 
 }
