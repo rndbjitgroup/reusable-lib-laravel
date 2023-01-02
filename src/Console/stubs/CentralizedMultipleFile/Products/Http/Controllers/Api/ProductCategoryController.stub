@@ -91,7 +91,7 @@ class ProductCategoryController extends Controller
      *      description="Returns list of Product Category All",
      *      security={{"bearerAuth": {}}},
      *      @OA\Parameter(
-     *          name="searchText",
+     *          name="search_text",
      *          description="Search title",
      *          required=false,
      *          in="query",

@@ -21,7 +21,7 @@ class CreateProductsTable extends Migration
             $table->string('slug')->unique();
             $table->string('identifier_url')->nullable();
             $table->text('description')->nullable();
-            $table->enum('size', ['XS', 'S', 'M', 'L', 'XL'])->default('M');
+            $table->enum('size', ['XS', 'S', 'M', 'L', 'XL'])->default('M')->nullable();
             $table->string('color', 25)->nullable();
             $table->double('old_price', 8, 2)->nullable();
             $table->double('price', 8, 2)->nullable();
