@@ -14,9 +14,10 @@ return [
     'password_required' => 'Password is required',
     'inavlid_email' => 'Email is not valid',
     'deactivate' => 'Successfully deactivated',
-    'notFoundUrl' => 'Page Not Found With Given URL.',
-    'notFoundId' => 'ID is not found.',
-    'queryException' => 'Ops! Internal Errors',
+    'notFoundUrl' => 'Not Found With Given URL',
+    'notFoundId' => 'ID is not found',
+    'queryException' => 'Ops! Internal Server Errors',
+    'notAllowedHTTPMethod' => 'This HTTP method is not allowed. Please select the appropriate option',
 
     'commonMessageForInputError' => '指定されたデータは無効でした。',
     'registered' => '登録は正常に完了しました！',

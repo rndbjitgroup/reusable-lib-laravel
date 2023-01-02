@@ -31,6 +31,7 @@ abstract class RLRouteEnum
                 "        Route::post('change-password', [\App\Http\Controllers\Api\Profile\ChangePasswordController::class, 'update']);\n",
                 "        Route::post('logout', [\App\Http\Controllers\Api\Auth\LoginController::class, 'logout']);\n",
                 "        Route::get('samples/list', [\App\Http\Controllers\Api\Samples\SampleController::class, 'list']);\n",
+                "        Route::get('samples/show-common-arr/{sample}', [\App\Http\Controllers\Api\Samples\SampleController::class, 'showCommon']);\n",
                 "        Route::resource('samples', \App\Http\Controllers\Api\Samples\SampleController::class);\n",
             ],
         ],

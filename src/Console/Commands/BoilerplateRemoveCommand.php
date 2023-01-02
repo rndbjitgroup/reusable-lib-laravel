@@ -274,17 +274,19 @@ class BoilerplateRemoveCommand extends Command
     protected function removeFileContent()
     {
         $files = $this->fileContentList();
+        $mainFile = '';
         foreach ($files as $from => $to) {  
             if (file_exists($to['file']) || $this->option('force')) {
                 $from = file_get_contents($to['file']);
-                $from = str_replace(
-                    ['use CustomException;', 'CustomException,', ', CustomException'], 
-                    ['', '', ''], 
-                    $from
-                );
-                file_put_contents($to['file'], $from);
-                $mainFile = str_replace(base_path() . '/', '', $to['file']);
-                $this->info("This file {$mainFile} is updated successfully!");
+                if (str_contains($to['file'], ReusableLibEnum::EXCEPTION_HANDLER)) {
+                    $from = str_replace(
+                        ['use CustomException;', 'CustomException,', ', CustomException'], 
+                        ['', '', ''], 
+                        $from
+                    );
+                    file_put_contents($to['file'], $from);
+                    $mainFile = str_replace(base_path() . '/', '', $to['file']); 
+                }
 
                 if (str_contains($to['file'], ReusableLibEnum::CONFIG_APP)) {
                     $from = str_replace(
@@ -295,11 +297,26 @@ class BoilerplateRemoveCommand extends Command
                         ['', ''], 
                         $from
                     );
+                    file_put_contents($to['file'], $from);
+                    $mainFile = str_replace(base_path() . '/', '', $to['file']);
                 }
-                file_put_contents($to['file'], $from);
-                $mainFile = str_replace(base_path() . '/', '', $to['file']);
-                 
-                $this->info("This file {$mainFile} is updated successfully!");
+
+                if (str_contains($to['file'], ReusableLibEnum::HTTP_KERNEL)) {
+                    $from = str_replace(
+                        [
+                            "'localization',",
+                            "'localization' => \App\Http\Middleware\Localization::class,"
+                        ], 
+                        ['', ''], 
+                        $from
+                    );
+                    file_put_contents($to['file'], $from);
+                    $mainFile = str_replace(base_path() . '/', '', $to['file']);
+                }
+                if($mainFile !== '') {
+                    $this->info("This file {$mainFile} is updated successfully!");
+                    $mainFile = '';
+                }
             }
         }
     }
@@ -307,8 +324,9 @@ class BoilerplateRemoveCommand extends Command
     protected function fileContentList()
     {
         return [
+            ['file' => app_path('Http/Kernel.php')],
             ['file' => app_path('Exceptions/Handler.php')],
-            ['file' => config_path('app.php')]
+            ['file' => config_path('app.php')],
         ];
     }
 
@@ -327,7 +345,8 @@ class BoilerplateRemoveCommand extends Command
 
     protected function extraFilesForDelete()
     {
-        return [
+        return [ 
+            ['file' => app_path('Http/Middleware/Localization.php')],
             ['file' => app_path('Models/BaseModel.php')],
             ['file' => app_path('Notifications/ResetPasswordNotification.php')],
             ['file' => base_path('resources/views/vendor/notifications/email.blade.php')],
@@ -366,10 +385,9 @@ class BoilerplateRemoveCommand extends Command
     protected function migrationFileNames()
     {
         return [
+            'add_profile_photo_path_and_contact_no_to_users.php' => 'add_profile_photo_path_and_contact_no_to_users.php',
             'create_samples_table.php' => 'create_samples_table.php',
         ];
-    }
-
-    
+    } 
 
 }

@@ -54,7 +54,7 @@ class ProductCategoryService
     public function store($request)
     {
         $request->merge([
-            'slug' => Str::slug($request->title ?? $product->title), 
+            'slug' => Str::slug($request->title), 
         ]);
 
         $productCategory = $this->productCategoryRepository->store($request);
@@ -78,7 +78,7 @@ class ProductCategoryService
     public function update($request, $productCategory)
     {
         $request->merge([
-            'slug' => Str::slug($request->title ?? $product->title), 
+            'slug' => Str::slug($request->title ?? $productCategory->title), 
         ]);
 
         if($request->has('is_file_deleted') && $request->is_file_deleted) {

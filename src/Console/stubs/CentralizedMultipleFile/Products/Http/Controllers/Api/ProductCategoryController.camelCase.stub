@@ -327,7 +327,7 @@ class ProductCategoryController extends Controller
      *      ),     
      *  
      *      @OA\Response(
-     *          response=201,
+     *          response=200,
      *          description="Success",
      *          @OA\MediaType(
      *              mediaType="application/json",

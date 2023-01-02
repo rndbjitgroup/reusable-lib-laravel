@@ -70,7 +70,7 @@ class AllBjitRemoveCommand extends GeneratorCommand
 
     protected function removeFlieList()
     {
-        $name = $this->argument('name'); 
+        $name = $this->removeBackslash($this->argument('name'));
         $specificName = $name;
         if (str_contains($name, '/')) {
             $specificName = explode('/', $name)[ReusableLibEnum::DEFAULT_ONE];
@@ -111,7 +111,7 @@ class AllBjitRemoveCommand extends GeneratorCommand
         $deleteFileNames = $this->migrationFileNames();
         
         $fileName = substr($file->getFilename(), ReusableLibEnum::MIGRATION_DATE_STRING_LAST_POS);
-  
+
         if (isset($deleteFileNames[$fileName])) {
             return true;
         }
@@ -120,7 +120,7 @@ class AllBjitRemoveCommand extends GeneratorCommand
 
     protected function migrationFileNames()
     {
-        $name = $this->argument('name');
+        $name = $this->removeBackslash($this->argument('name'));
         $specificName = $name;
         if (str_contains($name, '/')) {
             $specificName = explode('/', $name)[ReusableLibEnum::DEFAULT_ONE];
@@ -150,7 +150,7 @@ class AllBjitRemoveCommand extends GeneratorCommand
 
     protected function removeDirectoryList()
     {
-        $name = $this->argument('name');
+        $name = $this->removeBackslash($this->argument('name'));
         $dirName = '';
         if (str_contains($name, '/')) {
             $dirName = '/' . explode('/', $name)[ReusableLibEnum::DEFAULT_ZERO];
@@ -169,7 +169,7 @@ class AllBjitRemoveCommand extends GeneratorCommand
 
     protected function updatedContent()
     {
-        $name = $this->argument('name');
+        $name = $this->removeBackslash($this->argument('name'));
         $routeName = $name;
         if (str_contains($name, '/')) {
             $routeName = explode('/', $name)[ReusableLibEnum::DEFAULT_ONE];
@@ -184,6 +184,11 @@ class AllBjitRemoveCommand extends GeneratorCommand
         
         file_put_contents(base_path('routes/api.php'), $routeFile); 
         $this->info('This route has been successfully updated!');
+    }
+
+    private function removeBackslash($name)
+    {
+        return str_replace('\\', '/', $name); // ADDED FOR WINDOW 
     }
 
     /**

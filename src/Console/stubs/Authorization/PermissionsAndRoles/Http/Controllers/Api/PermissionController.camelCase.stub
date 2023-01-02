@@ -307,7 +307,7 @@ class PermissionController extends Controller
      *      ),     
      *
      *      @OA\Response(
-     *          response=202,
+     *          response=200,
      *          description="Success",
      *          @OA\MediaType(
      *              mediaType="application/json",

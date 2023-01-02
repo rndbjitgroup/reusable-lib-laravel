@@ -37,7 +37,7 @@ composer require bjitgroup/reusable-lib-laravel
 **Confirm the database connection** 
 The correct **APP_URL** must be specified in the.env file. For example,
 ```sh
-APP_URL=locahost:8000 
+APP_URL=localhost:8000 
 ```
 
 #### To install the reusable library package, use the below command: 
