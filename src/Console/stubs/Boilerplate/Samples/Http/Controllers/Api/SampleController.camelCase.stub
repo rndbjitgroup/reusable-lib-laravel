@@ -97,6 +97,14 @@ class SampleController extends BaseController
      *      description="Returns list of Samples All",
      *      security={{"bearerAuth": {}}},
      *      @OA\Parameter(
+     *         name="lang",
+     *         in="header",
+     *         description="Set language parameter by short code like en/ja/bn",
+     *         @OA\Schema(
+     *             type="string"
+     *         )
+     *     ),
+     *      @OA\Parameter(
      *          name="searchText",
      *          description="Search Name, Detail",
      *          required=false,
@@ -167,6 +175,14 @@ class SampleController extends BaseController
      *      description="Returns list of Samples",
      *      security={{"bearerAuth": {}}},
      *      @OA\Parameter(
+     *         name="lang",
+     *         in="header",
+     *         description="Set language parameter by short code like en/ja/bn",
+     *         @OA\Schema(
+     *             type="string"
+     *         )
+     *      ),
+     *      @OA\Parameter(
      *          name="searchText",
      *          description="Search Name",
      *          required=false,
@@ -225,6 +241,15 @@ class SampleController extends BaseController
      *      tags={"Samples"},
      *      summary="Store New Sample",
      *      security={{"bearerAuth": {}}},
+     * 
+     *      @OA\Parameter(
+     *         name="lang",
+     *         in="header",
+     *         description="Set language parameter by short code like en/ja/bn",
+     *         @OA\Schema(
+     *             type="string"
+     *         )
+     *      ),
      * 
      *      @OA\RequestBody(
      *          required=true,
@@ -333,6 +358,14 @@ class SampleController extends BaseController
      *      summary="Return specific Sample",
 	 * 		security={{"bearerAuth": {}}},
      *
+     *      @OA\Parameter(
+     *         name="lang",
+     *         in="header",
+     *         description="Set language parameter by short code like en/ja/bn",
+     *         @OA\Schema(
+     *             type="string"
+     *         )
+     *      ),
 	 * 		@OA\Parameter(
      *          name="id",
      *          description="Sample Id",
@@ -411,6 +444,15 @@ class SampleController extends BaseController
      *      summary="Return specific array data",
 	 * 		security={{"bearerAuth": {}}},
      *
+     *      @OA\Parameter(
+     *         name="lang",
+     *         in="header",
+     *         description="Set language parameter by short code like en/ja/bn",
+     *         @OA\Schema(
+     *             type="string"
+     *         )
+     *      ),
+     * 
 	 * 		@OA\Parameter(
      *          name="id",
      *          description="Sample Id",
@@ -489,6 +531,15 @@ class SampleController extends BaseController
      *      tags={"Samples"},
      *      summary="Update existing Sample",
      *      security={{"bearerAuth": {}}},
+     * 
+     *      @OA\Parameter(
+     *         name="lang",
+     *         in="header",
+     *         description="Set language parameter by short code like en/ja/bn",
+     *         @OA\Schema(
+     *             type="string"
+     *         )
+     *      ),
      * 
      *      @OA\Parameter(
      *          name="id",
@@ -587,6 +638,16 @@ class SampleController extends BaseController
      *      summary="Delete existing Sample",
      *      description="Deletes a record and returns no content",
      *      security={{"bearerAuth": {}}},
+     * 
+     *      @OA\Parameter(
+     *         name="lang",
+     *         in="header",
+     *         description="Set language parameter by short code like en/ja/bn",
+     *         @OA\Schema(
+     *             type="string"
+     *         )
+     *      ),
+     * 
      *      @OA\Parameter(
      *          name="id",
      *          description="Sample Id",

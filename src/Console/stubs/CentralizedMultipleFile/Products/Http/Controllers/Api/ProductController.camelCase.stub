@@ -139,16 +139,14 @@ class ProductController extends Controller
      *          @OA\MediaType(
      *              mediaType="multipart/form-data",
      *              @OA\Schema(
-     *                  required={"filenames[0]","productCategoryId","title"}, 
+     *                  required={"filenames[]","productCategoryId","title"}, 
      *                  @OA\Property(
-     *                      property="filenames[0]",
-     *                      type="file",
-     *                      description="Uplaod a files",
-     *                  ),
-     *                  @OA\Property(
-     *                      property="filenames[1]",
-     *                      type="file",
-     *                      description="Uplaod a files",
+     *                      property="filenames[]",
+     *                      type="array",
+     *                      @OA\Items(
+     *                          type="string",
+     *                          format="binary",
+     *                      ),
      *                  ),
      *                  @OA\Property(
      *                      property="productCategoryId",
@@ -177,7 +175,7 @@ class ProductController extends Controller
      *                  @OA\Property(
      *                      property="size",
      *                      description="Size",
-     *                      example="XS/S/M/L/XL",
+     *                      enum={"XS", "S", "M", "L", "XL"},
      *                      type="string"
      *                  ), 
      *                  @OA\Property(
@@ -370,14 +368,12 @@ class ProductController extends Controller
      *                      type="string"
      *                  ),
      *                  @OA\Property(
-     *                      property="filenames[0]",
-     *                      type="file",
-     *                      description="Uplaod a files",
-     *                  ),
-     *                  @OA\Property(
-     *                      property="filenames[1]",
-     *                      type="file",
-     *                      description="Uplaod a files",
+     *                      property="filenames[]",
+     *                      type="array",
+     *                      @OA\Items(
+     *                          type="string",
+     *                          format="binary",
+     *                      ),
      *                  ),
      *                  @OA\Property(
      *                      property="productCategoryId",
@@ -406,7 +402,7 @@ class ProductController extends Controller
      *                  @OA\Property(
      *                      property="size",
      *                      description="Size",
-     *                      example="XS/S/M/L/XL",
+     *                      enum={"XS", "S", "M", "L", "XL"},
      *                      type="string"
      *                  ), 
      *                  @OA\Property(
