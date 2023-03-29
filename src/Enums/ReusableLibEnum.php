@@ -9,6 +9,7 @@ abstract class ReusableLibEnum
     const DEFAULT_ONE = 1;
     const DEFAULT_TWO = 2;
     const DEFAULT_THREE = 3;
+    const DEFAULT_FALSE = false;
     const DEFAULT_TEXT = 'default';
     const ADDITIONAL_TEXT = 'additional';
     const DEFAULT_LANG = 'English';
@@ -17,6 +18,8 @@ abstract class ReusableLibEnum
     const LANG_NA = 'NA';
     const CAMEL_CASE = 'camelCase';
     const SNACK_CASE = 'snack_case';
+    const LARAVEL_VERSION_EIGHT = 8;
+    const LARAVEL_VERSION_NINE = 9;
 
     const LANGS = [
         'English', 'Japanese', 'Arabic', 'Spanish', 'French', 
@@ -42,9 +45,12 @@ abstract class ReusableLibEnum
     //const API_SELECTED_AUTH = 'Sanctum';
 
     const API_AUTH_COMPOSER_COMMAND = [
-        'Sanctum' => 'composer require  "laravel/sanctum:~2.15"', 
-        'Passport' => 'composer require "laravel/passport:~10.3"',
-        'JWT' => 'composer require "tymon/jwt-auth:~1.0"',
+        'Sanctum' => 'composer require  "laravel/sanctum"', 
+        'Passport' => 'composer require "laravel/passport"',
+        'JWT' => 'composer require "tymon/jwt-auth"',
+        // 'Sanctum' => 'composer require  "laravel/sanctum:~2.15"', 
+        // 'Passport' => 'composer require "laravel/passport:~10.3"',
+        // 'JWT' => 'composer require "tymon/jwt-auth:~1.0"',
     ];
 
     const API_AUTH_COMPOSER_REMOVE_COMMAND = [
@@ -60,7 +66,8 @@ abstract class ReusableLibEnum
         'NA'
     ];
 
-    const OPEN_API_COMPOSER_COMMAND = 'composer require "darkaonline/l5-swagger:8.1"'; // OPEN API - SWAGGER 
+    //const OPEN_API_COMPOSER_COMMAND = 'composer require "darkaonline/l5-swagger:8.1"'; // OPEN API - SWAGGER
+    const OPEN_API_COMPOSER_COMMAND = 'composer require "darkaonline/l5-swagger"'; // OPEN API - SWAGGER  
     const BOILERPLATE_COMMAND = 'bjit:boilerplate-install';
 
     const OPEN_API_COMPOSER_REMOVE_COMMAND = 'composer remove "darkaonline/l5-swagger"'; // OPEN API - SWAGGER 
@@ -89,7 +96,8 @@ abstract class ReusableLibEnum
 
     const MIGRATION_DATE_STRING_LAST_POS = 18;
 
-    const COMPOSER_COMMAND_IMAGE_RESIZE = 'composer require "intervention/image:~2.7"';
+    //const COMPOSER_COMMAND_IMAGE_RESIZE = 'composer require "intervention/image:~2.7"';
+    const COMPOSER_COMMAND_IMAGE_RESIZE = 'composer require "intervention/image"';
     const COMPOSER_COMMAND_REMOVE_IMAGE_RESIZE = 'composer remove intervention/image';
     const ARTISAN_COMMAND_BLOG = 'bjit:blog-install';
     const ARTISAN_COMMAND_REMOVE_BLOG = 'bjit:blog-remove';
@@ -105,11 +113,14 @@ abstract class ReusableLibEnum
     const ARTISAN_COMMAND_NOTIFICATION = 'bjit:notification-install';
     const ARTISAN_COMMAND_REMOVE_NOTIFICATION = 'bjit:notification-remove';
     const ARTISAN_COMMAND_NOTIFICATION_DATABSE = 'php artisan notifications:table';
-    const COMPOSER_COMMAND_PSR7 = 'composer require "guzzlehttp/psr7:^1.7"';
+    //const COMPOSER_COMMAND_PSR7 = 'composer require "guzzlehttp/psr7:^1.7"';
+    const COMPOSER_COMMAND_PSR7 = 'composer require "guzzlehttp/psr7"';
     const COMPOSER_COMMAND_REMOVE_PSR7 = 'composer remove guzzlehttp/psr7';
-    const COMPOSER_COMMAND_PUSHER = 'composer require "pusher/pusher-php-server:^5.0"';
+    //const COMPOSER_COMMAND_PUSHER = 'composer require "pusher/pusher-php-server:^5.0"';
+    const COMPOSER_COMMAND_PUSHER = 'composer require "pusher/pusher-php-server"';
     const COMPOSER_COMMAND_REMOVE_PUSHER = 'composer remove pusher/pusher-php-server';
-    const COMPOSER_COMMAND_WEBSOCKET = 'composer require "beyondcode/laravel-websockets:^1.12"';
+    //const COMPOSER_COMMAND_WEBSOCKET = 'composer require "beyondcode/laravel-websockets:^1.12"';
+    const COMPOSER_COMMAND_WEBSOCKET = 'composer require "beyondcode/laravel-websockets"';
     const COMPOSER_COMMAND_REMOVE_WEBSOCKET = 'composer remove beyondcode/laravel-websockets';
 
     const SEEDER_MAIN_FILE = 'DatabaseSeeder.php';

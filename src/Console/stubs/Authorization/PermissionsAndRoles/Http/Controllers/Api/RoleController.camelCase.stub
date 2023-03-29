@@ -28,60 +28,7 @@ class RoleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(RoleFilterRequest $request)
-    { 
-        $this->authorize('role-list');
-        return $this->roleService->getAll($request);
-    } 
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(RoleStoreRequest $request)
-    {
-        return $this->roleService->store($request);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Role  $role
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Role $role)
-    {
-        $this->authorize('role-view');
-        return $this->roleService->get($role);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Role  $role
-     * @return \Illuminate\Http\Response
-     */
-    public function update(RoleUpdateRequest $request, Role $role)
-    {
-        return $this->roleService->update($request, $role);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Role  $role
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Role $role)
-    {
-        $this->authorize('role-delete');
-        return $this->roleService->destroy($role);
-    }
-
-    // FN : getAll
+    
     /**
      * @OA\Get(
      *      path="/roles",
@@ -123,9 +70,20 @@ class RoleController extends Controller
      *          )
      *      ),
      * )
-     */ 
+     */
+    public function index(RoleFilterRequest $request)
+    { 
+        $this->authorize('role-list');
+        return $this->roleService->getAll($request);
+    } 
 
-    // FN: store 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+
     /**
      * @OA\Post(
      *     path="/roles",
@@ -134,9 +92,31 @@ class RoleController extends Controller
      *      summary="Store New Role",
      *      security={{"bearerAuth": {}}},
      * 
-     *      @OA\RequestBody(
+     *      @OA\RequestBody( 
      *          required=true,
-     *          @OA\JsonContent(ref="#/components/schemas/StoreRoleRequest")
+     *          description="Create the role",
+     *          @OA\JsonContent(
+     *              title="Create new role request",
+     *              description="role request body",
+     *              type="object",
+     *              required={"displayTitle", "permissions"},
+     *              @OA\Property(
+     *                  property="displayTitle",
+     *                  description="Title of the role",
+     *                  example="Manager",
+     *                  type="string"
+     *              ), 
+     *              @OA\Property(
+     *                  property="permissions",
+     *                  description="permissions in array",
+     *                  type="array",
+     *                  @OA\Items(
+     *                      title="list of Permissions Ids", 
+     *                      type="integer",
+     *                      example=1
+     *                  )
+     *              ),
+     *          ),
      *      ), 
      * 
      *      @OA\Response(
@@ -198,34 +178,18 @@ class RoleController extends Controller
      *      ),
      * )
      */
+    public function store(RoleStoreRequest $request)
+    {
+        return $this->roleService->store($request);
+    }
 
-     /**
-     * @OA\Schema(
-     *      schema="StoreRoleRequest",
-     *      title="Create new role request",
-     *      description="role request body",
-     *      type="object",
-     *      required={"name", "email", "password", "password_confirmation", "roles"},
-     *      @OA\Property(
-     *          property="displayTitle",
-     *          description="Title of the role",
-     *          example="Manager",
-     *          type="string"
-     *      ), 
-     *      @OA\Property(
-     *          property="permissions",
-     *          description="permissions in array",
-     *          type="array",
-     *          @OA\Items(
-     *              title="list of Permissions Ids", 
-     *              type="integer",
-     *              example=1
-     *          )
-     *      ),
-     * )
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Role  $role
+     * @return \Illuminate\Http\Response
      */
 
-    // FN : show
     /**
      * @OA\Get(
      *      path="/roles/{id}",
@@ -282,9 +246,20 @@ class RoleController extends Controller
      *      ), 
      * )
      */
+    public function show(Role $role)
+    {
+        $this->authorize('role-view');
+        return $this->roleService->get($role);
+    }
 
-
-    // FN : update
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Role  $role
+     * @return \Illuminate\Http\Response
+     */
+ 
     /**
      * @OA\Put(
      *     path="/roles/{id}",
@@ -306,7 +281,29 @@ class RoleController extends Controller
      * 
      *      @OA\RequestBody(
      *          required=true,
-     *          @OA\JsonContent(ref="#/components/schemas/StoreRoleRequest")
+     *          description="Update the role",
+     *          @OA\JsonContent(
+     *              title="Update the role request",
+     *              description="role request body",
+     *              type="object",
+     *              required={"displayTitle", "permissions"},
+     *              @OA\Property(
+     *                  property="displayTitle",
+     *                  description="Title of the role",
+     *                  example="Manager",
+     *                  type="string"
+     *              ), 
+     *              @OA\Property(
+     *                  property="permissions",
+     *                  description="permissions in array",
+     *                  type="array",
+     *                  @OA\Items(
+     *                      title="list of Permissions Ids", 
+     *                      type="integer",
+     *                      example=1
+     *                  )
+     *              ),
+     *          ),
      *      ), 
      * 
      *      @OA\Response(
@@ -376,9 +373,18 @@ class RoleController extends Controller
      *      ),
      * )
      */
+    public function update(RoleUpdateRequest $request, Role $role)
+    {
+        return $this->roleService->update($request, $role);
+    }
 
-
-    // FN : delete
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Role  $role
+     * @return \Illuminate\Http\Response
+     */
+ 
     /**
      * @OA\Delete(
      *      path="/roles/{id}",
@@ -434,5 +440,11 @@ class RoleController extends Controller
      *      ), 
      * )
      */
+    public function destroy(Role $role)
+    {
+        $this->authorize('role-delete');
+        return $this->roleService->destroy($role);
+    }
 
+ 
 }

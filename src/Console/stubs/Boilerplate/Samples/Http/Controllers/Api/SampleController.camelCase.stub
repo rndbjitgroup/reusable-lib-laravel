@@ -26,67 +26,8 @@ class SampleController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(SampleFilterRequest $request)
-    {
-        return $this->sampleService->getAll($request);
-    }
 
-    public function list(SampleFilterRequest $request)
-    {
-        return $this->sampleService->list($request);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(SampleStoreRequest $request)
-    {
-        return $this->sampleService->store($request);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Samples\Sample  $sample
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Sample $sample)
-    {
-        return $this->sampleService->get($sample);
-    }
-
-    public function showCommon(Sample $sample)
-    {
-        return $this->sampleService->getCommon($sample);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Samples\Sample  $sample
-     * @return \Illuminate\Http\Response
-     */
-    public function update(SampleUpdateRequest $request, Sample $sample)
-    {
-        return $this->sampleService->update($request, $sample);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Samples\Sample  $sample
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Sample $sample)
-    {
-        return $this->sampleService->destroy($sample);
-    }
-
-
+    
     // FN : getAll
     /**
      * @OA\Get(
@@ -165,6 +106,12 @@ class SampleController extends BaseController
      * )
      */ 
 
+    public function index(SampleFilterRequest $request)
+    {
+        return $this->sampleService->getAll($request);
+    }
+
+
     // FN : list
     /**
      * @OA\Get(
@@ -233,7 +180,19 @@ class SampleController extends BaseController
      * )
      */
 
-    // FN: store 
+    public function list(SampleFilterRequest $request)
+    {
+        return $this->sampleService->list($request);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+
+     // FN: store 
     /**
      * @OA\Post(
      *     path="/samples",
@@ -253,7 +212,25 @@ class SampleController extends BaseController
      * 
      *      @OA\RequestBody(
      *          required=true,
-     *          @OA\JsonContent(ref="#/components/schemas/StoreSampleRequest")
+     *          description="Create the sample",
+     *          @OA\JsonContent(
+     *              title="Create new sample request",
+     *              description="sample request body",
+     *              type="object",
+     *              required={"name", "detail"},
+     *              @OA\Property(
+     *                  property="name",
+     *                  description="Name of User",
+     *                  example="Sample Name 101",
+     *                  type="string"
+     *              ),
+     *              @OA\Property(
+     *                  property="detail",
+     *                  description="Detail",
+     *                  example="detail 101",
+     *                  type="string"
+     *              ) 
+     *          )
      *      ),
      * 
      *      @OA\Response(
@@ -327,26 +304,16 @@ class SampleController extends BaseController
      * )
      */
 
-     /**
-     * @OA\Schema(
-     *      schema="StoreSampleRequest",
-     *      title="Create new sample request",
-     *      description="sample request body",
-     *      type="object",
-     *      required={"name", "detail"},
-     *      @OA\Property(
-     *          property="name",
-     *          description="Name of User",
-     *          example="Sample Name 101",
-     *          type="string"
-     *      ),
-     *      @OA\Property(
-     *          property="detail",
-     *          description="Detail",
-     *          example="detail 101",
-     *          type="string"
-     *      ) 
-     * )
+    public function store(SampleStoreRequest $request)
+    {
+        return $this->sampleService->store($request);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Samples\Sample  $sample
+     * @return \Illuminate\Http\Response
      */
 
     // FN : show
@@ -435,6 +402,11 @@ class SampleController extends BaseController
      * )
      */
 
+    public function show(Sample $sample)
+    {
+        return $this->sampleService->get($sample);
+    }
+
     // FN : showCommon
     /**
      * @OA\Get(
@@ -522,6 +494,21 @@ class SampleController extends BaseController
      * )
      */
 
+    public function showCommon(Sample $sample)
+    {
+        return $this->sampleService->getCommon($sample);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Samples\Sample  $sample
+     * @return \Illuminate\Http\Response
+     */
+
+
+    
 
     // FN : update
     /**
@@ -552,9 +539,27 @@ class SampleController extends BaseController
      *          )
      *      ),
      * 
-     *      @OA\RequestBody(
+     *      @OA\RequestBody( 
      *          required=true,
-     *          @OA\JsonContent(ref="#/components/schemas/StoreSampleRequest")
+     *          description="Update the sample",
+     *          @OA\JsonContent(
+     *              title="Create new sample request",
+     *              description="sample request body",
+     *              type="object",
+     *              required={"name", "detail"},
+     *              @OA\Property(
+     *                  property="name",
+     *                  description="Name of User",
+     *                  example="Sample Name 101",
+     *                  type="string"
+     *              ),
+     *              @OA\Property(
+     *                  property="detail",
+     *                  description="Detail",
+     *                  example="detail 101",
+     *                  type="string"
+     *              ) 
+     *          )
      *      ),
      *
      *      @OA\Response(
@@ -626,6 +631,21 @@ class SampleController extends BaseController
      *          )
      *      ), 
      * )
+     */
+
+   
+
+
+    public function update(SampleUpdateRequest $request, Sample $sample)
+    {
+        return $this->sampleService->update($request, $sample);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Samples\Sample  $sample
+     * @return \Illuminate\Http\Response
      */
 
 
@@ -715,5 +735,10 @@ class SampleController extends BaseController
      *      ), 
      * )
      */
+
+    public function destroy(Sample $sample)
+    {
+        return $this->sampleService->destroy($sample);
+    } 
 
 }
