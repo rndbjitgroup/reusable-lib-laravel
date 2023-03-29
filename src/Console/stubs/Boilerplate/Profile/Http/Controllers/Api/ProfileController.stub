@@ -27,13 +27,7 @@ class ProfileController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(ProfileUpdateRequest $request)
-    {
-        return $this->profileService->update($request);
-    }
-    
 
-    // FN: update 
     /**
      * @OA\Post(
      *      path="/update-profile",
@@ -131,6 +125,11 @@ class ProfileController extends Controller
      *          )
      *      ),
      * )
-     */    
-
+     */ 
+    public function update(ProfileUpdateRequest $request)
+    {
+        return $this->profileService->update($request);
+    }
+    
+ 
 }

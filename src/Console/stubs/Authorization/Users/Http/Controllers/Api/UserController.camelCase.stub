@@ -28,66 +28,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(UserFilterRequest $request)
-    {
-        $this->authorize('user-list');
-        return $this->userService->getAll($request);
-    }
-
-    public function list(UserFilterRequest $request)
-    {
-        $this->authorize('user-list');
-        return $this->userService->list($request);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(UserStoreRequest $request)
-    {
-        return $this->userService->store($request);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function show(User $user)
-    {
-        $this->authorize('user-view');
-        return $this->userService->get($user);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UserUpdateRequest $request, User $user)
-    {
-        return $this->userService->update($request, $user);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(User $user)
-    {
-        $this->authorize('user-delete');
-        return $this->userService->destroy($user);
-    }
-
-    // FN : getAll
+    
     /**
      * @OA\Get(
      *      path="/users",
@@ -130,8 +71,12 @@ class UserController extends Controller
      *      ), 
      * )
      */ 
+    public function index(UserFilterRequest $request)
+    {
+        $this->authorize('user-list');
+        return $this->userService->getAll($request);
+    }
 
-    // FN : list
     /**
      * @OA\Get(
      *      path="/users/list",
@@ -174,8 +119,19 @@ class UserController extends Controller
      *      ),
      * )
      */
+    public function list(UserFilterRequest $request)
+    {
+        $this->authorize('user-list');
+        return $this->userService->list($request);
+    }
 
-    // FN: store 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+
     /**
      * @OA\Post(
      *     path="/users",
@@ -186,7 +142,47 @@ class UserController extends Controller
      * 
      *      @OA\RequestBody(
      *          required=true,
-     *          @OA\JsonContent(ref="#/components/schemas/StoreUserRequest")
+     *          description="Store User",
+     *          @OA\JsonContent(
+     *              title="Create new user request",
+     *              description="user request body",
+     *              type="object",
+     *              required={"name", "email", "password", "passwordConfirmation", "roles"},
+     *              @OA\Property(
+     *                  property="name",
+     *                  description="Name of User",
+     *                  example="Mr. X",
+     *                  type="string"
+     *              ),
+     *              @OA\Property(
+     *                  property="email",
+     *                  description="Email (Username) of User",
+     *                  example="example@bjitgroup.com",
+     *                  type="email"
+     *              ),
+     *              @OA\Property(
+     *                  property="password",
+     *                  description="Password of User",
+     *                  example="xxxxxxxx",
+     *                  type="password"
+     *              ),
+     *              @OA\Property(
+     *                  property="passwordConfirmation",
+     *                  description="Confirmation Password of User",
+     *                  example="xxxxxxxx",
+     *                  type="password"
+     *              ),
+     *              @OA\Property(
+     *                  property="roles",
+     *                  description="roles in array",
+     *                  type="array",
+     *                  @OA\Items(
+     *                      title="list of Role Ids", 
+     *                      type="integer",
+     *                      example=1
+     *                  )
+     *              ),
+     *          )
      *      ),
      * 
      *      @OA\Response(
@@ -278,53 +274,18 @@ class UserController extends Controller
      *      ),
      * )
      */
+    public function store(UserStoreRequest $request)
+    {
+        return $this->userService->store($request);
+    }
 
-     /**
-     * @OA\Schema(
-     *      schema="StoreUserRequest",
-     *      title="Create new user request",
-     *      description="user request body",
-     *      type="object",
-     *      required={"name", "email", "password", "passwordConfirmation", "roles"},
-     *      @OA\Property(
-     *          property="name",
-     *          description="Name of User",
-     *          example="Mr. X",
-     *          type="string"
-     *      ),
-     *      @OA\Property(
-     *          property="email",
-     *          description="Email (Username) of User",
-     *          example="example@bjitgroup.com",
-     *          type="email"
-     *      ),
-     *      @OA\Property(
-     *          property="password",
-     *          description="Password of User",
-     *          example="xxxxxxxx",
-     *          type="password"
-     *      ),
-     *      @OA\Property(
-     *          property="passwordConfirmation",
-     *          description="Confirmation Password of User",
-     *          example="xxxxxxxx",
-     *          type="password"
-     *      ),
-     *      @OA\Property(
-     *          property="roles",
-     *          description="roles in array",
-     *          type="array",
-     *          @OA\Items(
-     *              title="list of Role Ids", 
-     *              type="integer",
-     *              example=1
-     *          )
-     *      ),
-     * )
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\Response
      */
 
-
-    // FN : show
     /**
      * @OA\Get(
      *      path="/users/{id}",
@@ -381,9 +342,20 @@ class UserController extends Controller
      *      ), 
      * )
      */
+    public function show(User $user)
+    {
+        $this->authorize('user-view');
+        return $this->userService->get($user);
+    }
 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\Response
+     */
 
-    // FN : update
     /**
      * @OA\Put(
      *     path="/users/{id}",
@@ -404,7 +376,47 @@ class UserController extends Controller
      *      ), 
      *      @OA\RequestBody(
      *          required=true,
-     *          @OA\JsonContent(ref="#/components/schemas/StoreUserRequest")
+     *          description="Update User",
+     *          @OA\JsonContent(
+     *              title="Create new user request",
+     *              description="user request body",
+     *              type="object",
+     *              required={"name", "email", "password", "passwordConfirmation", "roles"},
+     *              @OA\Property(
+     *                  property="name",
+     *                  description="Name of User",
+     *                  example="Mr. X",
+     *                  type="string"
+     *              ),
+     *              @OA\Property(
+     *                  property="email",
+     *                  description="Email (Username) of User",
+     *                  example="example@bjitgroup.com",
+     *                  type="email"
+     *              ),
+     *              @OA\Property(
+     *                  property="password",
+     *                  description="Password of User",
+     *                  example="xxxxxxxx",
+     *                  type="password"
+     *              ),
+     *              @OA\Property(
+     *                  property="passwordConfirmation",
+     *                  description="Confirmation Password of User",
+     *                  example="xxxxxxxx",
+     *                  type="password"
+     *              ),
+     *              @OA\Property(
+     *                  property="roles",
+     *                  description="roles in array",
+     *                  type="array",
+     *                  @OA\Items(
+     *                      title="list of Role Ids", 
+     *                      type="integer",
+     *                      example=1
+     *                  )
+     *              ),
+     *          )
      *      ),
      *      @OA\Response(
      *          response=200,
@@ -503,9 +515,18 @@ class UserController extends Controller
      *      ),
      * )
      */
+    public function update(UserUpdateRequest $request, User $user)
+    {
+        return $this->userService->update($request, $user);
+    }
 
-
-    // FN : delete
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\Response
+     */
+ 
     /**
      * @OA\Delete(
      *      path="/users/{id}",
@@ -561,5 +582,11 @@ class UserController extends Controller
      *      ), 
      * )
      */
-
+    public function destroy(User $user)
+    {
+        $this->authorize('user-delete');
+        return $this->userService->destroy($user);
+    }
+ 
+ 
 }

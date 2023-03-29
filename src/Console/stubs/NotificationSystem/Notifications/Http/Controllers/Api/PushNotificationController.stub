@@ -15,12 +15,6 @@ class PushNotificationController extends Controller
         $this->pushNotificationService = $pushNotificationService;
     }
 
-    public function notify(Request $request)
-    {
-        return $this->pushNotificationService->notify($request);
-    }
-
-    // FN : notify
     /**
      * @OA\Get(
      *      path="/notifications/push",
@@ -54,5 +48,10 @@ class PushNotificationController extends Controller
      *      ), 
      * )
      */
+    public function notify(Request $request)
+    {
+        return $this->pushNotificationService->notify($request);
+    }
+
     
 }

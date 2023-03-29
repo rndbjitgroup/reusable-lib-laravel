@@ -21,8 +21,8 @@ class RoleResource extends JsonResource
             'title' => $this->title,
             'display_title' => $this->display_title,
             //'permissions' => PermissionResource::collection($this->permissions)
-        ];
-        if (!isset(self::$data['hidePermission'])) {
+        ]; 
+        if (!isset(self::$data['hidePermission']) || !self::$data['hidePermission']) {
             $rtrData['permissions'] = PermissionResource::collection($this->permissions);
         }
         return $rtrData;

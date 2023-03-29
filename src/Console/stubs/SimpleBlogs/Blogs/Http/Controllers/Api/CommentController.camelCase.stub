@@ -40,53 +40,7 @@ class CommentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CommentStoreRequest $request, Post $post)
-    {
-        return $this->commentService->store($request, $post);
-    }
-
-    public function storeReply(CommentStoreReplyRequest $request, Post $post)
-    {
-        return $this->commentService->storeReply($request, $post);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Comment  $comment
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Comment $comment)
-    {
-        $this->authorize('comment-view');
-        return $this->commentService->get($comment);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Comment  $comment
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Comment $comment)
-    {
-        return $this->commentService->update($request, $comment);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Comment  $comment
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Comment $comment)
-    {
-        $this->authorize('comment-delete');
-        return $this->commentService->destroy($comment);
-    }
-
-    // FN: store 
+ 
     /**
      * @OA\Post(
      *      path="/posts/{slug}/comments",
@@ -180,8 +134,11 @@ class CommentController extends Controller
      *      ),
      * )
      */
+    public function store(CommentStoreRequest $request, Post $post)
+    {
+        return $this->commentService->store($request, $post);
+    }
 
-    // FN: storeReply 
     /**
      * @OA\Post(
      *      path="/posts/{slug}/comments/reply",
@@ -281,5 +238,46 @@ class CommentController extends Controller
      *      ),
      * )
      */
+    public function storeReply(CommentStoreReplyRequest $request, Post $post)
+    {
+        return $this->commentService->storeReply($request, $post);
+    }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Comment  $comment
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Comment $comment)
+    {
+        $this->authorize('comment-view');
+        return $this->commentService->get($comment);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Comment  $comment
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Comment $comment)
+    {
+        return $this->commentService->update($request, $comment);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Comment  $comment
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Comment $comment)
+    {
+        $this->authorize('comment-delete');
+        return $this->commentService->destroy($comment);
+    }
+
+ 
 }

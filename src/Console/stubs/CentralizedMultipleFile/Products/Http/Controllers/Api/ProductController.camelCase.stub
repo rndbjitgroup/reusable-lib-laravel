@@ -27,60 +27,7 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(ProductFilterRequest $request)
-    {
-        $this->authorize('product-list');
-        return $this->productService->getAll($request);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(ProductStoreRequest $request)
-    {
-        return $this->productService->store($request);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Products\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Product $product)
-    {
-        $this->authorize('product-view');
-        return $this->productService->get($product);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Products\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function update(ProductUpdateRequest $request, Product $product)
-    {
-        return $this->productService->update($request, $product);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Products\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Product $product)
-    {
-        $this->authorize('product-delete');
-        return $this->productService->destroy($product);
-    }
-
-    // FN : getAll
+ 
     /**
      * @OA\Get(
      *      path="/products",
@@ -123,9 +70,19 @@ class ProductController extends Controller
      *      ), 
      * )
      */ 
+    public function index(ProductFilterRequest $request)
+    {
+        $this->authorize('product-list');
+        return $this->productService->getAll($request);
+    }
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
 
-    // FN: store 
     /**
      * @OA\Post(
      *      path="/products",
@@ -276,8 +233,18 @@ class ProductController extends Controller
      *      ),
      * )
      */
+    public function store(ProductStoreRequest $request)
+    {
+        return $this->productService->store($request);
+    }
 
-    // FN : show
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Products\Product  $product
+     * @return \Illuminate\Http\Response
+     */
+ 
     /**
      * @OA\Get(
      *      path="/products/{slug}",
@@ -333,9 +300,20 @@ class ProductController extends Controller
      *      ), 
      * )
      */
+    public function show(Product $product)
+    {
+        $this->authorize('product-view');
+        return $this->productService->get($product);
+    }
 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Products\Product  $product
+     * @return \Illuminate\Http\Response
+     */
 
-    // FN: update 
     /**
      * @OA\Post(
      *      path="/products/{id}",
@@ -503,9 +481,18 @@ class ProductController extends Controller
      *      ),
      * )
      */    
+    public function update(ProductUpdateRequest $request, Product $product)
+    {
+        return $this->productService->update($request, $product);
+    }
 
-
-    // FN : delete
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Products\Product  $product
+     * @return \Illuminate\Http\Response
+     */
+ 
     /**
      * @OA\Delete(
      *      path="/products/{id}",
@@ -561,5 +548,11 @@ class ProductController extends Controller
      *      ), 
      * )
      */
+    public function destroy(Product $product)
+    {
+        $this->authorize('product-delete');
+        return $this->productService->destroy($product);
+    }
 
+ 
 }

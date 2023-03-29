@@ -29,60 +29,7 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(CategoryFilterRequest $request)
-    {
-        $this->authorize('category-list');
-        return $this->categoryService->getAll($request);
-    } 
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(CategoryStoreRequest $request)
-    {
-        return $this->categoryService->store($request);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Category $category)
-    {
-        $this->authorize('category-view');
-        return $this->categoryService->get($category);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function update(CategoryUpdateRequest $request, Category $category)
-    {
-        return $this->categoryService->update($request, $category);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Category $category)
-    {
-        $this->authorize('category-delete');
-        return $this->categoryService->destroy($category);
-    }
-
-    // FN : getAll
+ 
     /**
      * @OA\Get(
      *      path="/categories",
@@ -124,9 +71,20 @@ class CategoryController extends Controller
      *          )
      *      ), 
      * )
-     */ 
+     */
+    public function index(CategoryFilterRequest $request)
+    {
+        $this->authorize('category-list');
+        return $this->categoryService->getAll($request);
+    } 
 
-    // FN: store 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+ 
     /**
      * @OA\Post(
      *      path="/categories",
@@ -210,8 +168,18 @@ class CategoryController extends Controller
      *      ),
      * )
      */
+    public function store(CategoryStoreRequest $request)
+    {
+        return $this->categoryService->store($request);
+    }
 
-    // FN : show
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Category  $category
+     * @return \Illuminate\Http\Response
+     */
+ 
     /**
      * @OA\Get(
      *      path="/categories/{slug}",
@@ -267,9 +235,20 @@ class CategoryController extends Controller
      *      ), 
      * )
      */
+    public function show(Category $category)
+    {
+        $this->authorize('category-view');
+        return $this->categoryService->get($category);
+    }
 
-
-    // FN : update
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Category  $category
+     * @return \Illuminate\Http\Response
+     */
+ 
     /**
      * @OA\Put(
      *     path="/categories/{id}",
@@ -364,9 +343,18 @@ class CategoryController extends Controller
      *      ),
      * )
      */
+    public function update(CategoryUpdateRequest $request, Category $category)
+    {
+        return $this->categoryService->update($request, $category);
+    }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Category  $category
+     * @return \Illuminate\Http\Response
+     */
 
-    // FN : delete
     /**
      * @OA\Delete(
      *      path="/categories/{id}",
@@ -422,6 +410,11 @@ class CategoryController extends Controller
      *      ), 
      * )
      */
-
-
+    public function destroy(Category $category)
+    {
+        $this->authorize('category-delete');
+        return $this->categoryService->destroy($category);
+    }
+ 
+ 
 }
