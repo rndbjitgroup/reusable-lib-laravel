@@ -19,17 +19,6 @@ class LoginController extends BaseController
         $this->loginService = $loginService;
     } 
 
-    public function login(LoginRequest $request)
-    {
-        return $this->loginService->login($request);
-    }
-
-    public function logout(Request $request)
-    {
-        return $this->loginService->logout($request);
-    }
-
-    //FN : login 
     /**
      * @OA\Post(
      *  path="/login",
@@ -93,10 +82,12 @@ class LoginController extends BaseController
      *  )
      *  )
      */
+    public function login(LoginRequest $request)
+    {
+        return $this->loginService->login($request);
+    }
 
-
-    // FN : logout
-     /**
+    /**
      * @OA\Post(
      *      path="/logout",
      *      tags={"Auth"},
@@ -125,5 +116,10 @@ class LoginController extends BaseController
      *      ), 
      * )
      **/
+    public function logout(Request $request)
+    {
+        return $this->loginService->logout($request);
+    } 
+     
 
 }

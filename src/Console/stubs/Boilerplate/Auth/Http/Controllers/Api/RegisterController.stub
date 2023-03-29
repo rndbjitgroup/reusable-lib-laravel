@@ -22,12 +22,7 @@ class RegisterController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function register(RegisterRequest $request)
-    { 
-        return $this->registerService->register($request);
-    }
 
-    // FN : register         
     /**
      * @OA\Post(
      *      path="/register",
@@ -37,7 +32,37 @@ class RegisterController extends BaseController
      *
      *      @OA\RequestBody(
      *          required=true,
-     *          @OA\JsonContent(ref="#/components/schemas/RegisterUserRequest")
+     *          description="User Registration",
+     *          @OA\JsonContent(
+     *              title="Register new user request",
+     *              description="user request body",
+     *              type="object",
+     *              required={"name", "email", "password", "password_confirmation"},
+     *              @OA\Property(
+     *                  property="name",
+     *                  description="Name of User",
+     *                  example="Mr. X",
+     *                  type="string"
+     *              ),
+     *              @OA\Property(
+     *                  property="email",
+     *                  description="Email (Username) of User",
+     *                  example="example@bjitgroup.com",
+     *                  type="email"
+     *              ),
+     *              @OA\Property(
+     *                  property="password",
+     *                  description="Password of User",
+     *                  example="xxxxxxxx",
+     *                  type="password"
+     *              ),
+     *              @OA\Property(
+     *                  property="password_confirmation",
+     *                  description="Confirmation Password of User",
+     *                  example="xxxxxxxx",
+     *                  type="password"
+     *              ), 
+     *          )
      *      ),
      * 
      *      @OA\Response(
@@ -84,39 +109,10 @@ class RegisterController extends BaseController
      *      ), 
      * )
      **/
+    public function register(RegisterRequest $request)
+    { 
+        return $this->registerService->register($request);
+    } 
 
-     /**
-     * @OA\Schema(
-     *      schema="RegisterUserRequest",
-     *      title="Register new user request",
-     *      description="user request body",
-     *      type="object",
-     *      required={"name", "email", "password", "password_confirmation"},
-     *      @OA\Property(
-     *          property="name",
-     *          description="Name of User",
-     *          example="Mr. X",
-     *          type="string"
-     *      ),
-     *      @OA\Property(
-     *          property="email",
-     *          description="Email (Username) of User",
-     *          example="example@bjitgroup.com",
-     *          type="email"
-     *      ),
-     *      @OA\Property(
-     *          property="password",
-     *          description="Password of User",
-     *          example="xxxxxxxx",
-     *          type="password"
-     *      ),
-     *      @OA\Property(
-     *          property="password_confirmation",
-     *          description="Confirmation Password of User",
-     *          example="xxxxxxxx",
-     *          type="password"
-     *      ), 
-     * )
-     */
 
 }

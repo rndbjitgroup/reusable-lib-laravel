@@ -116,14 +116,23 @@ class BoilerplateInstallCommand extends Command
         }
 
         // --- UPDATE AUTH CONFIG FILE --- 
-        file_put_contents(config_path('auth.php'), file_get_contents(__DIR__.'/../stubs/Boilerplate/config/auth.stub'));
+        $autFile = file_get_contents(__DIR__.'/../stubs/Boilerplate/config/auth.stub');
+        if((int) app()->version() > ReusableLibEnum::LARAVEL_VERSION_NINE) {
+            $autFile = str_replace(
+                ['password_resets'], 
+                ['password_reset_tokens'],
+                file_get_contents(__DIR__.'/../stubs/Boilerplate/config/auth.stub')
+            ); 
+        }
+        file_put_contents(config_path('auth.php'), $autFile);
         $this->info('This config/auth.php file is updated successfully!');
         
 
         // --- UPDATE AUTH SERVICE PROVIDER ---
-        file_put_contents(app_path('Providers/AuthServiceProvider.php'), file_get_contents(__DIR__.'/../stubs/Boilerplate/Auth/Providers/AuthServiceProvider.stub'));
-        $this->info('This Providers/AuthServiceProvider.php file is updated successfully!');
-        
+        if(strpos(app()->version(), ReusableLibEnum::LARAVEL_VERSION_EIGHT) !== ReusableLibEnum::DEFAULT_FALSE ) {
+            file_put_contents(app_path('Providers/AuthServiceProvider.php'), file_get_contents(__DIR__.'/../stubs/Boilerplate/Auth/Providers/AuthServiceProvider.stub'));
+            $this->info('This Providers/AuthServiceProvider.php file is updated successfully!');
+        }
         // --- UPDATE ROUTE --- 
         if (file_exists(base_path('routes/api.php'))) {
             $routeFile = str_replace(
@@ -186,6 +195,13 @@ class BoilerplateInstallCommand extends Command
             ['jwt'],
             file_get_contents(__DIR__.'/../stubs/Boilerplate/config/auth.stub')
         ); 
+        if((int) app()->version() > ReusableLibEnum::LARAVEL_VERSION_NINE) {
+            $autFile = str_replace(
+                ['password_resets'], 
+                ['password_reset_tokens'],
+                $autFile
+            ); 
+        }
         file_put_contents(config_path('auth.php'), $autFile);
         $this->info('This config/auth.php file is updated successfully!');
         

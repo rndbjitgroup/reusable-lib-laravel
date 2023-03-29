@@ -27,61 +27,7 @@ class ProductCategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(ProductCategoryFilterRequest $request)
-    {
-        $this->authorize('product-category-list');
-        return $this->productCategoryService->getAll($request);
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(ProductCategoryStoreRequest $request)
-    {
-        return $this->productCategoryService->store($request);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Products\ProductCategory  $productCategory
-     * @return \Illuminate\Http\Response
-     */
-    public function show(ProductCategory $productCategory)
-    {
-        $this->authorize('product-category-view');
-        return $this->productCategoryService->get($productCategory);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Products\ProductCategory  $productCategory
-     * @return \Illuminate\Http\Response
-     */
-    public function update(ProductCategoryUpdateRequest $request, ProductCategory $productCategory)
-    {
-        return $this->productCategoryService->update($request, $productCategory);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Products\ProductCategory  $productCategory
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(ProductCategory $productCategory)
-    {
-        $this->authorize('product-category-delete');
-        return $this->productCategoryService->destroy($productCategory);
-    }
-
-
-    // FN : getAll
     /**
      * @OA\Get(
      *      path="/product-categories",
@@ -123,10 +69,20 @@ class ProductCategoryController extends Controller
      *          )
      *      ), 
      * )
-     */ 
+     */
+    public function index(ProductCategoryFilterRequest $request)
+    {
+        $this->authorize('product-category-list');
+        return $this->productCategoryService->getAll($request);
+    }
 
-
-    // FN: store 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+ 
     /**
      * @OA\Post(
      *      path="/product-categories",
@@ -214,8 +170,18 @@ class ProductCategoryController extends Controller
      *      ),
      * )
      */
+    public function store(ProductCategoryStoreRequest $request)
+    {
+        return $this->productCategoryService->store($request);
+    }
 
-    // FN : show
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Products\ProductCategory  $productCategory
+     * @return \Illuminate\Http\Response
+     */
+
     /**
      * @OA\Get(
      *      path="/product-categories/{slug}",
@@ -271,9 +237,20 @@ class ProductCategoryController extends Controller
      *      ), 
      * )
      */
+    public function show(ProductCategory $productCategory)
+    {
+        $this->authorize('product-category-view');
+        return $this->productCategoryService->get($productCategory);
+    }
 
-
-    // FN: update 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Products\ProductCategory  $productCategory
+     * @return \Illuminate\Http\Response
+     */
+   
     /**
      * @OA\Post(
      *      path="/product-categories/{id}",
@@ -383,10 +360,19 @@ class ProductCategoryController extends Controller
      *          )
      *      ),
      * )
-     */    
+     */
+    public function update(ProductCategoryUpdateRequest $request, ProductCategory $productCategory)
+    {
+        return $this->productCategoryService->update($request, $productCategory);
+    }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Products\ProductCategory  $productCategory
+     * @return \Illuminate\Http\Response
+     */
 
-    // FN : delete
     /**
      * @OA\Delete(
      *      path="/product-categories/{id}",
@@ -442,5 +428,11 @@ class ProductCategoryController extends Controller
      *      ), 
      * )
      */
-
+    public function destroy(ProductCategory $productCategory)
+    {
+        $this->authorize('product-category-delete');
+        return $this->productCategoryService->destroy($productCategory);
+    }
+ 
+ 
 }

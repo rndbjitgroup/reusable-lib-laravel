@@ -15,13 +15,6 @@ class BothNotificationController extends Controller
         $this->bothNotificationService = $bothNotificationService;
     }
 
-    public function notify(Request $request)
-    {
-        return $this->bothNotificationService->notify($request);
-    }
-
-
-    // FN : notify
     /**
      * @OA\Get(
      *      path="/notifications/both",
@@ -55,5 +48,12 @@ class BothNotificationController extends Controller
      *      ), 
      * )
      */
+    public function notify(Request $request)
+    {
+        return $this->bothNotificationService->notify($request);
+    }
+
+
+    
     
 }

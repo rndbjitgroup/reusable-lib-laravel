@@ -15,12 +15,6 @@ class EmailNotificationController extends Controller
         $this->emailNotificationService = $emailNotificationService;
     }
 
-    public function notify(Request $request)
-    {
-        return $this->emailNotificationService->notify($request);
-    }
-
-    // FN : notify
     /**
      * @OA\Get(
      *      path="/notifications/email",
@@ -54,5 +48,10 @@ class EmailNotificationController extends Controller
      *      ), 
      * )
      */
+    public function notify(Request $request)
+    {
+        return $this->emailNotificationService->notify($request);
+    }
 
+    
 }

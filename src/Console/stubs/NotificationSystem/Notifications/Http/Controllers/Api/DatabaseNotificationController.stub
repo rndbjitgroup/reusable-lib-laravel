@@ -25,12 +25,6 @@ class DatabaseNotificationController extends Controller
         return $this->databaseNotificationService->markNotification($request); 
     }
 
-    public function notify(Request $request)
-    {
-        return $this->databaseNotificationService->notify($request);
-    }
-
-    // FN : notify
     /**
      * @OA\Get(
      *      path="/notifications/database",
@@ -64,5 +58,11 @@ class DatabaseNotificationController extends Controller
      *      ), 
      * )
      */
+    public function notify(Request $request)
+    {
+        return $this->databaseNotificationService->notify($request);
+    }
+
+    
 
 }

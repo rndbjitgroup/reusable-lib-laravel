@@ -28,60 +28,7 @@ class PermissionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(PermissionFilterRequest $request)
-    {
-        $this->authorize('permission-list');
-        return $this->permissionService->getAll($request);
-    } 
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(PermissionStoreRequest $request)
-    {
-        return $this->permissionService->store($request);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Permission  $permission
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Permission $permission)
-    {
-        $this->authorize('permission-view');
-        return $this->permissionService->get($permission);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Permission  $permission
-     * @return \Illuminate\Http\Response
-     */
-    public function update(PermissionUpdateRequest $request, Permission $permission)
-    {
-        return $this->permissionService->update($request, $permission);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Permission  $permission
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Permission $permission)
-    {
-        $this->authorize('permission-delete');
-        return $this->permissionService->destroy($permission);
-    }
-
-    // FN : getAll
+ 
     /**
      * @OA\Get(
      *      path="/permissions",
@@ -124,8 +71,19 @@ class PermissionController extends Controller
      *      ), 
      * )
      */ 
+    public function index(PermissionFilterRequest $request)
+    {
+        $this->authorize('permission-list');
+        return $this->permissionService->getAll($request);
+    } 
 
-    // FN: store 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+ 
     /**
      * @OA\Post(
      *     path="/permissions",
@@ -141,7 +99,7 @@ class PermissionController extends Controller
      *              title="Store new permission request",
      *              description="permission request body",
      *              type="object",
-     *              required={"name"},
+     *              required={"display_title"},
      *              @OA\Property(
      *                  property="display_title",
      *                  description="Display Title",
@@ -209,8 +167,18 @@ class PermissionController extends Controller
      *      ),
      * )
      */
+    public function store(PermissionStoreRequest $request)
+    {
+        return $this->permissionService->store($request);
+    }
 
-    // FN : show
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Permission  $permission
+     * @return \Illuminate\Http\Response
+     */
+
     /**
      * @OA\Get(
      *      path="/permissions/{id}",
@@ -267,9 +235,20 @@ class PermissionController extends Controller
      *      ), 
      * )
      */
+    public function show(Permission $permission)
+    {
+        $this->authorize('permission-view');
+        return $this->permissionService->get($permission);
+    }
 
-
-    // FN : update
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Permission  $permission
+     * @return \Illuminate\Http\Response
+     */
+ 
     /**
      * @OA\Put(
      *     path="/permissions/{id}",
@@ -296,7 +275,7 @@ class PermissionController extends Controller
      *              title="Store new permission request",
      *              description="permission request body",
      *              type="object",
-     *              required={"name"},
+     *              required={"display_title"},
      *              @OA\Property(
      *                  property="display_title",
      *                  description="Display Title",
@@ -364,9 +343,18 @@ class PermissionController extends Controller
      *      ),
      * )
      */
+    public function update(PermissionUpdateRequest $request, Permission $permission)
+    {
+        return $this->permissionService->update($request, $permission);
+    }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Permission  $permission
+     * @return \Illuminate\Http\Response
+     */
 
-    // FN : delete
     /**
      * @OA\Delete(
      *      path="/permissions/{id}",
@@ -422,5 +410,11 @@ class PermissionController extends Controller
      *      ), 
      * )
      */
-
+    public function destroy(Permission $permission)
+    {
+        $this->authorize('permission-delete');
+        return $this->permissionService->destroy($permission);
+    }
+ 
+    
 }
