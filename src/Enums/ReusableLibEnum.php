@@ -46,7 +46,7 @@ abstract class ReusableLibEnum
 
     const API_AUTH_COMPOSER_COMMAND = [
         'Sanctum' => 'composer require  "laravel/sanctum"', 
-        'Passport' => 'composer require "laravel/passport"',
+        'Passport' => 'composer require laravel/passport --with-all-dependencies',
         'JWT' => 'composer require "tymon/jwt-auth"',
         // 'Sanctum' => 'composer require  "laravel/sanctum:~2.15"', 
         // 'Passport' => 'composer require "laravel/passport:~10.3"',
@@ -120,7 +120,7 @@ abstract class ReusableLibEnum
     const COMPOSER_COMMAND_PUSHER = 'composer require "pusher/pusher-php-server"';
     const COMPOSER_COMMAND_REMOVE_PUSHER = 'composer remove pusher/pusher-php-server';
     //const COMPOSER_COMMAND_WEBSOCKET = 'composer require "beyondcode/laravel-websockets:^1.12"';
-    const COMPOSER_COMMAND_WEBSOCKET = 'composer require "beyondcode/laravel-websockets"';
+    const COMPOSER_COMMAND_WEBSOCKET = 'composer require "beyondcode/laravel-websockets" --with-all-dependencies';
     const COMPOSER_COMMAND_REMOVE_WEBSOCKET = 'composer remove beyondcode/laravel-websockets';
 
     const SEEDER_MAIN_FILE = 'DatabaseSeeder.php';
