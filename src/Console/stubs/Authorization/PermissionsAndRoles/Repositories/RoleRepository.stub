@@ -2,9 +2,11 @@
 
 namespace App\Repositories\PermissionsAndRoles;
 
+use App\Interfaces\PermissionsAndRoles\RoleRepositoryInterface;
 use App\Models\PermissionsAndRoles\Role;
+use Illuminate\Database\Eloquent\Collection;
 
-class RoleRepository 
+class RoleRepository implements RoleRepositoryInterface
 {
     /** 
      * @var Role
@@ -22,7 +24,7 @@ class RoleRepository
         $this->role = $role;
     }
 
-    public function getAll($request)
+    public function getAll($request): Collection
     {
         return $this->role
         ->when($request->search_text, function($q) use ($request) {
@@ -40,26 +42,26 @@ class RoleRepository
         ->get();
     } 
 
-    public function get($role)
+    public function get($role): ?Role
     {
         return $role;
     }
 
-    public function store($request)
+    public function store($request): Role
     {
         $role = $this->role->create($request->all());
         $role->permissions()->attach($request->permissions);
         return $role->fresh();
     }
 
-    public function update($request, $role)
+    public function update($request, $role): ?Role
     {
         $role->update($request->all());
         $role->permissions()->sync($request->permissions);
         return $role->fresh();
     }
 
-    public function destroy($role)
+    public function destroy($role): bool
     {
         return $role->delete();
     }

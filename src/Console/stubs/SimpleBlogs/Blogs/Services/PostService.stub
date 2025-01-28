@@ -10,7 +10,7 @@ use App\Traits\Common\RespondsWithHttpStatus;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Intervention\Image\Facades\Image;
+use Intervention\Image\Laravel\Facades\Image;
 
 class PostService 
 {
@@ -47,6 +47,7 @@ class PostService
         return $this->success('', new PostResource($post));
     }
 
+
     protected function uploadImage($file, $paramFileName = null)
     {
         $rtrData['image_path'] = null;
@@ -64,29 +65,29 @@ class PostService
         $rtrData['thumbnail_path'] = null;
         if($file) {  
             if($post) {
-                Storage::delete(config('constants.path.storage_public') . '/' . $post->image_path);
-                Storage::delete(config('constants.path.storage_public') . '/' . $post->thumbnail_path);
+                Storage::delete($post->image_path);
+                Storage::delete($post->thumbnail_path);
             }
             
-            if(!Storage::exists(config('constants.path.storage_public') . '/' . config('constants.path.posts.normals'))) {
-                Storage::makeDirectory(config('constants.path.storage_public') . '/' . config('constants.path.posts.normals'));
+            if(!Storage::exists(config('constants.path.posts.normals'))) {
+                Storage::makeDirectory(config('constants.path.posts.normals'));
             }
 
-            if(!Storage::exists(config('constants.path.storage_public') . '/' . config('constants.path.posts.thumbnails'))) {
-                Storage::makeDirectory(config('constants.path.storage_public') . '/' . config('constants.path.posts.thumbnails'));
+            if(!Storage::exists(config('constants.path.posts.thumbnails'))) {
+                Storage::makeDirectory(config('constants.path.posts.thumbnails'));
             }
 
             $uniqueName = time() . '_' . $paramFileName .  '.' . $file->extension();
         
-            $destinationPath = storage_path(config('constants.path.storage_app_public') . '/' . config('constants.path.posts.thumbnails'));
+            $destinationPath = storage_path(config('constants.path.storage_app_local') . '/' . config('constants.path.posts.thumbnails'));
             $rtrData['thumbnail_path'] = config('constants.path.posts.thumbnails') . '/' . $uniqueName;
 
-            $img = Image::make($file->path());
+            $img = Image::read($file->path());
             $img->resize(CmnEnum::THUMBNAIL_SQUARE_SIZE, CmnEnum::THUMBNAIL_SQUARE_SIZE, function ($constraint) {
                 $constraint->aspectRatio();
             })->save($destinationPath . '/' . $uniqueName);
     
-            $destinationPath = storage_path(config('constants.path.storage_app_public') . '/' . config('constants.path.posts.normals'));
+            $destinationPath = storage_path(config('constants.path.storage_app_local') . '/' . config('constants.path.posts.normals'));
             $rtrData['image_path'] = config('constants.path.posts.normals') . '/' . $uniqueName;
             $file->move($destinationPath, $rtrData['image_path']);
         }

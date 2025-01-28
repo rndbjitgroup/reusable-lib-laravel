@@ -65,11 +65,12 @@ class AuthorizationRemoveCommand extends Command
     protected function permissionsAndRolesDirectory()
     {
         return [ 
-            ['path' => app_path('Models/PermissionsAndRoles')],
+            ['path' => app_path('Models/PermissionsAndRoles')], 
+            ['path' => app_path('Interfaces/PermissionsAndRoles')],
             ['path' => app_path('Repositories/PermissionsAndRoles')],
             ['path' => app_path('Services/PermissionsAndRoles')],
             ['path' => app_path('Http/Resources/PermissionsAndRoles')],
-            ['path' => app_path('Http/Controllers/Api/PermissionsAndRoles')],
+            ['path' => app_path('Http/Controllers/API/PermissionsAndRoles')],
             ['path' => app_path('Http/Requests/PermissionsAndRoles')],
         ];
     }
@@ -77,10 +78,11 @@ class AuthorizationRemoveCommand extends Command
     protected function userDirectory()
     {
         return [ 
+            ['path' => app_path('Interfaces/Users')],
             ['path' => app_path('Repositories/Users')],
             ['path' => app_path('Services/Users')],
             ['path' => app_path('Http/Resources/Users')],
-            ['path' => app_path('Http/Controllers/Api/Users')],
+            ['path' => app_path('Http/Controllers/API/Users')],
             ['path' => app_path('Http/Requests/Users')],
         ];
     }

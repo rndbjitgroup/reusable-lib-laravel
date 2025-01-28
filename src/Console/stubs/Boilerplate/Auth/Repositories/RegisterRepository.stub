@@ -3,10 +3,10 @@
 namespace App\Repositories\Auth;
 
 use App\Enums\CmnEnum;
-use App\Interfaces\CreateInterface;
+use App\Interfaces\Auth\RegisterRepositoryInterface; 
 use App\Models\User;
 
-class RegisterRepository  
+class RegisterRepository implements RegisterRepositoryInterface  
 {
     /** 
      * @var User
@@ -24,7 +24,7 @@ class RegisterRepository
         $this->user = $user;
     }
     
-    public function create($request) 
+    public function create($request): User 
     { 
         $user = $this->user->create($request->all());
         if(method_exists($user, 'roles')) { 

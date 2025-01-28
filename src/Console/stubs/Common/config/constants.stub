@@ -2,6 +2,7 @@
 
 return [
     'paginate' => 10,
+    'filesystem_disk' => env('FILESYSTEM_DISK', 'local'),
     'table' => [
         'users' => 'users',
         'permissions' => 'permissions',
@@ -15,7 +16,9 @@ return [
     'path' => [
         'storage' => 'storage',
         'storage_app' => 'app',
+        'storage_local' => 'private',
         'storage_public' => 'public',
+        'storage_app_local' => 'app/private', 
         'storage_app_public' => 'app/public', 
         'posts' => [
             'normals' => 'files/posts/normals',

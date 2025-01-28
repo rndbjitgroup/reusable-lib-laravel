@@ -47,7 +47,7 @@ class NotificationInstallCommand extends Command
     {
         $this->runExecCommands();
         $this->installFiles(); 
-        $this->updateFileContent(); 
+        //$this->updateFileContent(); 
     } 
 
     protected function runExecCommands()
@@ -56,9 +56,10 @@ class NotificationInstallCommand extends Command
         if (function_exists('exec')) { 
             foreach($this->execCommands as $execCommand) {
                 exec('cd ' . base_path() . ' && ' . $execCommand); 
+                $this->info('Notification - ' . $execCommand . ' is run successfully.');
             }
             exec('cd ' . base_path() . ' && ' . ReusableLibEnum::COMPOSER_AUTOLOAD);
-            $this->info('The Commands are run successfully.');
+            $this->info('The Notifications Commands are run successfully.');
         } else {
             $this->error($this->prepareErrorMessage());
         } 
@@ -67,10 +68,11 @@ class NotificationInstallCommand extends Command
     protected function setExecCommands()
     {
         if (in_array(ReusableLibEnum::NOTIFICATION_PUSH, $this->notificationTypes)) {
-            $this->execCommands[] = ReusableLibEnum::COMPOSER_COMMAND_PSR7;
-            $this->execCommands[] = ReusableLibEnum::COMPOSER_COMMAND_PUSHER;
-            $this->execCommands[] = ReusableLibEnum::COMPOSER_AUTOLOAD;
-            $this->execCommands[] = ReusableLibEnum::COMPOSER_COMMAND_WEBSOCKET;
+            //$this->execCommands[] = ReusableLibEnum::COMPOSER_COMMAND_PSR7;
+            //$this->execCommands[] = ReusableLibEnum::COMPOSER_COMMAND_PUSHER;
+            //$this->execCommands[] = ReusableLibEnum::COMPOSER_AUTOLOAD;
+            //$this->execCommands[] = ReusableLibEnum::COMPOSER_COMMAND_WEBSOCKET;
+            $this->execCommands[] = ReusableLibEnum::ARTISAN_BROADCASTING_REVERB;
         }
 
         if (in_array(ReusableLibEnum::NOTIFICATION_DATABASE, $this->notificationTypes)) {
@@ -94,8 +96,6 @@ class NotificationInstallCommand extends Command
     protected function installFiles()
     {
         $files = $this->notificationsFiles();  
-        //$files = array_merge($files, $this->databaseFiles()); 
-        //$files = array_merge($files, $this->configFile());
  
         foreach ($files as $from => $to) { 
             if ( ! is_dir($stubsPath = $to['path'])) {  
@@ -115,9 +115,9 @@ class NotificationInstallCommand extends Command
                             $from = str_replace(
                                 [
                                     'security={{"bearerAuth": {}}},',
-                                    '$this->authorize(\'notification-list\');',
-                                    '$this->authorize(\'notification-view\');',
-                                    '$this->authorize(\'notification-delete\');',
+                                    'Gate::authorize(\'notification-list\');',
+                                    'Gate::authorize(\'notification-view\');',
+                                    'Gate::authorize(\'notification-delete\');',
                                     'Gate::allows(\'notification-create\')',
                                     'Gate::allows(\'notification-edit\')', 
                                 ], 
@@ -144,10 +144,10 @@ class NotificationInstallCommand extends Command
     protected function notificationsFiles()
     {
         $files = $this->arrangeFiles('Services');  
-        $files = array_merge($files, $this->configFile());   
+        //$files = array_merge($files, $this->configFile());   
         $files = array_merge($files, $this->arrangeFiles('Events'));  
         $files = array_merge($files, $this->arrangeFiles('Notifications'));  
-        $files = array_merge($files, $this->arrangeFiles('Http/Controllers/Api'));
+        $files = array_merge($files, $this->arrangeFiles('Http/Controllers/API'));
         //$files = array_merge($files, $this->arrangeFiles('RootFiles')); // DON'T REMOVE THIS LINE 
 
         return $files;
@@ -259,13 +259,13 @@ class NotificationInstallCommand extends Command
     } 
 
 
-    protected function configFile()
-    {
-        return [
-            __DIR__.'/../stubs/NotificationSystem/config/broadcasting.stub' => [
-                'path' => base_path('config'), 'file' => base_path('config').'/broadcasting.php'
-            ]
-        ];
-    }
+    // protected function configFile()
+    // {
+    //     return [
+    //         __DIR__.'/../stubs/NotificationSystem/config/broadcasting.stub' => [
+    //             'path' => base_path('config'), 'file' => base_path('config').'/broadcasting.php'
+    //         ]
+    //     ];
+    // }
 
 }

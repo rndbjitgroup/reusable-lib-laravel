@@ -61,14 +61,14 @@ class CentralizedMultipleFileInstallCommand extends Command
                             $from = str_replace(
                                 [
                                     'security={{"bearerAuth": {}}},',
-                                    '$this->authorize(\'product-category-list\');',
-                                    '$this->authorize(\'product-category-view\');',
-                                    '$this->authorize(\'product-category-delete\');',
+                                    'Gate::authorize(\'product-category-list\');',
+                                    'Gate::authorize(\'product-category-view\');',
+                                    'Gate::authorize(\'product-category-delete\');',
                                     'Gate::allows(\'product-category-create\')',
                                     'Gate::allows(\'product-category-edit\')', 
-                                    '$this->authorize(\'product-list\');',
-                                    '$this->authorize(\'product-view\');',
-                                    '$this->authorize(\'product-delete\');',
+                                    'Gate::authorize(\'product-list\');',
+                                    'Gate::authorize(\'product-view\');',
+                                    'Gate::authorize(\'product-delete\');',
                                     'Gate::allows(\'product-create\')',
                                     'Gate::allows(\'product-edit\')',  
                                 ], 
@@ -96,12 +96,13 @@ class CentralizedMultipleFileInstallCommand extends Command
     {
         $files = $this->arrangeFiles('Models');  
         $files = array_merge($files, $this->arrangeFiles('Models', 'Common')); 
+        $files = array_merge($files, $this->arrangeFiles('Interfaces'));
         $files = array_merge($files, $this->arrangeFiles('Repositories'));  
         $files = array_merge($files, $this->arrangeFiles('Services'));  
         $files = array_merge($files, $this->arrangeFiles('Http/Resources')); 
         $files = array_merge($files, $this->arrangeFiles('Http/Resources', 'Common')); 
         $files = array_merge($files, $this->arrangeFiles('Http/Requests')); 
-        $files = array_merge($files, $this->arrangeFiles('Http/Controllers/Api'));
+        $files = array_merge($files, $this->arrangeFiles('Http/Controllers/API'));
 
         return $files;
     }

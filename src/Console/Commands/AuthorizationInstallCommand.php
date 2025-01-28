@@ -44,18 +44,20 @@ class AuthorizationInstallCommand extends Command
     {
         $files = $this->arrangeFiles('Traits', 'PermissionsAndRoles'); 
         $files = array_merge($files, $this->arrangeFiles('Models', 'PermissionsAndRoles'));
+        $files = array_merge($files, $this->arrangeFiles('Interfaces', 'PermissionsAndRoles'));
         $files = array_merge($files, $this->arrangeFiles('Repositories', 'PermissionsAndRoles'));
         $files = array_merge($files, $this->arrangeFiles('Services', 'PermissionsAndRoles'));
         $files = array_merge($files, $this->arrangeFiles('Http/Resources', 'PermissionsAndRoles'));
         $files = array_merge($files, $this->arrangeFiles('Http/Middleware', 'PermissionsAndRoles', false));
         $files = array_merge($files, $this->arrangeFiles('Http/Requests', 'PermissionsAndRoles'));
-        $files = array_merge($files, $this->arrangeFiles('Http/Controllers/Api', 'PermissionsAndRoles'));
+        $files = array_merge($files, $this->arrangeFiles('Http/Controllers/API', 'PermissionsAndRoles'));
         
+        $files = array_merge($files, $this->arrangeFiles('Interfaces', 'Users'));
         $files = array_merge($files, $this->arrangeFiles('Repositories', 'Users'));
         $files = array_merge($files, $this->arrangeFiles('Services', 'Users'));
         $files = array_merge($files, $this->arrangeFiles('Http/Resources', 'Users')); 
         $files = array_merge($files, $this->arrangeFiles('Http/Requests', 'Users'));
-        $files = array_merge($files, $this->arrangeFiles('Http/Controllers/Api', 'Users'));
+        $files = array_merge($files, $this->arrangeFiles('Http/Controllers/API', 'Users'));
         
         $files = array_merge($files, $this->databaseFiles());
         //$files = array_merge($files, $this->overideFileFiles());
