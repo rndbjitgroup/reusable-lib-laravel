@@ -84,7 +84,8 @@ class ReusableLibInstallCommand extends Command
             $this->chosenRoutes[] = RLRouteEnum::ROUTE_BOILERPLATE;
 
             if ($result == ReusableLibEnum::API_AUTH_PASSPORT) {
-                $this->lastCommands[] = ReusableLibEnum::ARTISAN_PASSPORT_COMMAND;
+                //$this->lastCommands[] = ReusableLibEnum::ARTISAN_PASSPORT_COMMAND; // No Need to run this command for Laravel 11
+                $this->lastCommands[] = ReusableLibEnum::ARTISAN_PASSPORT_CLIENT_PERSONAL_COMMAND;
             }
 
             $result = $this->choice( 'Please choose the localization language and type the default language first (example: 1 or 1, 0, 2):', $langArr, ReusableLibEnum::DEFAULT_ZERO, null, true );
@@ -302,23 +303,40 @@ class ReusableLibInstallCommand extends Command
         file_put_contents(base_path('.env'), $envFile);
 
         if($this->isPushNotification) { 
+            // $envFile = str_replace(
+            //     [
+            //         'BROADCAST_DRIVER=log',
+            //         'PUSHER_APP_ID=',
+            //         'PUSHER_APP_KEY=', 
+            //         'PUSHER_APP_SECRET=', 
+            //         ReusableLibEnum::PUSHER_APP_KEY . '"'
+            //     ], 
+            //     [
+            //         'BROADCAST_DRIVER=pusher',
+            //         'PUSHER_APP_ID=' . ReusableLibEnum::PUSHER_APP_ID,
+            //         'PUSHER_APP_KEY=' . ReusableLibEnum::PUSHER_APP_KEY,
+            //         'PUSHER_APP_SECRET=' . ReusableLibEnum::PUSHER_APP_SECRET,
+            //         '"'
+            //     ],
+            //     file_get_contents(base_path('.env'))
+            // ); 
             $envFile = str_replace(
                 [
-                    'BROADCAST_DRIVER=log',
-                    'PUSHER_APP_ID=',
-                    'PUSHER_APP_KEY=', 
-                    'PUSHER_APP_SECRET=', 
-                    ReusableLibEnum::PUSHER_APP_KEY . '"'
+                    'BROADCAST_CONNECTION=log',
+                    'REVERB_APP_ID=',
+                    'REVERB_APP_KEY=', 
+                    'REVERB_APP_SECRET=', 
+                    ReusableLibEnum::REVERB_APP_KEY . '"'
                 ], 
                 [
-                    'BROADCAST_DRIVER=pusher',
-                    'PUSHER_APP_ID=' . ReusableLibEnum::PUSHER_APP_ID,
-                    'PUSHER_APP_KEY=' . ReusableLibEnum::PUSHER_APP_KEY,
-                    'PUSHER_APP_SECRET=' . ReusableLibEnum::PUSHER_APP_SECRET,
+                    'BROADCAST_CONNECTION=reverb',
+                    'REVERB_APP_ID=' . ReusableLibEnum::REVERB_APP_ID,
+                    'REVERB_APP_KEY=' . ReusableLibEnum::REVERB_APP_KEY,
+                    'REVERB_APP_SECRET=' . ReusableLibEnum::REVERB_APP_SECRET,
                     '"'
                 ],
                 file_get_contents(base_path('.env'))
-            ); 
+            );
             file_put_contents(base_path('.env'), $envFile);
         }
 

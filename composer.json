@@ -1,7 +1,10 @@
 {
     "name": "bjitgroup/reusable-lib-laravel",
     "description": "A BJIT Reusable Laravel Package",
-    "keywords": ["bjit", "bjitgroup", "reusable library", "crossdomain", "api"],
+    "keywords": [
+        "Laravel Boilerplate", "Laravel API Boilerplate", "Laravel Standard Architecture", "Laravel API Standard Architecture",
+        "bjit", "bjitgroup", "reusable library", "crossdomain", "api"
+    ],
     "license": "MIT",
     "authors": [
         {

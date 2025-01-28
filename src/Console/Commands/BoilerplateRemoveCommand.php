@@ -129,17 +129,20 @@ class BoilerplateRemoveCommand extends Command
         $this->info('This config/auth.php file is updated successfully!');
         
 
-        // --- UPDATE AUTH SERVICE PROVIDER ---
-        $providerFile = str_replace(
-            [
-                "Passport::routes();",
-                "use Laravel\Passport\Passport;"
-            ],
-            ['', ''], 
-            file_get_contents(app_path('Providers/AuthServiceProvider.php'))
-        ); 
-        file_put_contents(app_path('Providers/AuthServiceProvider.php'), $providerFile);
-        $this->info('This provider app/Providers/AuthServiceProvider.php file is updated successfully!');
+        /*
+        if (file_exists(app_path('Providers/AuthServiceProvider.php'))) { // Not used for Laravel 11 Version 
+            // --- UPDATE AUTH SERVICE PROVIDER ---
+            $providerFile = str_replace(
+                [
+                    "Passport::routes();",
+                    "use Laravel\Passport\Passport;"
+                ],
+                ['', ''], 
+                file_get_contents(app_path('Providers/AuthServiceProvider.php'))
+            ); 
+            file_put_contents(app_path('Providers/AuthServiceProvider.php'), $providerFile);
+            $this->info('This provider app/Providers/AuthServiceProvider.php file is updated successfully!');
+        }*/
         
         // --- UPDATE ROUTE --- 
         if (file_exists(base_path('routes/api.php'))) {
@@ -228,7 +231,7 @@ class BoilerplateRemoveCommand extends Command
             ['path' => app_path('Enums')],
             ['path' => app_path('Traits')],
             ['path' => app_path('Rules')],
-            ['path' => app_path('Http/Controllers/Api')],
+            ['path' => app_path('Http/Controllers/API')],
             ['path' => app_path('Exceptions/Custom')],
             ['path' => base_path('resources/views/vendor/l5-swagger')],
         ];
@@ -237,11 +240,12 @@ class BoilerplateRemoveCommand extends Command
     protected function authDirectory()
     {
         return [ 
+            ['path' => app_path('Interfaces/Auth')],
             ['path' => app_path('Repositories/Auth')],
             ['path' => app_path('Services/Auth')],
             ['path' => app_path('Http/Resources/Auth')],
             ['path' => app_path('Http/Resources/Common')],
-            ['path' => app_path('Http/Controllers/Api/Auth')],
+            ['path' => app_path('Http/Controllers/API/Auth')],
             ['path' => app_path('Http/Requests/Auth')],
         ];
     }
@@ -250,10 +254,11 @@ class BoilerplateRemoveCommand extends Command
     {
         return [
             ['path' => app_path('Models/Samples')],
+            ['path' => app_path('Interfaces/Samples')],
             ['path' => app_path('Repositories/Samples')],
             ['path' => app_path('Services/Samples')],
             ['path' => app_path('Http/Resources/Samples')],
-            ['path' => app_path('Http/Controllers/Api/Samples')],
+            ['path' => app_path('Http/Controllers/API/Samples')],
             ['path' => app_path('Http/Requests/Samples')],
         ];
     }
@@ -262,6 +267,7 @@ class BoilerplateRemoveCommand extends Command
     {
         return [
             ['path' => app_path('Notifications')],
+            ['path' => app_path('Interfaces')],
             ['path' => app_path('Repositories')],
             ['path' => app_path('Services')],
             ['path' => app_path('Http/Resources')],
@@ -313,6 +319,23 @@ class BoilerplateRemoveCommand extends Command
                     file_put_contents($to['file'], $from);
                     $mainFile = str_replace(base_path() . '/', '', $to['file']);
                 }
+
+                if (str_contains($to['file'], ReusableLibEnum::BOOTSTRAP_APP)) {
+                    $from = str_replace(
+                        [
+                            "\n            \App\Http\Middleware\Localization::class,",
+                            "])->create();",
+                            "\Illuminate\Contracts\Debug\ExceptionHandler::class => \App\Exceptions\Handler::class,",
+                            "->withSingletons(["
+                        ], 
+                        ["","", "", "->create();"], 
+                        $from
+                    );
+                    file_put_contents($to['file'], $from);
+                    $mainFile = str_replace(base_path() . '/', '', $to['file']);
+                }
+
+
                 if($mainFile !== '') {
                     $this->info("This file {$mainFile} is updated successfully!");
                     $mainFile = '';
@@ -324,9 +347,10 @@ class BoilerplateRemoveCommand extends Command
     protected function fileContentList()
     {
         return [
-            ['file' => app_path('Http/Kernel.php')],
+            //['file' => app_path('Http/Kernel.php')],
             ['file' => app_path('Exceptions/Handler.php')],
             ['file' => config_path('app.php')],
+            ['file' => base_path('bootstrap/app.php')],
         ];
     }
 
@@ -387,6 +411,12 @@ class BoilerplateRemoveCommand extends Command
         return [
             'add_profile_photo_path_and_contact_no_to_users.php' => 'add_profile_photo_path_and_contact_no_to_users.php',
             'create_samples_table.php' => 'create_samples_table.php',
+            'create_oauth_auth_codes_table.php' => 'create_oauth_auth_codes_table.php',
+            'create_oauth_access_tokens_table.php' => 'create_oauth_access_tokens_table.php',
+            'create_oauth_refresh_tokens_table.php' => 'create_oauth_refresh_tokens_table.php',
+            'create_oauth_clients_table.php' => 'create_oauth_clients_table.php',
+            'create_oauth_personal_access_clients_table.php' => 'create_oauth_personal_access_clients_table.php', 
+
         ];
     } 
 

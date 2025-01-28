@@ -2,10 +2,12 @@
 
 namespace App\Repositories\Blogs;
 
+use App\Interfaces\Blogs\CommentRepositoryInterface;
 use App\Models\Blogs\Comment;
+use App\Models\Blogs\Post;
 use Illuminate\Support\Str;
 
-class CommentRepository
+class CommentRepository implements CommentRepositoryInterface
 {
     /** 
      * @var Comment
@@ -29,17 +31,17 @@ class CommentRepository
     }
  
 
-    public function get($comment)
+    public function get($comment): ?Comment
     {
         return $comment;
     }
 
-    public function getById($id)
+    public function getById($id): ?Comment
     {
         return $this->comment->find($id);
     }
 
-    public function store($request, $post)
+    public function store($request, $post): Post
     {
         $comment = new $this->comment;
         $comment->comment = $request->comment;
@@ -49,7 +51,7 @@ class CommentRepository
         return $post->fresh();
     }
 
-    public function storeReply($request, $post)
+    public function storeReply($request, $post): Post
     {
         $reply = new Comment();
         $reply->post_id = $post->id;
@@ -66,7 +68,7 @@ class CommentRepository
 
     }
 
-    public function destroy($comment)
+    public function destroy($comment): bool
     {
         return $comment->delete();
     }

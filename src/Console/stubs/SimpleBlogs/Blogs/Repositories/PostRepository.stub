@@ -2,10 +2,12 @@
 
 namespace App\Repositories\Blogs;
 
+use App\Interfaces\Blogs\PostRepositoryInterface;
 use App\Models\Blogs\Post;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Str;
 
-class PostRepository
+class PostRepository implements PostRepositoryInterface
 {
     /** 
      * @var Post
@@ -23,7 +25,7 @@ class PostRepository
         $this->post = $post;
     }
 
-    public function getAll($request)
+    public function getAll($request): LengthAwarePaginator
     {
         return $this->post
         ->when($request->search_text, function($q) use ($request) {
@@ -42,24 +44,24 @@ class PostRepository
         ->paginate(config('constants.paginate'));
     } 
 
-    public function get($post)
+    public function get($post): ?Post
     {
         return $post;
     }
 
-    public function store($request)
+    public function store($request): Post
     {
         $post = $this->post->create($request->all());
         return $post->fresh();
     }
 
-    public function update($request, $post)
+    public function update($request, $post): ?Post
     {
         $post->update($request->all());
         return $post->fresh();
     }
 
-    public function destroy($post)
+    public function destroy($post): bool
     {
         foreach ($post->comments as $comment) { 
             $comment->replies()->delete();

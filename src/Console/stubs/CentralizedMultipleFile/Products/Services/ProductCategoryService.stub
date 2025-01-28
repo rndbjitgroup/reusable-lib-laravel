@@ -60,7 +60,7 @@ class ProductCategoryService
         $productCategory = $this->productCategoryRepository->store($request);
         if($productCategory) {
             if ($request->hasFile('filename')) { 
-                $this->productCategoryRepository->uploadFile($productCategory, $request->filename, $request->existing_filename ?? null);
+                $this->productCategoryRepository->uploadFile($productCategory, $request->filename);
             }
             return $this->success(__('messages.crud.stored'), new ProductCategoryResource($productCategory), Response::HTTP_CREATED);
         }
@@ -81,14 +81,14 @@ class ProductCategoryService
             'slug' => Str::slug($request->title ?? $productCategory->title), 
         ]);
 
-        if($request->has('is_file_deleted') && $request->is_file_deleted) {
-            $this->productCategoryRepository->destroyProductCategoryFile($request, $productCategory);
+        if ($request->hasFile('filename')) { 
+                $this->productCategoryRepository->destroyProductCategoryFile($request, $productCategory);
         }
-        //dd($request->all());
+ 
         $productCategory = $this->productCategoryRepository->update($request, $productCategory);
         if($productCategory) {
             if ($request->hasFile('filename')) { 
-                $this->productCategoryRepository->uploadFile($productCategory, $request->filename, $request->existing_filename ?? null);
+                $this->productCategoryRepository->uploadFile($productCategory, $request->filename);
             }
             return $this->success(__('messages.crud.updated'), new ProductCategoryResource($productCategory));
         }  

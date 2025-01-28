@@ -46,8 +46,8 @@ class ReusableLibRemoveCommand extends Command
     protected function handleRemove()
     {
         //$this->execCommands[] = ReusableLibEnum::API_AUTH_COMPOSER_REMOVE_COMMAND[ReusableLibEnum::API_AUTH_SANCTUM];
-        $this->execCommands[] = ReusableLibEnum::API_AUTH_COMPOSER_REMOVE_COMMAND[ReusableLibEnum::API_AUTH_PASSPORT];
-        $this->execCommands[] = ReusableLibEnum::API_AUTH_COMPOSER_REMOVE_COMMAND[ReusableLibEnum::API_AUTH_JWT];
+        $this->execCommands[] = ReusableLibEnum::API_AUTH_REMOVE_COMMAND[ReusableLibEnum::API_AUTH_PASSPORT];
+        $this->execCommands[] = ReusableLibEnum::API_AUTH_REMOVE_COMMAND[ReusableLibEnum::API_AUTH_JWT];
         $this->execCommands[] = ReusableLibEnum::OPEN_API_COMPOSER_REMOVE_COMMAND;
         $this->execCommands[] = ReusableLibEnum::COMPOSER_COMMAND_REMOVE_IMAGE_RESIZE;
         $this->artisanCommands[] = ReusableLibEnum::BOILERPLATE_REMOVE_COMMAND;
@@ -119,19 +119,29 @@ class ReusableLibRemoveCommand extends Command
             file_get_contents(base_path('.env'))
         ); 
         file_put_contents(base_path('.env'), $envFile);  
-
-
          
+        // $envFile = str_replace(
+        //     [
+        //         'BROADCAST_DRIVER=pusher',
+        //         'PUSHER_APP_ID=' . ReusableLibEnum::PUSHER_APP_ID,
+        //         'PUSHER_APP_KEY=' . ReusableLibEnum::PUSHER_APP_KEY,
+        //         'PUSHER_APP_SECRET=' . ReusableLibEnum::PUSHER_APP_SECRET,
+        //     ],
+        //     ['BROADCAST_DRIVER=log', 'PUSHER_APP_ID=','PUSHER_APP_KEY=', 'PUSHER_APP_SECRET='], 
+        //     file_get_contents(base_path('.env'))
+        // ); 
+
         $envFile = str_replace(
             [
-                'BROADCAST_DRIVER=pusher',
-                'PUSHER_APP_ID=' . ReusableLibEnum::PUSHER_APP_ID,
-                'PUSHER_APP_KEY=' . ReusableLibEnum::PUSHER_APP_KEY,
-                'PUSHER_APP_SECRET=' . ReusableLibEnum::PUSHER_APP_SECRET,
+                'BROADCAST_CONNECTION=reverb',
+                'REVERB_APP_ID=' . ReusableLibEnum::REVERB_APP_ID,
+                'REVERB_APP_KEY=' . ReusableLibEnum::REVERB_APP_KEY,
+                'REVERB_APP_SECRET=' . ReusableLibEnum::REVERB_APP_SECRET,
             ],
-            ['BROADCAST_DRIVER=log', 'PUSHER_APP_ID=','PUSHER_APP_KEY=', 'PUSHER_APP_SECRET='], 
+            ['BROADCAST_CONNECTION=log', 'REVERB_APP_ID=','REVERB_APP_KEY=', 'REVERB_APP_SECRET='], 
             file_get_contents(base_path('.env'))
         ); 
+
         file_put_contents(base_path('.env'), $envFile);
          
     }

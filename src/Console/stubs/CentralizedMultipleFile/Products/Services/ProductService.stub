@@ -64,7 +64,7 @@ class ProductService
         if($product) {
             if ($request->hasFile('filenames')) { 
                 foreach($request->filenames as $filename) {
-                    $this->productRepository->uploadFile($product, $filename, $request->existing_filename ?? null);
+                    $this->productRepository->uploadFile($product, $filename);
                 }
             }
             return $this->success(__('messages.crud.stored'), new ProductResource($product), Response::HTTP_CREATED);
@@ -86,12 +86,15 @@ class ProductService
             'slug' => Str::slug($request->title ?? $product->title), 
         ]); 
 
+        if ($request->hasFile('filenames')) { 
+            $this->productRepository->deleteProductFiles($product);
+        }
+
         $product = $this->productRepository->update($request, $product);
         if ($product) {
-            if ($request->hasFile('filenames')) { 
-                $this->productRepository->deleteProductFiles($product);
+            if ($request->hasFile('filenames')) {  
                 foreach ($request->filenames as $filename) {
-                    $this->productRepository->uploadFile($product, $filename, $request->existing_filename ?? null);
+                    $this->productRepository->uploadFile($product, $filename);
                 }
             }
             return $this->success(__('messages.crud.updated'), new ProductResource($product));

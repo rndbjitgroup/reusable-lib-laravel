@@ -2,11 +2,11 @@
 
 namespace App\Repositories\Auth;
 
-use App\Interfaces\LoginInterface;
+use App\Interfaces\Auth\LoginRepositoryInterface;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
-class LoginRepository
+class LoginRepository implements LoginRepositoryInterface
 {
     /** 
      * @var User
@@ -24,7 +24,7 @@ class LoginRepository
         $this->user = $user;
     }
     
-    public function login($request) 
+    public function login($request): bool
     {
         return Auth::attempt(['email' => $request->email, 'password' => $request->password]);
     }
