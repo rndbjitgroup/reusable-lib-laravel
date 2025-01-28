@@ -3,12 +3,14 @@
 namespace App\Repositories\Products;
 
 use App\Enums\CmnEnum;
+use App\Interfaces\Products\ProductCategoryRepositoryInterface;
 use App\Models\Common\File;
 use App\Models\Products\ProductCategory;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-class ProductCategoryRepository
+class ProductCategoryRepository implements ProductCategoryRepositoryInterface
 {
     /** 
      * @var ProductCategory
@@ -26,7 +28,7 @@ class ProductCategoryRepository
         $this->productCategory = $productCategory;
     }
 
-    public function getAll($request)
+    public function getAll($request): Collection
     {
         return $this->productCategory
         ->when($request->search_text, function($q) use ($request) {
@@ -42,82 +44,75 @@ class ProductCategoryRepository
             return $q->where('created_at', '<=', $request->end_date);
         })
         ->latest()
-        ->paginate(config('constants.paginate'));
+        ->get();
     } 
 
-    public function get($productCategory)
+    public function get($productCategory): ?ProductCategory
     {
         return $productCategory;
     }
 
-    function getOriginalFileName($fileRow)
+    private function getOriginalFileName($fileRow): String
     {
         $fileNameWithOurExt = pathinfo($fileRow->getClientOriginalName(), PATHINFO_FILENAME);
         return '_' . Str::limit($fileNameWithOurExt, CmnEnum::FILE_ORIGINAL_NAME_CHAR_LIMIT, '');
     }
 
-    public function uploadFile($productCategory, $fileRaw, $existingFileName)
+    public function uploadFile($productCategory, $fileRaw): bool
     {
         if (isset($fileRaw)) { 
             $filePath = config('constants.path.product_categories');
             $uniqueName = date('YmdHis'). uniqid() . '_' . $productCategory->id . $this->getOriginalFileName($fileRaw) . '.' . $fileRaw->extension();
            
-            if (!Storage::exists(config('constants.path.storage_public') . '/' .$filePath)) {
-                Storage::makeDirectory(config('constants.path.storage_public') . '/' .$filePath);
+            if (!Storage::exists($filePath)) {
+                Storage::makeDirectory($filePath);
             }
-  
+
             $fileData = [ 
                 'name' => $uniqueName,
                 'display_name' => $fileRaw->getClientOriginalName(), 
                 'path' =>  $filePath,
             ];
 
-            $existFile = '';
-            if(!empty($existingFileName)) {
-                $existFile = File::where('fileable_type', CmnEnum::PRODUCT_CATEGORY_FILEABLE_TYPE)
-                        ->where('name', '=', $existingFileName)
-                        ->first();
-            }
-            
-            if ($existFile) { 
-                if(Storage::exists(config('constants.path.storage_public') . '/' . $filePath . $existingFileName)) {
-                    Storage::delete(config('constants.path.storage_public') . '/' . $filePath . $existingFileName);
-                }
-
-                $fileRaw->storeAs($filePath, $uniqueName, config('constants.path.storage_public'));
-                return $existFile->update($fileData);
-            } else { 
-                $fileRaw->storeAs($filePath, $uniqueName, config('constants.path.storage_public'));
-                $productCategoryFile = $productCategory->files()->create($fileData);
-                if($productCategoryFile) { 
-                    return true;
-                }
+            $fileRaw->storeAs($filePath, $uniqueName, config('constants.filesystem_disk'));
+            $productCategoryFile = $productCategory->files()->create($fileData);
+            if($productCategoryFile) { 
+                return true;
             }
         }
         return false;
     }
 
-    public function store($request)
+    public function store($request): ProductCategory
     {
         $productCategory = $this->productCategory->create($request->all());
         return $productCategory->fresh();
     }
 
-    public function update($request, $productCategory)
+    public function update($request, $productCategory): ?ProductCategory
     {
         $productCategory->update($request->all());
         return $productCategory->fresh();
     }
 
-    public function destroy($productCategory)
+    public function destroy($productCategory): bool
     {
+        if($productCategory->files) {
+            foreach($productCategory->files as $productCategoryFile) {
+                Storage::delete($productCategoryFile->path . '/' . $productCategoryFile->name); 
+            }
+        }
         $productCategory->files()->delete();
         return $productCategory->delete();
     }
 
-    public function destroyProductCategoryFile($request, $productCategory)
+    public function destroyProductCategoryFile($request, $productCategory): bool
     {
+        $filePath = config('constants.path.product_categories');
         if($request->has('existing_filename')) { 
+            if(Storage::exists($filePath . '/' . $request->existing_filename)) {
+                Storage::delete($filePath . '/' . $request->existing_filename);
+            }
             return $productCategory->files()->where('name', $request->existing_filename)->delete();
         }
         return $productCategory->files()->delete();

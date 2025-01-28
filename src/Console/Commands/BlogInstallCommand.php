@@ -77,7 +77,6 @@ class BlogInstallCommand extends Command
     {
         $files = $this->blogFiles();  
         $files = array_merge($files, $this->databaseFiles()); 
-        //$files = array_merge($files, $this->configFile());
  
         foreach ($files as $from => $to) { 
             if ( ! is_dir($stubsPath = $to['path'])) {  
@@ -96,19 +95,19 @@ class BlogInstallCommand extends Command
                             $from = str_replace(
                                 [
                                     'security={{"bearerAuth": {}}},',
-                                    '$this->authorize(\'category-list\');',
-                                    '$this->authorize(\'category-view\');',
-                                    '$this->authorize(\'category-delete\');',
+                                    'Gate::authorize(\'category-list\');',
+                                    'Gate::authorize(\'category-view\');',
+                                    'Gate::authorize(\'category-delete\');',
                                     'Gate::allows(\'category-create\')',
                                     'Gate::allows(\'category-edit\')',
-                                    '$this->authorize(\'comment-list\');',
-                                    '$this->authorize(\'comment-view\');',
-                                    '$this->authorize(\'comment-delete\');',
+                                    'Gate::authorize(\'comment-list\');',
+                                    'Gate::authorize(\'comment-view\');',
+                                    'Gate::authorize(\'comment-delete\');',
                                     'Gate::allows(\'comment-create\')',
                                     'Gate::allows(\'comment-edit\')',
-                                    '$this->authorize(\'post-list\');',
-                                    '$this->authorize(\'post-view\');',
-                                    '$this->authorize(\'post-delete\');',
+                                    'Gate::authorize(\'post-list\');',
+                                    'Gate::authorize(\'post-view\');',
+                                    'Gate::authorize(\'post-delete\');',
                                     'Gate::allows(\'post-create\')',
                                     'Gate::allows(\'post-edit\')',
                                     'Gate::allows(\'comment-reply\')',
@@ -140,12 +139,13 @@ class BlogInstallCommand extends Command
     protected function blogFiles()
     {
         $files = $this->arrangeFiles('Models');
+        $files = array_merge($files, $this->arrangeFiles('Interfaces')); 
         $files = array_merge($files, $this->arrangeFiles('Traits'));  
         $files = array_merge($files, $this->arrangeFiles('Repositories'));  
         $files = array_merge($files, $this->arrangeFiles('Services'));  
         $files = array_merge($files, $this->arrangeFiles('Http/Resources')); 
         $files = array_merge($files, $this->arrangeFiles('Http/Requests')); 
-        $files = array_merge($files, $this->arrangeFiles('Http/Controllers/Api'));
+        $files = array_merge($files, $this->arrangeFiles('Http/Controllers/API'));
 
         return $files;
     }
@@ -221,16 +221,7 @@ class BlogInstallCommand extends Command
             } 
         }
         return $rtrArr;
-    }
-
-    // protected function configFile()
-    // {
-    //     return [
-    //         __DIR__.'/../stubs/SimpleBlogs/config/app.stub' => [
-    //             'path' => base_path('config'), 'file' => base_path('config').'/app.php'
-    //         ]
-    //     ];
-    // }
+    } 
 
     protected function updateFileContent()
     {

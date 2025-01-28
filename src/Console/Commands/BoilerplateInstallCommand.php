@@ -42,6 +42,7 @@ class BoilerplateInstallCommand extends Command
         $this->installFiles(); 
         $this->configureForAuth();
         $this->updateEnum();
+        $this->updateBootstrapApp();
         //$this->runArtisanCommands(); 
     } 
 
@@ -53,9 +54,10 @@ class BoilerplateInstallCommand extends Command
 
             $this->withProgressBar($execCommands, function ($execCommand) {
                 exec('cd ' . base_path() . ' && ' . $execCommand);
+                $this->info('Boilerplate - ' . $execCommand . ' is run successfully.');
             });
             exec('cd ' . base_path() . ' && ' . ReusableLibEnum::COMPOSER_AUTOLOAD);
-            $this->info('The Commands are run successfully.');
+            $this->info('The Boilerplate Commands are run successfully.');
         } else {
             $this->error($this->prepareErrorMessage());
         } 
@@ -63,8 +65,8 @@ class BoilerplateInstallCommand extends Command
 
     protected function setExecCommands()
     {
-        if (isset(ReusableLibEnum::API_AUTH_COMPOSER_COMMAND[$this->option('auth')])) {
-            $this->execCommands[] = ReusableLibEnum::API_AUTH_COMPOSER_COMMAND[$this->option('auth')];
+        if (isset(ReusableLibEnum::API_AUTH_COMMAND[$this->option('auth')])) {
+            $this->execCommands[] = ReusableLibEnum::API_AUTH_COMMAND[$this->option('auth')];
         }
         
         if ($this->option('auth') == ReusableLibEnum::API_AUTH_JWT) {
@@ -129,10 +131,11 @@ class BoilerplateInstallCommand extends Command
         
 
         // --- UPDATE AUTH SERVICE PROVIDER ---
-        if(strpos(app()->version(), ReusableLibEnum::LARAVEL_VERSION_EIGHT) !== ReusableLibEnum::DEFAULT_FALSE ) {
-            file_put_contents(app_path('Providers/AuthServiceProvider.php'), file_get_contents(__DIR__.'/../stubs/Boilerplate/Auth/Providers/AuthServiceProvider.stub'));
-            $this->info('This Providers/AuthServiceProvider.php file is updated successfully!');
-        }
+        // if(strpos(app()->version(), ReusableLibEnum::LARAVEL_VERSION_EIGHT) !== ReusableLibEnum::DEFAULT_FALSE ) {
+        //     file_put_contents(app_path('Providers/AuthServiceProvider.php'), file_get_contents(__DIR__.'/../stubs/Boilerplate/Auth/Providers/AuthServiceProvider.stub'));
+        //     $this->info('This Providers/AuthServiceProvider.php file is updated successfully!');
+        // } // No need to update for Laravel 8 and after 11 version
+
         // --- UPDATE ROUTE --- 
         if (file_exists(base_path('routes/api.php'))) {
             $routeFile = str_replace(
@@ -250,32 +253,35 @@ class BoilerplateInstallCommand extends Command
     protected function installFiles()
     {
         $files =  $this->commonFiles();
-        $files = array_merge($files, $this->configFile());
+        //$files = array_merge($files, $this->configFile());
 
         $files = array_merge($files, $this->arrangeExceptionFiles('Exceptions', 'Custom'));
         
         if ($this->option('auth') !== ReusableLibEnum::API_AUTH_NONE) {
             //$files = array_merge($files, $this->arrangeFiles('Models', 'Auth'));
+            $files = array_merge($files, $this->arrangeFiles('Interfaces', 'Auth'));
             $files = array_merge($files, $this->arrangeFiles('Repositories', 'Auth'));
             $files = array_merge($files, $this->arrangeFiles('Services', 'Auth'));
             $files = array_merge($files, $this->arrangeFiles('Http/Resources', 'Auth'));
             $files = array_merge($files, $this->arrangeFiles('Http/Requests', 'Auth'));
-            $files = array_merge($files, $this->arrangeFiles('Http/Controllers/Api', 'Auth'));
+            $files = array_merge($files, $this->arrangeFiles('Http/Controllers/API', 'Auth'));
         
             $files = array_merge($files, $this->arrangeFiles('Rules', 'Profile'));
+            $files = array_merge($files, $this->arrangeFiles('Interfaces', 'Profile'));
             $files = array_merge($files, $this->arrangeFiles('Repositories', 'Profile'));
             $files = array_merge($files, $this->arrangeFiles('Services', 'Profile'));
             $files = array_merge($files, $this->arrangeFiles('Http/Resources', 'Profile'));
             $files = array_merge($files, $this->arrangeFiles('Http/Requests', 'Profile'));
-            $files = array_merge($files, $this->arrangeFiles('Http/Controllers/Api', 'Profile'));
+            $files = array_merge($files, $this->arrangeFiles('Http/Controllers/API', 'Profile'));
         }
 
         $files = array_merge($files, $this->arrangeFiles('Models', 'Samples'));
+        $files = array_merge($files, $this->arrangeFiles('Interfaces', 'Samples'));
         $files = array_merge($files, $this->arrangeFiles('Repositories', 'Samples'));
         $files = array_merge($files, $this->arrangeFiles('Services', 'Samples'));
         $files = array_merge($files, $this->arrangeFiles('Http/Resources', 'Samples'));
         $files = array_merge($files, $this->arrangeFiles('Http/Requests', 'Samples'));
-        $files = array_merge($files, $this->arrangeFiles('Http/Controllers/Api', 'Samples'));
+        $files = array_merge($files, $this->arrangeFiles('Http/Controllers/API', 'Samples'));
         
         //if ($this->option('auth') !== ReusableLibEnum::API_AUTH_NONE) {
             $files = array_merge($files, $this->migrationFiles());
@@ -287,7 +293,7 @@ class BoilerplateInstallCommand extends Command
             }  
             if (! file_exists($to['file']) 
                 || strpos($to['file'], ReusableLibEnum::MODEL_USER) !== false
-                || strpos($to['file'], ReusableLibEnum::HTTP_KERNEL) !== false
+                //|| strpos($to['file'], ReusableLibEnum::HTTP_KERNEL) !== false
                 || str_contains($to['file'], ReusableLibEnum::CONFIG_APP)
                 || strpos($to['file'], ReusableLibEnum::EXCEPTION_HANDLER) !== false
                 || $this->option('force')) {
@@ -389,12 +395,6 @@ class BoilerplateInstallCommand extends Command
             __DIR__.'/../stubs/Common/Models/User' . $case . '.stub' => [
                 'path' => app_path('Models'), 'file' => app_path('Models').'/User.php'
             ],
-            // __DIR__.'/../stubs/Common/Models/BaseModel.stub' => [
-            //     'path' => app_path('Models'), 'file' => app_path('Models').'/BaseModel.php'
-            // ],
-            // __DIR__.'/../stubs/Common/Traits/AllowCamelCase.stub' => [
-            //     'path' => app_path('Traits/Common'), 'file' => app_path('Traits/Common').'/AllowCamelCase.php'
-            // ],
             __DIR__.'/../stubs/Common/Traits/RespondsWithHttpStatus' . $case . '.stub' => [
                 'path' => app_path('Traits/Common'), 'file' => app_path('Traits/Common').'/RespondsWithHttpStatus.php'
             ],
@@ -408,14 +408,14 @@ class BoilerplateInstallCommand extends Command
                 'path' => app_path('Exceptions'), 'file' => app_path('Exceptions').'/Handler.php'
             ],
             __DIR__.'/../stubs/Common/Http/Controllers/BaseController.stub' => [
-                'path' => app_path('Http/Controllers/Api'), 'file' => app_path('Http/Controllers/Api').'/BaseController.php'
+                'path' => app_path('Http/Controllers/API'), 'file' => app_path('Http/Controllers/API').'/BaseController.php'
             ],
             __DIR__.'/../stubs/Common/Http/Middleware/Localization.stub' => [
                 'path' => app_path('Http/Middleware'), 'file' => app_path('Http/Middleware').'/Localization.php'
             ],
-            __DIR__.'/../stubs/Common/Http/Kernel.stub' => [
-                'path' => app_path('Http'), 'file' => app_path('Http').'/Kernel.php'
-            ],
+            // __DIR__.'/../stubs/Common/Http/Kernel.stub' => [
+            //     'path' => app_path('Http'), 'file' => app_path('Http').'/Kernel.php'
+            // ],
             __DIR__.'/../stubs/Common/Http/Resources/PaginationResource' . $case . '.stub' => [
                 'path' => app_path('Http/Resources/Common'), 'file' => app_path('Http/Resources/Common').'/PaginationResource.php'
             ],
@@ -454,14 +454,14 @@ class BoilerplateInstallCommand extends Command
         return $rtrArr;
     }
 
-    protected function configFile()
-    {
-        return [
-            __DIR__.'/../stubs/Boilerplate/config/app.stub' => [
-                'path' => base_path('config'), 'file' => base_path('config').'/app.php'
-            ]
-        ];
-    }
+    // protected function configFile()
+    // {
+    //     return [
+    //         __DIR__.'/../stubs/Boilerplate/config/app.stub' => [
+    //             'path' => base_path('config'), 'file' => base_path('config').'/app.php'
+    //         ]
+    //     ];
+    // }
 
     protected function migrationFiles()
     {
@@ -501,4 +501,22 @@ class BoilerplateInstallCommand extends Command
         // ); 
         // file_put_contents(__DIR__. '/../../Enums/ReusableLibEnum.php', $rlEnum);  
     }
+
+    protected function updateBootstrapApp()
+    {
+        $bootstrapApp = str_replace(
+            [
+                '$middleware->api(prepend: [',
+                "->create();"
+            ], 
+            [
+                '$middleware->api(prepend: [' . "\n" . '            \App\Http\Middleware\Localization::class,',
+                "->withSingletons([\n       \Illuminate\Contracts\Debug\ExceptionHandler::class => \App\Exceptions\Handler::class,\n    ])->create();"
+            ], 
+            file_get_contents(base_path('bootstrap/app.php'))
+        ); 
+        file_put_contents(base_path('bootstrap/app.php'), $bootstrapApp); 
+        $this->info('This bootstrap/app.php file is updated successfully!');
+    }
+
 }

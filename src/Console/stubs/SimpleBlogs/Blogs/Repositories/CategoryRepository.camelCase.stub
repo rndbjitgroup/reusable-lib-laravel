@@ -2,10 +2,11 @@
 
 namespace App\Repositories\Blogs;
 
+use App\Interfaces\Blogs\CategoryRepositoryInterface;
 use App\Models\Blogs\Category;
-use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Collection; 
 
-class CategoryRepository
+class CategoryRepository implements CategoryRepositoryInterface
 {
     /** 
      * @var Category
@@ -23,7 +24,7 @@ class CategoryRepository
         $this->category = $category;
     }
 
-    public function getAll($request)
+    public function getAll($request): Collection
     {
         return $this->category
         ->when($request->searchText, function($q) use ($request) {
@@ -39,27 +40,27 @@ class CategoryRepository
             return $q->where('created_at', '<=', $request->end_date);
         })
         ->latest()
-        ->paginate(config('constants.paginate'));
+        ->get();
     } 
 
-    public function get($category)
+    public function get($category): ?Category
     {
         return $category;
     }
 
-    public function store($request)
+    public function store($request): Category
     {
         $category = $this->category->create($request->all());
         return $category->fresh();
     }
 
-    public function update($request, $category)
+    public function update($request, $category): ?Category
     {
         $category->update($request->all());
         return $category->fresh();
     }
 
-    public function destroy($category)
+    public function destroy($category): bool
     {
         return $category->delete();
     }

@@ -15,8 +15,8 @@ class SendPushRandomMessage implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $message;
-    public $count;
+    public string $message;
+    public int $count;
 
     /**
      * Create a new event instance.
@@ -32,14 +32,22 @@ class SendPushRandomMessage implements ShouldBroadcast
     /**
      * Get the channels the event should broadcast on.
      *
-     * @return \Illuminate\Broadcasting\Channel|array
+     * @return array<int, \Illuminate\Broadcasting\Channel>
      */
-    public function broadcastOn()
+    public function broadcastOn(): array
     {
-        return new Channel('notification-channel'); 
+        return new Channel('notification-channel'); // for single channel
+        //return [
+            //new Channel('notification-channel'),  // for multiple channel
+        //];
     }
 
-    public function broadcastWith()
+    /**
+     * Get the data to broadcast.
+     *
+     * @return array<string, mixed>
+     */
+    public function broadcastWith(): array 
     {
         return ['message' => Str::random(18)];
     }

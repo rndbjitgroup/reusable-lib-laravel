@@ -18,9 +18,18 @@ The Reusable Library Package is a lightweight Laravel package.
 
 The Reusable Library requires
 
-- **[Laravel](https://laravel.com/) v8+ to run.**
+- **[Laravel](https://laravel.com/) v8+ to latest.**
 - **enable the "exec" function in php.ini**
 - **Composer 2+(Recommended)**
+
+####
+Version Histories
+
+| Laravel  | Reusable Package  |
+| ------------- |:-------------|
+| 11.x     |composer require bjitgroup/reusable-lib-laravel     |
+| 9.x to 10.x | composer require bjitgroup/reusable-lib-laravel: 2.*|
+| 8.x      | composer require bjitgroup/reusable-lib-laravel: 1.*|
 
 Install the Laravel project by following this link
 **[Laravel Document](https://laravel.com/docs)** or use the below command:
@@ -57,9 +66,15 @@ php artisan bjit:reusable-lib-install
 php artisan serve 
 ```
 
-##### For Websocket
+##### For Push Notification
 
 If you choose push notification while setting up the reusable library, you have to run the below command:
+
+For Reverb (Laravel 11.x)  
+```sh
+php artisan reverb:start
+```
+For Websocket (Laravel 8.x to 10.x)  
 
 ```sh
 php artisan websocket:serve
@@ -92,6 +107,14 @@ php artisan bjit-make:model Products/Item -m --all
 3. f => factory
 
 This **_-mfs --all_** can be used at the end of the above command.
+
+#### To generate Service or Repository, use the below command:
+```sh
+php artisan bjit-make:service Products/ProductBrand
+```
+```sh
+php artisan bjit-make:repository Products/ProductBrand
+```
 
 #### To remove a specific module (all files), use the below command:
 

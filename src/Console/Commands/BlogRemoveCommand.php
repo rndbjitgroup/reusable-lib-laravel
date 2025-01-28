@@ -67,11 +67,12 @@ class BlogRemoveCommand extends Command
         return [ 
             ['path' => app_path('Models/' . $path)],
             ['path' => app_path('Traits/' . $path)],
+            ['path' => app_path('Interfaces/' . $path)],
             ['path' => app_path('Repositories/' . $path)],
             ['path' => app_path('Services/' . $path)],
             ['path' => app_path('Http/Resources/' . $path)],
             ['path' => app_path('Http/Requests/' . $path)],
-            ['path' => app_path('Http/Controllers/Api/' . $path)],
+            ['path' => app_path('Http/Controllers/API/' . $path)],
         ];
     } 
 

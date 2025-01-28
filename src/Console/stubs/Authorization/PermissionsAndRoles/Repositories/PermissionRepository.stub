@@ -2,9 +2,11 @@
 
 namespace App\Repositories\PermissionsAndRoles;
 
+use App\Interfaces\PermissionsAndRoles\PermissionRepositoryInterface;
 use App\Models\PermissionsAndRoles\Permission;
+use Illuminate\Database\Eloquent\Collection;
 
-class PermissionRepository 
+class PermissionRepository implements PermissionRepositoryInterface
 {
     /** 
      * @var Permission
@@ -22,7 +24,7 @@ class PermissionRepository
         $this->permission = $permission;
     }
 
-    public function getAll($request)
+    public function getAll($request): Collection
     {
         return $this->permission
         ->when($request->search_text, function($q) use ($request) {
@@ -40,23 +42,23 @@ class PermissionRepository
         ->get();
     }
 
-    public function get($permission)
+    public function get($permission): ?Permission
     {
         return $permission;
     }
 
-    public function store($request)
+    public function store($request): Permission
     {
         return $this->permission->create($request->all());
     }
 
-    public function update($request, $permission)
+    public function update($request, $permission): ?Permission
     {
         $permission->update($request->all());
         return $permission->fresh();
     }
 
-    public function destroy($permission)
+    public function destroy($permission): bool
     {
         return $permission->delete();
     }

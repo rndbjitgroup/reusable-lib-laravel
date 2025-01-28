@@ -2,10 +2,10 @@
 
 namespace App\Repositories\Profile;
 
-use App\Models\User;
-use Illuminate\Support\Str;
+use App\Interfaces\Profile\ProfileRepositoryInterface;
+use App\Models\User; 
 
-class ProfileRepository
+class ProfileRepository implements ProfileRepositoryInterface
 {
     /** 
      * @var User
@@ -23,7 +23,7 @@ class ProfileRepository
         $this->user = $user;
     }
 
-    public function update($request, $user)
+    public function update($request, $user): ?User
     {
         $user->update($request->all());
         return $user->fresh();

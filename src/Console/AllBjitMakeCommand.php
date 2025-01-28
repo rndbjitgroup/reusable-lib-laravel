@@ -85,7 +85,7 @@ class AllBjitMakeCommand extends GeneratorCommand
 
         $this->execCommands[] = 'make:model ' . $name . $optionals;
         if ($this->option('all')) {
-            $this->execCommands[] = 'make:controller Api/' . $name . 'Controller --api --model=' . $name;
+            $this->execCommands[] = 'make:controller API/' . $name . 'Controller --api --model=' . $name;
             $this->execCommands[] = 'make:request ' . $name . 'StoreRequest';
             $this->execCommands[] = 'make:request ' . $name . 'UpdateRequest';
             $this->execCommands[] = 'make:request ' . $name . 'FilterRequest';
@@ -105,7 +105,7 @@ class AllBjitMakeCommand extends GeneratorCommand
             $routeName = explode('/', $name)[ReusableLibEnum::DEFAULT_ONE];
         }
  
-        $routeStr = "\nRoute::resource('" . Str::plural(Str::lower($routeName)) .  "', \App\Http\Controllers\Api\\" . str_replace('/', '\\', $name) . "Controller::class);";
+        $routeStr = "\nRoute::resource('" . Str::plural(Str::lower($routeName)) .  "', \App\Http\Controllers\API\\" . str_replace('/', '\\', $name) . "Controller::class);";
         file_put_contents(base_path('routes/api.php'), $routeStr.PHP_EOL, FILE_APPEND | LOCK_EX); 
         $this->info('This route has been successfully appended!');
 

@@ -3,10 +3,13 @@
 namespace App\Repositories\Users;
 
 use App\Enums\CmnEnum;
+use App\Interfaces\Users\UserRepositoryInterface;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Hash;
 
-class UserRepository 
+class UserRepository implements UserRepositoryInterface 
 {
     /** 
      * @var User
@@ -24,7 +27,7 @@ class UserRepository
         $this->user = $user;
     }
 
-    public function getAll($request)
+    public function getAll($request): LengthAwarePaginator
     {
         return $this->user
         ->when($request->searchText, function($q) use ($request) {
@@ -43,7 +46,7 @@ class UserRepository
         ->paginate(config('constants.paginate'));
     }
 
-    public function list($request) 
+    public function list($request): Collection 
     {
         return $this->user
         ->when($request->searchText, function($q) use ($request) {
@@ -54,12 +57,12 @@ class UserRepository
         })->get(['id', 'name', 'email']);
     }
 
-    public function get($user)
+    public function get($user): ?User
     {
         return $user;
     }
 
-    public function store($request)
+    public function store($request): User
     {
         $input = $request->validated();
         $input['password'] = Hash::make($input['password']);
@@ -68,16 +71,16 @@ class UserRepository
         return $user->fresh();
     }
 
-    public function update($request, $user)
+    public function update($request, $user): ?User
     {
         $input = $request->validated();
         $input['password'] = Hash::make($input['password']);
-        $user->update($input);
-        $user->sync($request->roles ?? []); 
+        $user->update($input); 
+        $user->roles()->sync($request->roles ?? []);
         return $user->fresh();
     }
 
-    public function destroy($user)
+    public function destroy($user): bool
     {
         return $user->delete();
     }

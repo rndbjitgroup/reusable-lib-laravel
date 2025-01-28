@@ -83,7 +83,7 @@ class AllBjitRemoveCommand extends GeneratorCommand
             ['file' => app_path('Services/' . $name . 'Service.php')],  
             ['file' => app_path('Http/Resources/' . $name . 'Collection.php')], 
             ['file' => app_path('Http/Resources/' . $name . 'Resource.php')], 
-            ['file' => app_path('Http/Controllers/Api/' . $name . 'Controller.php')],  
+            ['file' => app_path('Http/Controllers/API/' . $name . 'Controller.php')],  
             ['file' => app_path('Http/Requests/' . $name . 'FilterRequest.php')],  
             ['file' => app_path('Http/Requests/' . $name . 'StoreRequest.php')],
             ['file' => app_path('Http/Requests/' . $name . 'UpdateRequest.php')],
@@ -161,7 +161,7 @@ class AllBjitRemoveCommand extends GeneratorCommand
             ['path' => app_path('Repositories' . $dirName)],
             ['path' => app_path('Services' . $dirName)],
             ['path' => app_path('Http/Resources' . $dirName)],
-            ['path' => app_path('Http/Controllers/Api' . $dirName)],
+            ['path' => app_path('Http/Controllers/API' . $dirName)],
             ['path' => app_path('Http/Requests' . $dirName)],
             ['path' => base_path('database/factories' . $dirName)], 
         ];
@@ -174,7 +174,7 @@ class AllBjitRemoveCommand extends GeneratorCommand
         if (str_contains($name, '/')) {
             $routeName = explode('/', $name)[ReusableLibEnum::DEFAULT_ONE];
         }
-        $routeStr = "\nRoute::resource('" . Str::plural(Str::lower($routeName)) .  "', \App\Http\Controllers\Api\\" . str_replace('/', '\\', $name) . "Controller::class);";
+        $routeStr = "\nRoute::resource('" . Str::plural(Str::lower($routeName)) .  "', \App\Http\Controllers\API\\" . str_replace('/', '\\', $name) . "Controller::class);";
         
         $routeFile = str_replace(
                         [$routeStr], 

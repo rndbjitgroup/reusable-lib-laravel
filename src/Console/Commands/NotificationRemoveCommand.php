@@ -72,7 +72,7 @@ class NotificationRemoveCommand extends Command
             ['path' => app_path('Services/' . $path)],
             //['path' => app_path('Http/Resources/' . $path)],
             //['path' => app_path('Http/Requests/' . $path)],
-            ['path' => app_path('Http/Controllers/Api/' . $path)],
+            ['path' => app_path('Http/Controllers/API/' . $path)],
         ];
     } 
 
@@ -151,10 +151,12 @@ class NotificationRemoveCommand extends Command
 
     protected function setExecCommands()
     {
-        $this->execCommands[] = ReusableLibEnum::COMPOSER_COMMAND_REMOVE_WEBSOCKET;
-        $this->execCommands[] = ReusableLibEnum::COMPOSER_AUTOLOAD;
-        $this->execCommands[] = ReusableLibEnum::COMPOSER_COMMAND_REMOVE_PUSHER;
-        $this->execCommands[] = ReusableLibEnum::COMPOSER_COMMAND_REMOVE_PSR7; 
+        // $this->execCommands[] = ReusableLibEnum::COMPOSER_COMMAND_REMOVE_WEBSOCKET;
+        // $this->execCommands[] = ReusableLibEnum::COMPOSER_AUTOLOAD;
+        // $this->execCommands[] = ReusableLibEnum::COMPOSER_COMMAND_REMOVE_PUSHER;
+        // $this->execCommands[] = ReusableLibEnum::COMPOSER_COMMAND_REMOVE_PSR7; 
+        $this->execCommands[] = ReusableLibEnum::COMPOSER_REVERB_REMOVE;
+
     }
 
     protected function prepareErrorMessage()
