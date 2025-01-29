@@ -45,7 +45,7 @@ class NotificationRemoveCommand extends Command
         $this->removeDirectory(); 
         $this->deleteExtraDirecotriesOrFiles();
         $this->removeOtherDirectory();
-        $this->removeFileContent();  
+        //$this->removeFileContent();  
     }
 
     protected function removeDirectory()
@@ -101,37 +101,37 @@ class NotificationRemoveCommand extends Command
         ];
     }
 
-    protected function removeFileContent()
-    {
-        $files = $this->fileContentList();
-        foreach ($files as $from => $to) {  
-            if (file_exists($to['file']) || $this->option('force')) {
-                $from = file_get_contents($to['file']);
-                if (str_contains($to['file'], ReusableLibEnum::CONFIG_BROADCASTING)) {
-                    $from = str_replace(
-                        [
-                            "'host' => '127.0.0.1',\n", 
-                            "'port' => 6001,\n",
-                            "'scheme' => 'http'",  
-                        ], 
-                        ['', '', ''], 
-                        $from
-                    );
-                } 
-                file_put_contents($to['file'], $from);
-                $mainFile = str_replace(base_path() . '/', '', $to['file']);
-                $this->info("This file {$mainFile} is updated successfully!");
-            } 
-        }
-    }
+    // protected function removeFileContent()
+    // {
+    //     $files = $this->fileContentList();
+    //     foreach ($files as $from => $to) {  
+    //         if (file_exists($to['file']) || $this->option('force')) {
+    //             $from = file_get_contents($to['file']);
+    //             if (str_contains($to['file'], ReusableLibEnum::CONFIG_BROADCASTING)) {
+    //                 $from = str_replace(
+    //                     [
+    //                         "'host' => '127.0.0.1',\n", 
+    //                         "'port' => 6001,\n",
+    //                         "'scheme' => 'http'",  
+    //                     ], 
+    //                     ['', '', ''], 
+    //                     $from
+    //                 );
+    //             } 
+    //             file_put_contents($to['file'], $from);
+    //             $mainFile = str_replace(base_path() . '/', '', $to['file']);
+    //             $this->info("This file {$mainFile} is updated successfully!");
+    //         } 
+    //     }
+    // }
 
-    protected function fileContentList()
-    {
-        return [
-            //['file' => app_path('Models/User.php')],
-            ['file' => config_path('broadcasting.php')]
-        ];
-    }
+    // protected function fileContentList()
+    // {
+    //     return [
+    //         //['file' => app_path('Models/User.php')],
+    //         ['file' => config_path('broadcasting.php')]
+    //     ];
+    // }
 
    
 

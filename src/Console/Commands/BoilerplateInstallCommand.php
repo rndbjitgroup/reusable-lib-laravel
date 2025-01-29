@@ -504,13 +504,37 @@ class BoilerplateInstallCommand extends Command
 
     protected function updateBootstrapApp()
     {
+        if (strpos(file_get_contents(base_path('bootstrap/app.php')), 'api.php') !== false) {
+            $bootstrapApp = str_replace(
+                [
+                    '$middleware->api(prepend: ['
+                ], 
+                [
+                    '$middleware->api(prepend: [' . "\n" . '            \App\Http\Middleware\Localization::class,'
+                ], 
+                file_get_contents(base_path('bootstrap/app.php'))
+            ); 
+            file_put_contents(base_path('bootstrap/app.php'), $bootstrapApp); 
+        } else {
+            $bootstrapApp = str_replace(
+                [
+                    "web: __DIR__.'/../routes/web.php',", 
+                    '->withMiddleware(function (Middleware $middleware) {'
+                ], 
+                [
+                    "web: __DIR__.'/../routes/web.php',\n        api: __DIR__.'/../routes/api.php',", 
+                    '->withMiddleware(function (Middleware $middleware) {'. "\n" . '        $middleware->api(prepend: ['. "\n" . '            \App\Http\Middleware\Localization::class,'. "\n" .'        ]);'
+                ], 
+                file_get_contents(base_path('bootstrap/app.php'))
+            ); 
+            file_put_contents(base_path('bootstrap/app.php'), $bootstrapApp);
+        }
+
         $bootstrapApp = str_replace(
-            [
-                '$middleware->api(prepend: [',
+            [ 
                 "->create();"
             ], 
             [
-                '$middleware->api(prepend: [' . "\n" . '            \App\Http\Middleware\Localization::class,',
                 "->withSingletons([\n       \Illuminate\Contracts\Debug\ExceptionHandler::class => \App\Exceptions\Handler::class,\n    ])->create();"
             ], 
             file_get_contents(base_path('bootstrap/app.php'))
