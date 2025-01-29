@@ -33,7 +33,8 @@ class PushNotificationService
         ]; 
         //dd($data, $user);
         //Notification::send($user, new SendBothNotification($data)); 
-        event(new \App\Events\SendPushRandomMessage());
+        event(new \App\Events\SendPushRandomMessage()); 
+        event(new \App\Events\SendPushMessage($data));
         return $this->success('Push Notification is sent successfully!');
     }
  
