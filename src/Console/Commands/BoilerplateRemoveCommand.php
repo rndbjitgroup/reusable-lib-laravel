@@ -294,31 +294,31 @@ class BoilerplateRemoveCommand extends Command
                     $mainFile = str_replace(base_path() . '/', '', $to['file']); 
                 }
 
-                if (str_contains($to['file'], ReusableLibEnum::CONFIG_APP)) {
-                    $from = str_replace(
-                        [
-                            "Intervention\Image\ImageServiceProvider::class,", 
-                            "'Image' => Intervention\Image\Facades\Image::class,"
-                        ], 
-                        ['', ''], 
-                        $from
-                    );
-                    file_put_contents($to['file'], $from);
-                    $mainFile = str_replace(base_path() . '/', '', $to['file']);
-                }
+                // if (str_contains($to['file'], ReusableLibEnum::CONFIG_APP)) {
+                //     $from = str_replace(
+                //         [
+                //             "Intervention\Image\ImageServiceProvider::class,", 
+                //             "'Image' => Intervention\Image\Facades\Image::class,"
+                //         ], 
+                //         ['', ''], 
+                //         $from
+                //     );
+                //     file_put_contents($to['file'], $from);
+                //     $mainFile = str_replace(base_path() . '/', '', $to['file']);
+                // }
 
-                if (str_contains($to['file'], ReusableLibEnum::HTTP_KERNEL)) {
-                    $from = str_replace(
-                        [
-                            "'localization',",
-                            "'localization' => \App\Http\Middleware\Localization::class,"
-                        ], 
-                        ['', ''], 
-                        $from
-                    );
-                    file_put_contents($to['file'], $from);
-                    $mainFile = str_replace(base_path() . '/', '', $to['file']);
-                }
+                // if (str_contains($to['file'], ReusableLibEnum::HTTP_KERNEL)) {
+                //     $from = str_replace(
+                //         [
+                //             "'localization',",
+                //             "'localization' => \App\Http\Middleware\Localization::class,"
+                //         ], 
+                //         ['', ''], 
+                //         $from
+                //     );
+                //     file_put_contents($to['file'], $from);
+                //     $mainFile = str_replace(base_path() . '/', '', $to['file']);
+                // }
 
                 if (str_contains($to['file'], ReusableLibEnum::BOOTSTRAP_APP)) {
                     $from = str_replace(

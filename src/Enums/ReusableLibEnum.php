@@ -172,7 +172,7 @@ abstract class ReusableLibEnum
     //const PUSHER_APP_KEY = 'scvbmzkmvcscvbmzkmvcscvbmzkmvcbjit';
     //const PUSHER_APP_SECRET = 'xcnmcxdfgvcxcnmcxdfgvcxcnmcxdfgvcbjit';
 
-    const REVERB_APP_ID=197375678;
-    const REVERB_APP_KEY='hrgvrmfwhvanfkkghhzjohrgvrmfwhvanfkkghhzj';
-    const REVERB_APP_SECRET='qyhk7emaxu5yotdegg0coqyhk7emaxu5yotdegg0c';
+    // const REVERB_APP_ID=197375678;
+    // const REVERB_APP_KEY='hrgvrmfwhvanfkkghhzjohrgvrmfwhvanfkkghhzj';
+    // const REVERB_APP_SECRET='qyhk7emaxu5yotdegg0coqyhk7emaxu5yotdegg0c';
 }

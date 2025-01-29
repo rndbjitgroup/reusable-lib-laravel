@@ -125,6 +125,7 @@ class ReusableLibInstallCommand extends Command
             return false;
         } 
 
+        $this->checkAndSetAPIRoute();
         $this->appendRoute(); 
         
         $this->appendEnv();
@@ -170,6 +171,25 @@ class ReusableLibInstallCommand extends Command
             Artisan::call($artisanCommand);
             $this->info('This ' . $artisanCommand . ' has been successfully installed!');
         } 
+    }
+
+
+    protected function checkAndSetAPIRoute()
+    { 
+        if (!file_exists(base_path('routes/api.php'))) {
+            $files = $this->commonFiles();
+            foreach ($files as $from => $to) { 
+                if (! is_dir($stubsPath = $to['path'])) {  
+                    (new Filesystem)->makeDirectory($stubsPath, 0777, true);
+                }  
+                if (! file_exists($to['file']) || $this->option('force')) {
+                        $from = file_get_contents($from);
+                        file_put_contents($to['file'], $from);
+                        $mainFile = str_replace(base_path() . '/', '', $to['file']);
+                        $this->info("This file {$mainFile} is installed successfully!");
+                }
+            } 
+        }
     }
 
     protected function appendRoute()
@@ -302,6 +322,7 @@ class ReusableLibInstallCommand extends Command
         ); 
         file_put_contents(base_path('.env'), $envFile);
 
+        /*
         if($this->isPushNotification) { 
             // $envFile = str_replace(
             //     [
@@ -338,7 +359,7 @@ class ReusableLibInstallCommand extends Command
                 file_get_contents(base_path('.env'))
             );
             file_put_contents(base_path('.env'), $envFile);
-        }
+        }*/
 
     }
 
@@ -395,5 +416,15 @@ class ReusableLibInstallCommand extends Command
         }
          
     }  
+
+    protected function commonFiles()
+    {  
+        $rtrArr = [
+            __DIR__ . '/stubs/Boilerplate/Auth/Routes/api.stub' => [
+                'path' => base_path('routes'), 'file' => base_path('routes').'/api.php'
+            ], 
+        ]; 
+        return $rtrArr;
+    }
 
 }

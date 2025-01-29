@@ -131,18 +131,18 @@ class ReusableLibRemoveCommand extends Command
         //     file_get_contents(base_path('.env'))
         // ); 
 
-        $envFile = str_replace(
-            [
-                'BROADCAST_CONNECTION=reverb',
-                'REVERB_APP_ID=' . ReusableLibEnum::REVERB_APP_ID,
-                'REVERB_APP_KEY=' . ReusableLibEnum::REVERB_APP_KEY,
-                'REVERB_APP_SECRET=' . ReusableLibEnum::REVERB_APP_SECRET,
-            ],
-            ['BROADCAST_CONNECTION=log', 'REVERB_APP_ID=','REVERB_APP_KEY=', 'REVERB_APP_SECRET='], 
-            file_get_contents(base_path('.env'))
-        ); 
+        // $envFile = str_replace(
+        //     [
+        //         'BROADCAST_CONNECTION=reverb',
+        //         'REVERB_APP_ID=' . ReusableLibEnum::REVERB_APP_ID,
+        //         'REVERB_APP_KEY=' . ReusableLibEnum::REVERB_APP_KEY,
+        //         'REVERB_APP_SECRET=' . ReusableLibEnum::REVERB_APP_SECRET,
+        //     ],
+        //     ['BROADCAST_CONNECTION=log', 'REVERB_APP_ID=','REVERB_APP_KEY=', 'REVERB_APP_SECRET='], 
+        //     file_get_contents(base_path('.env'))
+        // ); 
 
-        file_put_contents(base_path('.env'), $envFile);
+        // file_put_contents(base_path('.env'), $envFile);
          
     }
 
