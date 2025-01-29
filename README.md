@@ -1,133 +1,162 @@
 # BJIT Reusable Library Package
 
-This is the reusable library package for Laravel. There are some reusable modules.
+&#x20;
 
-## Features
+## Overview
 
-- Boilerplate Structure
-- Auth Module
-- Sample Module
-- Permissions and Roles Module
-- Blog Module
-- Certralized Multiple File
-- Notifications (Email, Database and Push)
+The **BJIT Reusable Library Package** is a lightweight and modular Laravel package designed to provide reusable components and features to streamline development.
 
-The Reusable Library Package is a lightweight Laravel package.
+### **Features**
 
-## Installation
+- 🔥 **Boilerplate Structure**
+- 🔐 **Auth Module**
+- 🏗 **Sample Module**
+- 🎛 **Permissions & Roles Management**
+- 📝 **Blog Module**
+- 📁 **Centralized File Handling**
+- 🔔 **Notifications (Email, Database, Push)**
 
-The Reusable Library requires
+---
 
-- **[Laravel](https://laravel.com/) v8+ to latest.**
-- **enable the "exec" function in php.ini**
-- **Composer 2+(Recommended)**
+## **Installation**
 
-####
-Version Histories
+### **Requirements**
 
-| Laravel  | Reusable Package  |
-| ------------- |:-------------|
-| 11.x     |composer require bjitgroup/reusable-lib-laravel     |
-| 9.x to 10.x | composer require bjitgroup/reusable-lib-laravel: 2.*|
-| 8.x      | composer require bjitgroup/reusable-lib-laravel: 1.*|
+- **Laravel** v8+ (Latest Supported)
+- **PHP** with `exec` function enabled
+- **Composer** v2+ (Recommended)
 
-Install the Laravel project by following this link
-**[Laravel Document](https://laravel.com/docs)** or use the below command:
+### **Version Compatibility**
+
+Laravel Version | Reusable Package  
+--------------- | -----------------  
+11.x            | `composer require bjitgroup/reusable-lib-laravel`  
+9.x - 10.x      | `composer require bjitgroup/reusable-lib-laravel:2.*`  
+8.x             | `composer require bjitgroup/reusable-lib-laravel:1.*`  
+
+### **Step 1: Install Laravel**
 
 ```sh
 composer create-project laravel/laravel rl-demo
 ```
 
-Install the Reusable Library package. Use the below command:
+### **Step 2: Install the Reusable Library**
 
 ```sh
-cd rl-demo(your project root)
+cd rl-demo  # Navigate to the project root
 composer require bjitgroup/reusable-lib-laravel
 ```
 
-#### Configure the .env file
+### **Step 3: Configure the .env File**
 
-**Confirm the database connection**
-The correct **APP_URL** must be specified in the.env file. For example,
+Ensure the correct database connection and `APP_URL` settings:
 
 ```sh
-APP_URL=http://localhost:8000 
+APP_URL=http://localhost:8000
 ```
 
-#### To install the reusable library package, use the below command:
+### **Step 4: Install the Reusable Library**
 
 ```sh
 php artisan bjit:reusable-lib-install
 ```
 
-#### Verify the deployment by navigating to your server address in your preferred browser. Use the below command:
+### **Step 5: Serve the Application**
 
 ```sh
-php artisan serve 
+php artisan serve
 ```
 
-##### For Push Notification
+---
 
-If you choose push notification while setting up the reusable library, you have to run the below command:
+## **Push Notification Setup**
 
-For Reverb (Laravel 11.x)  
+### **For Laravel 11.x (Reverb)**
+
 ```sh
 php artisan reverb:start
 ```
-For Websocket (Laravel 8.x to 10.x)  
+
+### **For Laravel 8.x - 10.x (Websockets)**
 
 ```sh
 php artisan websocket:serve
 ```
 
-#### To get Open API (Swagger) documentation
+### **For Queue Processing**
 
-- Click on one of your preferred browsers.
-- Copy **localhost:8000/api/documentation** and paste it in the browser's url.
+```sh
+php artisan queue:work
+```
 
-## File Structure
+### **Client-Side Configuration**
 
-File structure flow is as follow
+- Configure the client application with **Key, Host, and Port**.
+- Build the frontend application:
 
-1. Route - Configure the route path.
-2. Controller - Write code as simply as possible in the controller, and call Request Class in the method parameter.
-3. Request - Form validation is required in this class.
-4. Service - Write business logic and response data (API).
-5. Repository - Create, retrieve, update, and delete are actioned in this section.
-6. Resource - Return the response from service in this section and format it if necessary. 
+```sh
+npm run build
+```
 
-#### To generate the required files for the structure, use the below command:
+---
+
+## **API Documentation (Swagger)**
+
+Access the API documentation by opening your browser and navigating to:
+
+```
+http://localhost:8000/api/documentation
+```
+
+---
+
+## **File Structure**
+
+The package follows a modular structure:
+
+1. **Route** - Configure API routes.
+2. **Controller** - Handle requests and responses.
+3. **Request** - Form validation logic.
+4. **Service** - Business logic handling.
+5. **Repository** - Database operations (CRUD).
+6. **Resource** - API response formatting.
+
+### **Generate Module Files**
 
 ```sh
 php artisan bjit-make:model Products/Item -m --all
 ```
 
-1. m => migration
-2. s => seed
-3. f => factory
+**Options:**
 
-This **_-mfs --all_** can be used at the end of the above command.
+- `-m` → Create migration
+- `-s` → Create seed file
+- `-f` → Create factory
 
-#### To generate Service or Repository, use the below command:
+You can also use `-mfs --all` at the end of the command to generate a migration, seed, and factory simultaneously.
+
+### **Generate Service or Repository**
+
 ```sh
 php artisan bjit-make:service Products/ProductBrand
-```
-```sh
 php artisan bjit-make:repository Products/ProductBrand
 ```
 
-#### To remove a specific module (all files), use the below command:
+### **Remove a Module**
 
 ```sh
 php artisan bjit-remove:all Products/Item
 ```
 
-#### To remove the reusable library package, use the below command:
+### **Uninstall Reusable Library**
 
 ```sh
 php artisan bjit:reusable-lib-remove
 ```
 
-## License
+---
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## **License**
+
+This package is open-source software licensed under the [MIT License](https://opensource.org/licenses/MIT).
+
