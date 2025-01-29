@@ -27,12 +27,32 @@ The **BJIT Reusable Library Package** is a lightweight and modular Laravel packa
 - **Composer** v2+ (Recommended)
 
 ### **Version Compatibility**
-
-Laravel Version | Reusable Package  
---------------- | -----------------  
-11.x            | `composer require bjitgroup/reusable-lib-laravel`  
-9.x - 10.x      | `composer require bjitgroup/reusable-lib-laravel:2.*`  
-8.x             | `composer require bjitgroup/reusable-lib-laravel:1.*`  
+<table>
+  <thead>
+    <tr>
+      <th>Laravel Version</th>
+      <th>Package Version</th>
+      <th>Installation Command</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>11.x</td>
+      <td>Latest</td>
+      <td><code>composer require bjitgroup/reusable-lib-laravel</code></td>
+    </tr>
+    <tr>
+      <td>9.x to 10.x</td>
+      <td>2.x</td>
+      <td><code>composer require bjitgroup/reusable-lib-laravel:2.*</code></td>
+    </tr>
+    <tr>
+      <td>8.x</td>
+      <td>1.x</td>
+      <td><code>composer require bjitgroup/reusable-lib-laravel:1.*</code></td>
+    </tr>
+  </tbody>
+</table>
 
 ### **Step 1: Install Laravel**
 
