@@ -33,9 +33,8 @@ class SendPushMessage implements ShouldBroadcast
      */
     public function broadcastOn(): array
     { 
-        //return new Channel('notification-channel'); // for single channel
         return [
-            new Channel('notification-channel'),  // for multiple channel
+            new Channel('notification-channel'), 
         ];
     }
 
